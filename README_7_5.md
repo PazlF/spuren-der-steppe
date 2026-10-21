@@ -1,0 +1,1 @@
+Spuren der Steppe 7.5: Bitte zuerst `PRODUKTIONSSTATUS.md` lesen. Lokale Originalbilder sind noch nicht enthalten. Dieses Paket ist eine vorbereitete Offline-Produktion, keine kuratorisch freigegebene Installation.

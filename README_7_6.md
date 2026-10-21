@@ -1,0 +1,1 @@
+Goldhirsch ist nun mit einer echten aus dem Nutzer-PDF extrahierten JPEG-Abbildung offline im Spiel eingebaut. Öffne index.html, wähle Goldhirsch. Alle anderen sechs Originalbilder fehlen noch. Mehr: GOLDHIRSCH_BILDSTATUS.md.

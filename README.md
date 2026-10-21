@@ -1,18 +1,9 @@
-# Spuren der Steppe
+# Spuren der Steppe 7.3 – Goldhirsch Musterstation
 
-Interaktives Museumsspiel für Tablets mit sieben archäologischen Originalfotografien.
+**NEU:** `GOLDHIRSCH_PRUEFSTATION.html` öffnen, originale CC0-Aufnahme aus dem Met-Katalog oder dem verlinkten Commons-Eintrag herunterladen und mit „Originalfoto auswählen“ importieren. Marker auswählen; mit „Marker kalibrieren“ Marker per Touch verschieben und Koordinaten als JSON exportieren.
 
-**Konzept & Entwicklung: Paul Fürst**
+Die Bilddatei liegt **noch nicht** im ZIP; der Download über die Entwicklungsumgebung war nicht erreichbar. Ohne Originalfoto zeigt die Musterstation bewusst kein Ersatzbild.
 
-## Hosting
+`index.html` enthält weiterhin alle sieben Spielstationen samt bisheriger noch zu kalibrierender Hotspots. `redaktion.html` ist für betreute Tests. `GOLDHIRSCH_FACHNOTIZ.md` erläutert Faktenlage und Freigabeschritte.
 
-Statische HTML-Seite ohne Build-Schritt. Netlify-Einstellungen:
-- Branch: `main`
-- Build command: leer
-- Publish directory: `.` (Repository-Wurzel)
-
-Die Dateien `index.html` und `assets/photos/` müssen direkt im Repository liegen. Nach der erstmaligen Verbindung mit Netlify lösen Änderungen auf `main` automatisch neue Deployments aus.
-
-## Fachlicher Status
-
-Prototyp. Hotspots und wissenschaftliche Erläuterungen müssen vor einem Museumseinsatz fachlich freigegeben und auf dem Ziel-Tablet getestet werden.
+Konzept & Entwicklung: Paul Fürst.

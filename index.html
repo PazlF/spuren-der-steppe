@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#121916">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Spuren der Steppe">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <meta name="description" content="Spuren der Steppe: sieben wissenschaftlich fundierte Museums-Stationen zur skythischen Kultur. Eine digitale Sammlung von Paul Fürst.">
+  <title>Spuren der Steppe — Eine digitale Skythen-Sammlung · Paul Fürst</title>
+  <style>
+:root{--bg:#101916;--bg2:#17211d;--panel:#1c2721;--panel2:#222d26;--border:rgba(210,183,120,.24);--border-light:rgba(232,219,186,.11);--gold:#d4b377;--gold-soft:#efd6a5;--gold-deep:#98743e;--paper:#f0e5cb;--white:#fff7e7;--muted:#adae9e;--serif:Georgia,'Times New Roman',serif;--sans:'Trebuchet MS',Arial,sans-serif;--max:1460px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--paper);font-family:var(--sans);font-size:16px;margin:0;-webkit-font-smoothing:antialiased;overflow-x:hidden}body:before{content:"";z-index:-1;position:fixed;inset:0;pointer-events:none;opacity:.36;background:radial-gradient(circle at 12% 5%,rgba(180,147,77,.10),transparent 40%),radial-gradient(circle at 93% 55%,rgba(75,97,79,.18),transparent 46%),repeating-linear-gradient(45deg,rgba(233,213,157,.022) 0,rgba(233,213,157,.022) 1px,transparent 1px,transparent 24px)}button,a{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}a{color:var(--gold-soft)}a:hover{color:white}button:focus-visible,a:focus-visible{outline:3px solid #e5be74;outline-offset:4px}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-weight:400}h1,h2{font-family:var(--serif)}em{color:var(--gold);font-style:italic}button{touch-action:manipulation}
+.main{width:min(100% - 88px,var(--max));margin:auto;min-height:calc(100vh - 180px)}.masthead{min-height:94px;display:flex;align-items:center;justify-content:space-between;padding:16px max(44px,calc((100vw - var(--max)) / 2));border-bottom:1px solid var(--border);background:rgba(17,27,22,.9);position:relative;z-index:5}.brand{display:flex;align-items:center;gap:14px;border:0;color:var(--paper);padding:0;background:transparent;text-align:left}.sigil{width:49px;height:49px;border:1px solid var(--gold-deep);border-radius:50%;display:grid;place-items:center;color:var(--gold)}.sigil svg{height:32px;width:32px;fill:none;stroke:currentColor;stroke-width:2}.brand-text{display:flex;flex-direction:column;gap:6px}.brand strong{font-size:16px;letter-spacing:.17em;font-weight:600}.brand small{font-size:9px;letter-spacing:.26em;color:var(--muted)}.masthead-right{display:flex;align-items:center;gap:25px}.tiny-maker{font-size:10px;letter-spacing:.17em;color:#a99e84;display:flex;flex-direction:column;align-items:flex-end;gap:4px}.tiny-maker b{font-size:12px;color:var(--gold-soft);font-weight:400;letter-spacing:.12em}.icon-circle{width:39px;height:39px;border:1px solid var(--border);color:var(--gold-soft);background:transparent;border-radius:50%;font-family:var(--serif);font-style:italic;font-size:20px}.icon-circle:hover{background:var(--panel)}
+.footer{max-width:var(--max);padding:28px 0 38px;width:calc(100% - 88px);margin:38px auto 0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;color:#968f7e;font-size:11px;letter-spacing:.08em}.footer strong{color:var(--gold-soft);font-weight:400}.dot{display:inline-block;height:5px;width:5px;border-radius:100%;background:var(--gold);margin-right:8px}.text-button,.subtle-link{background:none;border:0;color:var(--gold);cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px}.text-button:hover,.subtle-link:hover{text-decoration-color:currentColor}
+.eyebrow,.kicker{font-size:11px;letter-spacing:.23em;font-weight:bold;color:var(--gold);text-transform:uppercase}.eyebrow{display:flex;align-items:center;gap:14px}.eyebrow-line{width:29px;height:1px;background:var(--gold)}
+.hero{min-height:550px;display:grid;grid-template-columns:1fr .88fr;gap:64px;align-items:center;border-bottom:1px solid var(--border);padding:52px 0 58px}.hero h1{font-size:clamp(62px,6vw,108px);line-height:.94;letter-spacing:-.06em;white-space:nowrap;margin:39px 0 30px}.hero h1 em{font-weight:400}.hero-lead{font-family:var(--serif);font-size:clamp(23px,2.25vw,32px);line-height:1.3;max-width:570px;color:var(--paper);margin-bottom:18px}.hero-intro{font-size:14px;line-height:1.85;color:var(--muted);max-width:560px}.hero-actions{display:flex;align-items:center;gap:24px;margin-top:32px;flex-wrap:wrap}.hero-time{font-size:10px;font-weight:bold;letter-spacing:.14em;color:#a19b87}.hero-time span{padding:0 7px;color:var(--gold)}
+.btn{border:1px solid var(--border);min-height:56px;display:inline-flex;align-items:center;justify-content:center;gap:24px;padding:13px 23px;letter-spacing:.045em;font-weight:bold;font-size:13px;transition:background .15s,color .15s,transform .15s}.btn:not(:disabled):hover{transform:translateY(-2px)}.btn span{font-size:19px;font-weight:400}.btn-gold{background:var(--gold);border-color:var(--gold);color:#18211b}.btn-gold:hover{background:#f0cc8e}.btn-outline{background:transparent;color:var(--paper)}.btn-outline:hover{background:var(--panel2);color:var(--gold-soft)}.btn-wide{width:100%}
+.hero-visual{height:465px;position:relative;padding:16px;border:1px solid var(--border)}.hero-visual:after{content:"";width:92px;height:92px;border:1px solid var(--gold-deep);position:absolute;right:-14px;top:-14px;z-index:-1}.hero-visual-caption{position:absolute;bottom:18px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,14,.88);padding:13px 17px;backdrop-filter:blur(12px);gap:10px}.hero-visual-caption span{font-size:10px;letter-spacing:.2em;color:var(--gold)}.hero-visual-caption strong{font-size:12px;letter-spacing:.12em;font-weight:400}
+.art-frame{overflow:hidden;position:relative;background:radial-gradient(circle at center,#313b32,#111a16 73%);isolation:isolate}.art-frame:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;box-shadow:inset 0 0 70px rgba(0,0,0,.18);border:1px solid rgba(255,237,183,.075)}.art-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .4s ease}.art-illustration{opacity:1}.art-original{opacity:0}.art-frame.is-loaded .art-original{opacity:1}.art-frame.is-loaded .art-illustration{opacity:0}.art-frame.is-loaded{background:#252a28}.art-stamp{position:absolute;bottom:12px;left:12px;z-index:4;font-size:8px;letter-spacing:.18em;color:#eddbb6;padding:5px 8px;background:rgba(10,16,12,.78);max-width:90%}.art-hero{height:100%;width:100%}.art-card{height:216px;width:100%}.art-large{width:100%;height:min(470px,48vw);min-height:300px}.art-zoom{width:100%;height:100%}.art-evidence{width:100%;height:100%}.art-report{width:105px;height:105px;flex:none}
+.collection-intro{padding:56px 0 32px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.collection-intro h2{font-size:clamp(34px,3.2vw,48px);margin:13px 0 11px;letter-spacing:-.025em}.collection-intro p{color:var(--muted);max-width:580px;line-height:1.65;font-size:14px;margin-bottom:0}.collection-progress{border:1px solid var(--border);min-width:175px;padding:19px 23px 21px;text-align:right}.progress-number{font-family:var(--serif);font-size:31px;color:var(--gold-soft)}.progress-sub{font-size:8px;letter-spacing:.15em;color:var(--muted);margin:5px 0 14px}.progress-track{width:100%;height:3px;background:#344039}.progress-track span{display:block;height:3px;background:var(--gold)}
+.object-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.object-card{text-align:left;border:1px solid var(--border);padding:12px;background:linear-gradient(150deg,rgba(44,55,43,.6),rgba(24,33,27,.9));color:var(--paper);min-width:0;transition:transform .17s,background .17s,border-color .17s}.object-card:hover{border-color:var(--gold);background:#29362c;transform:translateY(-4px)}.object-card.explored{border-color:#738e69}.card-upper{display:flex;justify-content:space-between;align-items:center;min-height:34px;padding:2px 4px 12px}.card-number{font-family:var(--serif);color:var(--gold);font-size:22px}.card-number span{font:10px var(--sans);color:var(--muted)}.card-state{font-size:8px;letter-spacing:.13em;color:var(--gold-soft)}.card-details{padding:20px 9px 8px}.card-topic{font-size:9px;letter-spacing:.22em;color:var(--gold)}.card-details h3{font-size:25px;font-family:var(--serif);letter-spacing:-.02em;margin:10px 0 10px}.card-details p{font-size:11px;color:var(--muted);line-height:1.55;min-height:28px}.card-bottom{border-top:1px solid var(--border);padding-top:15px;margin-top:23px;display:flex;justify-content:space-between;align-items:center;color:#d9ceaf;font-size:11px}.card-bottom span:last-child{font-size:20px}.object-card:nth-child(5){grid-column:span 2}.object-card:nth-child(5) .art-card,.object-card:nth-child(7) .art-card{height:228px}.object-card:nth-child(5) .card-details h3,.object-card:nth-child(7) .card-details h3{font-size:29px}
+.principle{display:flex;align-items:center;gap:26px;border:1px solid var(--border);background:linear-gradient(100deg,#1c2822,#131e18);padding:28px;margin-top:37px}.principle-icon{border:1px solid var(--gold);color:var(--gold);border-radius:100%;width:60px;height:60px;display:grid;place-items:center;flex:none;font:italic 35px var(--serif)}.principle div:nth-child(2){flex:1}.principle h3{font:30px var(--serif);margin:9px 0}.principle p{font-size:12px;max-width:740px;line-height:1.6;color:var(--muted);margin:0}.principle .btn{white-space:nowrap}.all-done{margin-top:28px;padding:30px 40px;background:#283729;border:1px solid #8b9e72}.all-done h2{font-size:35px;margin:13px 0}.all-done p{font-size:14px;color:var(--muted)}
+.breadcrumbs{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:10px;letter-spacing:.14em;padding:32px 0 22px}.breadcrumbs button{background:none;border:0;color:var(--gold);font-size:12px;padding:0}.breadcrumbs b{font-weight:400;color:var(--paper)}.station-title-row{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--border);padding-bottom:25px;gap:14px}.station-title-row h1{font-size:clamp(36px,4vw,62px);margin:13px 0 0;line-height:1.1;letter-spacing:-.036em}.index-stamp{font:54px var(--serif);color:var(--gold)}.index-stamp span{font:13px var(--sans);color:var(--muted)}.stepper{display:flex;align-items:center;justify-content:flex-start;gap:20px;min-height:70px}.stepper span{font-size:11px;color:#7e8678;letter-spacing:.12em}.stepper b{font-size:9px;font-weight:normal;margin-left:5px}.stepper .active{color:var(--gold)}.stepper i{width:32px;height:1px;background:var(--border)}
+.station-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:42px;align-items:start;margin:4px 0 25px}.gallery-glass{border:1px solid var(--border);background:#1a251e;padding:15px}.object-mark{border-top:1px solid var(--border);margin-top:14px;padding:13px 3px 0;display:flex;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.14em;color:var(--muted)}.object-mark b{color:var(--gold);font-weight:400}.image-foot{font-size:10px;color:#968f7e;letter-spacing:.015em;line-height:1.5;margin-top:12px}.details-column{padding:18px 0}.details-column h2,.workbench-task h2,.evidence-content h2{font-size:clamp(35px,3.4vw,51px);letter-spacing:-.03em;line-height:1.08;margin:19px 0 24px}.lead-copy{font:clamp(18px,1.7vw,23px)/1.5 var(--serif);color:var(--paper)}.field-note{border-left:2px solid var(--gold);display:flex;gap:16px;padding:11px 19px;background:rgba(230,198,120,.06);margin:28px 0}.field-note p{font-size:14px;color:#d8d4be;line-height:1.7;margin:0}.field-note-symbol{font-size:23px;color:var(--gold)}.facts{margin:25px 0;border-top:1px solid var(--border-light)}.facts div{display:flex;justify-content:space-between;gap:25px;padding:11px 0;border-bottom:1px solid var(--border-light)}.facts dt{font-size:9px;letter-spacing:.14em;color:var(--gold);min-width:115px}.facts dd{font-size:12px;color:var(--paper);margin:0;text-align:right;line-height:1.5}.museum-tag{display:flex;align-items:center;gap:12px;margin-bottom:22px}.tag-mark{display:grid;place-items:center;border:1px solid var(--border);border-radius:50%;height:37px;width:37px;color:var(--gold);font:22px var(--serif)}.museum-tag strong,.museum-tag small{display:block}.museum-tag strong{font-size:11px;font-weight:normal}.museum-tag small{font-size:10px;color:var(--muted);margin-top:4px}
+.workbench-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,1fr);gap:32px;padding-top:2px}.workbench-art{background:#19221d;border:1px solid var(--border);padding:17px;align-self:start}.workbench-header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:17px}.zoom-controls{display:flex;align-items:center;gap:7px}.zoom-controls button{border:1px solid var(--border);background:#243026;color:var(--gold-soft);width:35px;height:35px;font-size:20px}.zoom-controls button:hover{background:#334335}.zoom-controls span{font-size:11px;min-width:32px;text-align:center;color:var(--muted)}.zoom-stage{height:min(430px,41vw);min-height:300px;background:#1b241e;overflow:hidden;touch-action:none;cursor:grab}.zoom-stage:active{cursor:grabbing}.zoom-stage .art-frame img{transition:none;will-change:transform}.museum-minilink{text-align:right;font-size:11px;padding-top:18px}.workbench-task{border:1px solid var(--border);background:rgba(32,43,35,.54);padding:clamp(20px,3vw,36px);align-self:start}.task-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.task-label{font-size:9px;color:var(--muted);letter-spacing:.09em}.workbench-task h2{margin-bottom:12px}.task-question{font:21px/1.45 var(--serif);max-width:490px}.task-hint{font-size:11px;color:var(--gold);margin-top:12px}.choices,.evidence-choices{display:grid;gap:9px;margin:21px 0}.choice{width:100%;padding:14px 16px;min-height:64px;border:1px solid var(--border);background:rgba(16,24,19,.38);color:var(--paper);text-align:left;display:flex;align-items:center;gap:15px;transition:background .15s,border-color .15s}.choice:hover,.evidence-choice:hover{background:rgba(156,133,83,.13)}.choice.chosen,.evidence-choice.chosen{border-color:var(--gold);background:rgba(204,171,96,.13)}.choice.correct{border-color:#849775}.choice-letter{border:1px solid var(--border);width:32px;height:32px;display:grid;place-items:center;color:var(--gold);flex:none;font:14px var(--serif)}.choice-tick{margin-left:auto;color:var(--gold);font-size:19px}.task-buttons{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}.task-buttons .btn{flex:1;min-width:180px}.light-hint{margin-top:14px;border-left:2px solid var(--gold);padding:12px 16px;color:var(--paper);font-size:13px;line-height:1.6;background:#283329}.feedback{border:1px solid rgba(196,176,125,.4);background:#293329;padding:19px;margin:19px 0;color:var(--paper)}.feedback.right{border-color:#849774}.feedback strong{display:block;font:23px var(--serif);margin-bottom:8px;color:var(--gold-soft)}.feedback p{font-size:13px;line-height:1.65;margin:0}.feedback small{display:block;font-size:10px;color:var(--muted);margin-top:10px}
+.evidence-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(350px,1.05fr);gap:52px;min-height:550px;margin:3px 0 30px}.evidence-art{border:1px solid var(--border);padding:17px;height:545px;position:relative}.evidence-art .art-frame{height:100%}.evidence-art-label{position:absolute;bottom:45px;right:40px;background:rgba(11,18,13,.85);padding:12px 18px;font-size:10px;letter-spacing:.14em;color:var(--gold)}.evidence-content{padding:12px 0}.evidence-content>p{font-size:14px;line-height:1.7;color:var(--muted);max-width:490px}.evidence-content blockquote{margin:25px 0 20px;padding:20px 26px;border-left:3px solid var(--gold);background:rgba(204,178,114,.065);font:22px/1.4 var(--serif);color:var(--paper)}.evidence-choice{border:1px solid var(--border);color:var(--paper);background:rgba(18,27,21,.57);padding:13px 15px;display:flex;align-items:center;text-align:left;gap:16px;min-height:72px}.evidence-choice .evidence-radio{font-size:19px;color:var(--gold)}.evidence-choice strong{display:block;font-size:14px;font-weight:normal;margin-bottom:5px}.evidence-choice small{font-size:11px;color:var(--muted)}
+.report{max-width:900px;margin:3px auto 40px;text-align:center;border:1px solid var(--border);padding:35px 50px 45px;background:linear-gradient(145deg,rgba(36,49,39,.8),rgba(18,28,22,.8));position:relative}.report:before,.report:after{content:'◆';position:absolute;color:var(--gold);font-size:14px}.report:before{top:16px;left:20px}.report:after{bottom:16px;right:20px}.report-seal{height:83px;width:83px;border:1px solid var(--gold);border-radius:50%;margin:0 auto 23px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--gold)}.report-seal span{font:32px var(--serif)}.report-seal small{font-size:5px;letter-spacing:.08em}.report h2{font-size:clamp(42px,5vw,72px);line-height:1.02;margin:16px 0 22px;letter-spacing:-.04em}.report-intro{font:22px/1.4 var(--serif);max-width:650px;margin:0 auto 26px}.report-book{display:grid;grid-template-columns:1fr 1fr;text-align:left;border:1px solid var(--border);margin:30px 0}.report-object{display:flex;align-items:center;gap:16px;border-right:1px solid var(--border);padding:15px}.report-object h3{font:27px var(--serif);margin:8px 0}.report-object p,.report-explain p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}.report-explain{padding:22px}.report-explain p{color:var(--paper);margin-top:10px}.report-source{font-size:10px;color:var(--gold);display:block;margin-top:11px}.report-actions,.final-buttons{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}.report .subtle-link{display:block;margin:24px auto 0;font-size:11px}
+.final-page{text-align:center;padding:75px 0 70px;max-width:1050px}.ornament-line{color:var(--gold);font-size:24px}.ornament-line span{letter-spacing:.1em;font-size:11px;vertical-align:middle}.final-page h1{font-size:clamp(44px,6.1vw,93px);line-height:1.02;letter-spacing:-.05em;margin:30px 0}.final-page>p{font-size:17px;line-height:1.8;max-width:760px;margin:0 auto 35px;color:var(--muted)}.final-three{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:40px 0}.final-three div{border:1px solid var(--border);padding:28px 18px;display:grid;gap:14px;text-align:left}.final-three b{color:var(--gold);font:30px var(--serif)}.final-three strong{font:20px var(--serif)}.final-three span{color:var(--muted);font-size:12px}.final-sign{padding:25px;font-size:10px;letter-spacing:.16em;color:var(--muted)}.final-sign strong{display:block;font:35px var(--serif);color:var(--gold-soft);letter-spacing:0;margin-top:10px}
+.about-page{padding-bottom:50px}.about-page>h1{font-size:clamp(44px,5vw,72px);margin:20px 0 43px}.about-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;margin-bottom:35px}.about-layout h2{font:31px var(--serif);margin:0 0 20px}.about-layout h3{font:21px var(--serif);color:var(--gold-soft);margin:26px 0 9px}.about-layout p{font-size:14px;color:var(--muted);line-height:1.85}.about-layout strong{color:var(--paper);font-weight:400}.about-layout code{color:var(--gold-soft);font-size:13px}.source-list a{display:flex;align-items:center;gap:13px;justify-content:space-between;text-decoration:none;color:var(--paper);padding:14px 5px;border-bottom:1px solid var(--border)}.source-list a:hover{background:rgba(255,238,191,.06)}.source-list>a>span:first-child{font:21px var(--serif);color:var(--gold);width:28px}.source-list a div{flex:1}.source-list a b,.source-list a small{display:block}.source-list a b{font-size:13px;font-weight:normal}.source-list a small{color:var(--muted);font-size:10px;margin-top:6px}.source-list a>span:last-child{color:var(--gold);font-size:21px}.source-list h2:not(:first-child){margin-top:25px}.loading{font-family:var(--serif);color:var(--gold);text-align:center;margin:20vh auto}
+@media(max-width:1190px){.main{width:calc(100% - 50px)}.masthead{padding:12px 25px}.footer{width:calc(100% - 50px)}.hero{gap:28px;grid-template-columns:1.1fr .9fr}.hero h1{font-size:clamp(52px,6vw,84px)}.object-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.object-card:nth-child(5){grid-column:span 1}.object-card:nth-child(5) .art-card,.object-card:nth-child(7) .art-card{height:216px}.station-layout,.workbench-layout,.evidence-layout{gap:25px}}
+@media(max-width:850px){.hero{grid-template-columns:1fr;min-height:initial;padding:48px 0}.hero h1{font-size:clamp(60px,10vw,94px);white-space:normal}.hero-visual{height:410px;width:min(100%,640px)}.object-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-intro{align-items:start}.station-layout,.workbench-layout,.evidence-layout{grid-template-columns:1fr}.art-large{height:400px}.details-column{padding:12px 0}.zoom-stage{height:390px}.evidence-art{height:370px}.evidence-content{padding:12px 0}.report-book{grid-template-columns:1fr}.report-object{border-right:0;border-bottom:1px solid var(--border)}.about-layout{grid-template-columns:1fr}.principle{align-items:start;flex-wrap:wrap}.principle .btn{margin-left:88px}.footer{flex-wrap:wrap}.tiny-maker{display:none}}
+@media(max-width:560px){.main{width:calc(100% - 30px)}.masthead{padding:12px 15px;min-height:75px}.sigil{height:39px;width:39px}.sigil svg{height:26px;width:26px}.brand{gap:10px}.brand strong{font-size:12px;letter-spacing:.12em}.brand small{font-size:7px}.masthead-right{gap:8px}.icon-circle{height:35px;width:35px}.footer{width:calc(100% - 30px);display:grid;gap:9px;font-size:10px}.hero{padding-top:38px}.hero h1{font-size:clamp(47px,11vw,72px);margin:26px 0}.hero-lead{font-size:23px}.hero-intro{font-size:13px}.hero-actions{gap:12px}.hero-actions .btn{width:100%}.hero-visual{height:310px}.hero-visual-caption{flex-wrap:wrap}.collection-intro{display:grid;padding:40px 0 24px}.collection-progress{width:100%;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:20px;text-align:left}.progress-number{grid-row:span 2}.progress-sub{margin:0}.progress-track{grid-column:2}.object-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.object-card{padding:7px}.art-card{height:130px}.object-card:nth-child(5) .art-card,.object-card:nth-child(7) .art-card{height:130px}.card-details{padding:12px 4px 4px}.card-details h3,.object-card:nth-child(5) .card-details h3,.object-card:nth-child(7) .card-details h3{font-size:20px}.card-details p{font-size:9px}.card-topic,.card-state{font-size:8px}.card-upper{padding-bottom:7px}.card-bottom{font-size:9px;margin-top:11px}.art-stamp{font-size:6px}.principle{padding:18px;gap:13px}.principle-icon{height:42px;width:42px;font-size:28px}.principle h3{font-size:24px}.principle .btn{width:100%;margin:0}.breadcrumbs{font-size:9px;flex-wrap:wrap;padding:21px 0 17px}.station-title-row h1{font-size:35px}.index-stamp{font-size:38px}.stepper{gap:8px;min-height:59px}.stepper i{width:13px}.stepper b{font-size:8px}.station-layout,.workbench-layout,.evidence-layout{gap:19px}.art-large{height:285px;min-height:285px}.zoom-stage{height:295px;min-height:295px}.workbench-art{padding:9px}.workbench-header{padding:9px 3px}.workbench-task{padding:20px}.task-top{display:grid;gap:7px}.workbench-task h2,.evidence-content h2{font-size:38px}.task-question{font-size:19px}.evidence-art{height:275px}.evidence-content blockquote{font-size:21px}.evidence-choice small{font-size:10px}.report{padding:25px 17px 32px}.report h2{font-size:44px}.report-intro{font-size:18px}.report-actions .btn{width:100%}.final-page{padding-top:50px}.final-three{grid-template-columns:1fr}.final-buttons .btn{width:100%}.about-page>h1{font-size:46px}.about-layout{gap:25px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+
+.size-diagram{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin:16px 0 8px;padding:13px 20px;border:1px solid var(--border);background:rgba(211,183,115,.04)}.size-diagram>div{display:flex;align-items:center;flex-direction:column;gap:10px;min-width:110px}.diagram-coin{width:90px;height:90px;border:3px solid #c3b898;border-radius:50%;display:grid;place-items:center;color:#e2d2a5;font:32px var(--serif);box-shadow:inset 0 0 0 5px rgba(210,190,152,.11)}.diagram-piece{width:29px;height:29px;background:var(--gold);border:1px solid #edd5a7;display:grid;place-items:center;color:#68502b;font:19px var(--serif);margin:30.5px 0}.size-diagram small{color:var(--muted);font-size:10px}.diagram-note{font-size:9px;color:var(--gold);letter-spacing:.03em}
+@media(max-width:560px){.object-card:nth-child(5){grid-column:span 1}.size-diagram{gap:12px;padding:10px}.size-diagram>div{min-width:100px}.diagram-note{width:100%}}
+/* VERSION 1.2 – TOUCH-FUNDLABOR / direkter Kontakt mit schematisch annotierten Funden */
+.touchlab-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.72fr);gap:24px;margin:22px 0 44px;align-items:start}
+.touchlab-gallery{min-width:0;border:1px solid var(--border);background:linear-gradient(135deg,#18221c,#0c1511);padding:20px}
+.lab-titlebar{display:flex;gap:14px;justify-content:space-between;align-items:center;padding:2px 3px 19px}
+.lab-titlebar h2{font:clamp(22px,2.1vw,31px)/1.15 var(--serif);margin:9px 0 0}
+.lab-visit{display:flex;flex-direction:column;text-align:right;white-space:nowrap;gap:3px}.lab-visit b{font:28px var(--serif);color:var(--gold-soft)}.lab-visit span{font-size:10px;letter-spacing:.04em;color:var(--muted)}
+.lab-mode-switch{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);margin-bottom:12px;gap:1px;background:#4a493c}
+.lab-mode-switch button{background:#1a241e;border:0;min-height:54px;padding:10px 12px;color:var(--paper);font-size:13px}
+.lab-mode-switch button.selected{background:var(--gold);color:#152119;font-weight:bold}.lab-mode-switch button:focus-visible{position:relative;z-index:3}
+.touch-canvas{aspect-ratio:800/620;width:100%;position:relative;overflow:hidden;border:1px solid var(--border);background:radial-gradient(circle at 50% 50%,#30392f,#101a15 75%);touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.touch-canvas:active{cursor:grabbing}.touch-world{position:absolute;inset:0;transform-origin:center;will-change:transform}.touch-base{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none}
+.touch-base.touch-real{object-fit:contain;background:#2b302d}.touch-corner{position:absolute;z-index:6;left:10px;bottom:11px;color:var(--gold-soft);background:rgba(9,17,12,.85);font-size:9px;letter-spacing:.1em;padding:8px 10px;pointer-events:none}
+.touch-hotspot{--d:52px;position:absolute;z-index:4;width:var(--d);height:var(--d);border:2px solid #ffe1a1;border-radius:50%;display:grid;place-items:center;background:rgba(27,35,28,.89);color:#fff1d3;box-shadow:0 0 0 8px rgba(239,197,108,.15),0 3px 18px rgba(0,0,0,.5);font-weight:bold;font-size:16px;transform:translate(-50%,-50%) scale(var(--inv-z,1));transition:background .15s,border-color .15s;touch-action:manipulation}
+.touch-hotspot:hover,.touch-hotspot.active{background:#e0b76c;color:#132015;border-color:#fff0cd;box-shadow:0 0 0 10px rgba(239,197,108,.22)}
+.touch-hotspot.revealed{border-color:#b0c7a5}.touch-hotspot span{pointer-events:none}
+.touch-photo-error{display:none;position:absolute;inset:0;padding:28px;background:#1f2924;color:var(--paper);align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:14px;font-size:14px;line-height:1.5}.touch-photo-error span{max-width:300px;color:var(--muted)}.touch-photo-error button{border:1px solid var(--gold);padding:14px;color:var(--gold);background:transparent}.touch-canvas.photo-error .touch-photo-error{display:flex}
+.photo-focus-dot{display:none;position:absolute;width:32px;height:32px;border:2px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.lab-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 2px 8px;flex-wrap:wrap}.lab-toolbar>span{font-size:11px;color:var(--muted)}
+.lab-zoom-buttons{display:flex;align-items:center;gap:2px;background:#111c16;border:1px solid var(--border)}.lab-zoom-buttons button{height:48px;width:51px;border:0;background:transparent;color:var(--gold-soft);font-size:22px}.lab-zoom-buttons button:hover{background:#344235}.lab-zoom-buttons span{display:grid;place-items:center;min-width:62px;font-size:13px;color:var(--paper)}
+.lab-auth-note{font-size:11px;line-height:1.65;color:var(--muted);padding:0 2px;margin:0}.lab-auth-note strong{color:var(--gold-soft);font-weight:normal}
+.touchlab-inspector{border:1px solid var(--border);background:#202b23;min-width:0;padding:23px;display:flex;flex-direction:column;gap:19px}
+.lab-brief h2{font:38px var(--serif);line-height:1.05;margin:12px 0 12px}.lab-brief p{font-size:14px;line-height:1.75;color:var(--paper);margin:0}
+.lab-discovery-bar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0}
+.lab-pill{width:49px;height:49px;border-radius:50%;background:#0e1914;border:1px solid var(--gold-deep);font-size:17px;color:var(--gold-soft);font-weight:bold}
+.lab-pill.found{background:#354839;border-color:#9eb68b}.lab-pill.selected{background:var(--gold);color:#162017}
+.lab-discovery-bar>span{margin-left:auto;font-size:11px;color:var(--muted)}
+.lab-fact{padding:21px;background:#111c16;border:1px solid var(--border);min-height:260px;display:flex;flex-direction:column;align-items:start;gap:12px}
+.lab-fact-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lab-fact-meta span{color:var(--gold);font-size:10px;letter-spacing:.17em;font-weight:bold}.lab-fact-meta small{color:#d2d6c1;font-size:10px;border:1px solid #627e65;padding:4px 8px}
+.lab-fact h3{font:26px/1.18 var(--serif);color:var(--gold-soft);margin:0}.lab-fact p{font-size:13px;line-height:1.7;margin:0;color:var(--paper)}.lab-fact-source{font-size:10px;color:var(--muted);line-height:1.6;margin-top:auto}.lab-fact-source a{color:var(--gold-soft)}
+.lab-empty-icon{font:43px var(--serif);color:var(--gold)}.lab-empty-note{color:var(--gold);font-size:11px;line-height:1.5}
+.lab-inspector-footer{margin-top:auto}.lab-inspector-footer p{color:var(--muted);font-size:12px;line-height:1.6;margin:0 0 18px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* The station progress now has four equally-sized labels. */
+.stepper{justify-content:space-between}
+@media(max-width:1060px){.touchlab-layout{grid-template-columns:1fr;gap:16px}.touchlab-inspector{display:grid;grid-template-columns:1fr 1fr;gap:16px}.lab-brief{grid-column:1}.lab-discovery-bar{grid-column:2;align-self:start;border-top:0;padding-top:0}.lab-fact{grid-column:1/-1;min-height:185px}.lab-inspector-footer{grid-column:1/-1}.touchlab-gallery{padding:15px}}
+@media(max-width:650px){.touchlab-layout{gap:12px}.touchlab-inspector{display:flex;padding:16px;gap:13px}.lab-titlebar{align-items:start}.lab-titlebar h2{font-size:23px}.lab-visit b{font-size:21px}.lab-visit span{font-size:9px}.lab-mode-switch button{font-size:11px;padding:8px;min-height:54px}.touchlab-gallery{padding:10px}.touch-hotspot{--d:46px;box-shadow:0 0 0 5px rgba(239,197,108,.15)}.lab-zoom-buttons button{width:46px;height:46px}.lab-zoom-buttons span{min-width:50px}.lab-brief h2{font-size:29px}.lab-fact{min-height:215px}.lab-discovery-bar{border-top:1px solid var(--border);padding:14px 0}.lab-discovery-bar>span{width:100%;margin-left:0}.lab-pill{width:47px;height:47px}.lab-toolbar{padding-bottom:5px}.lab-toolbar>span{font-size:10px}.stepper{gap:5px}.stepper i{width:8px}.stepper b{font-size:7px}}
+
+.lab-focus-button{margin-top:5px;padding:12px 15px;background:#344137;color:var(--gold-soft);border:1px solid var(--gold-deep);font-size:12px;min-height:46px}.lab-focus-button:hover{background:#506044}.lab-focus-button:focus-visible{outline:3px solid var(--gold)}
+@media(min-width:901px) and (max-width:1190px){.touchlab-layout{grid-template-columns:minmax(0,1.3fr) minmax(310px,.85fr)}.touchlab-inspector{display:flex}.lab-brief,.lab-discovery-bar,.lab-fact,.lab-inspector-footer{grid-column:auto}.lab-discovery-bar{border-top:1px solid var(--border);padding-top:18px}.lab-fact{min-height:245px}.touchlab-gallery{padding:12px}.touchlab-inspector{padding:18px}}
+
+/* V2.0: Nur Originalfotografien, keine schematischen Fundbilder */
+.art-frame{background:linear-gradient(135deg,#26322a,#111b17)}
+.art-frame .art-original{opacity:0;object-fit:contain}
+.art-frame.is-loaded .art-original{opacity:1}
+.art-frame .art-offline{position:absolute;inset:0;display:grid;align-content:center;justify-items:center;gap:10px;text-align:center;padding:26px;font-size:12px;line-height:1.7;color:#e8dabc;opacity:0;pointer-events:none}
+.art-frame.not-loaded .art-offline{opacity:1;pointer-events:auto}
+.art-frame .art-offline a{font-size:11px}
+.photo-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none;min-width:0;min-height:0}
+.photo-frame.photo-ready{display:block}
+.photo-main{width:100%;height:100%;object-fit:fill;display:block;pointer-events:none;user-select:none; -webkit-user-drag:none}
+.touch-canvas{aspect-ratio:4/3; min-height:345px; background:#29302c;}
+.touch-world{pointer-events:auto}
+.touch-canvas .touch-photo-error{z-index:7;background:#17231d;gap:19px}
+.touch-canvas .touch-photo-error strong{font:26px/1.2 var(--serif);color:var(--gold-soft)}
+.touch-canvas .touch-photo-error a{font-size:12px;color:var(--gold-soft)}
+.import-label{position:relative;display:flex;align-items:center;justify-content:center;min-height:48px;gap:12px;padding:10px 15px;border:1px solid var(--gold);color:#ffe0a4;background:#2b372d;cursor:pointer;font-size:12px;line-height:1.4;text-align:center}
+.import-label input{position:absolute;opacity:0;width:100%;height:100%;inset:0;cursor:pointer}
+.import-label:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+.import-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0 22px}
+@media(max-width:650px){.touch-canvas{min-height:300px;aspect-ratio:1/1}.import-grid{grid-template-columns:1fr}.touch-hotspot{--d:40px;box-shadow:0 0 0 3px rgba(239,197,108,.2)}}
+
+/* Fachredaktion: optionaler Hotspot-Kalibrierungsmodus ?kalibrieren=1 */
+.calibration-panel{border:1px dashed #dfbf83;background:#303529;margin:18px 0;padding:17px;color:#f0e5cc}
+.calibration-panel>strong{display:block;font-size:12px;letter-spacing:.13em;color:var(--gold-soft)}
+.calibration-panel p{font-size:12px;line-height:1.6;color:var(--paper);margin:9px 0}
+.calib-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:13px 0}
+.calib-choice{border:1px solid var(--border);min-height:48px;text-align:left;padding:9px;color:var(--paper);background:#16211a;font-size:11px;line-height:1.4}
+.calib-choice.selected{border-color:var(--gold);background:#564a2b;color:#fff4d8}
+@media(max-width:640px){.calib-tools{grid-template-columns:1fr}}
+
+/* 2.1: Fundfotos ohne störende Marker frei untersuchen */
+.touch-hotspot.spot-hidden{opacity:0;pointer-events:none}
+.lab-toggle{min-height:48px;border:1px solid var(--gold);background:#26352a;color:#ffe0a4;padding:9px 13px;font-size:12px;cursor:pointer}
+.lab-toggle:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.offline-result{white-space:pre-wrap;font:13px/1.85 ui-monospace,monospace;color:#f4ddb8;background:#142019;border:1px solid var(--border);padding:16px;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:650px){.lab-toggle{flex:1;min-width:170px}.touch-hotspot{--d:46px}}
+
+  
+.compare-head{padding:25px 0 20px;max-width:900px}.compare-head h2{font:clamp(35px,4vw,56px) Georgia,serif;margin:12px 0}.compare-head p{line-height:1.65;color:var(--muted)}
+.compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.compare-pane{background:var(--panel);border:1px solid var(--border);padding:20px;min-width:0}.compare-pane h3{font:27px Georgia,serif;min-height:35px;margin:12px 0}.compare-photo{height:clamp(220px,32vw,420px);overflow:hidden;position:relative;background:#121a16;border:1px solid var(--border)}.compare-photo img{position:absolute;width:100%;height:100%;object-fit:contain;transform:scale(2.6);transform-origin:calc(var(--cx) * 1%) calc(var(--cy) * 1%)}.compare-photo span{display:none;position:absolute;inset:0;align-items:center;justify-content:center;background:var(--bg);color:var(--paper)}.compare-photo.missing span{display:flex}.compare-photo.missing img{display:none}.compare-pane p{font-size:14px;line-height:1.7;margin:17px 0 11px}.compare-pane small{color:var(--muted)}.compare-control{margin:17px 0 50px;padding:22px;border:1px solid var(--border);background:var(--panel2)}.compare-control h3{font:28px Georgia,serif}.compare-select{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}.compare-select label{display:grid;gap:8px;color:var(--gold-soft);font-size:13px}.compare-select select{min-height:52px;width:100%;padding:8px 12px;background:#101916;color:var(--paper);border:1px solid var(--gold-deep);font:15px Arial,sans-serif;border-radius:3px}.compare-prompt{padding:18px;margin:18px 0;background:#142018;border-left:3px solid var(--gold);line-height:1.65}.compare-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:24px}@media(max-width:720px){.compare-grid,.compare-select{grid-template-columns:1fr}.compare-photo{height:270px}.compare-control{padding:15px}.compare-pane{padding:14px}}
+
+/* Version 6.0: sieben unterschiedliche interaktive Forschungslabore */
+.research-steps{display:grid;gap:8px;margin:16px 0}.research-slot{border:1px solid var(--gold-deep);padding:13px 15px;background:#1d2b21;font-size:15px}.research-slot.empty{border-style:dashed;color:var(--muted)}.research-ratio{margin:25px 0}.research-ratio label{display:block;line-height:1.6;margin-bottom:16px}.research-ratio input{display:block;width:100%;accent-color:#c9a763;min-height:44px}.ratio-bars{display:grid;gap:13px;margin-top:17px}.ratio-bars div{display:grid;gap:5px;font-size:13px}.ratio-bars span{height:15px;display:block;border-radius:7px;background:#c9a763;max-width:100%;transition:width .15s}
+/* Version 5.0: Touch-Forschungsmissionen */
+.field-mission{padding:25px 0 60px}.field-mission>h2{font:clamp(36px,5vw,63px)/1.1 Georgia,serif;margin:15px 0}.field-mission>p{font-size:16px;line-height:1.7;color:var(--muted);max-width:800px}.field-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,1fr);gap:24px;margin-top:30px}.field-photo,.field-panel{border:1px solid var(--border);padding:22px;background:var(--panel)}.field-photo .art-frame{height:370px}.field-photo p{font-size:12px;color:var(--muted);line-height:1.6}.field-panel h3{font:clamp(23px,3vw,33px) Georgia,serif;line-height:1.23;margin:15px 0}.field-tip{color:var(--gold-soft);font-size:14px;line-height:1.6}.field-options{display:grid;gap:10px;margin:22px 0}.field-option{display:flex;align-items:center;gap:14px;min-height:58px;text-align:left;padding:14px 17px;color:var(--paper);background:#16221c;border:1px solid var(--border);font:15px/1.5 Arial,sans-serif;cursor:pointer;border-radius:3px}.field-option span{color:var(--gold)}.field-option.picked{border-color:var(--gold);background:#293025}.field-option:disabled{cursor:default;opacity:.85}.field-feedback{background:rgba(201,167,99,.10);border-left:3px solid var(--gold);padding:15px 18px;margin:17px 0;line-height:1.6}.field-feedback p{font-size:14px;margin:8px 0}.field-feedback small{color:var(--muted)}@media(max-width:850px){.field-layout{grid-template-columns:1fr}.field-photo .art-frame{height:320px}}@media(max-width:560px){.field-photo,.field-panel{padding:14px}.field-photo .art-frame{height:270px}.field-option{min-height:56px}}
+
+.review-banner{border:1px solid #9e8148;background:rgba(158,129,72,.11);border-radius:10px;padding:12px 15px;margin:12px 0;line-height:1.5;font-size:13px}.review-banner a{color:inherit;text-decoration:underline}
+
+/* 7.8: Tablet edition – safe areas, readable tap targets and focused original objects */
+html { -webkit-text-size-adjust:100%; }
+button,select,input { -webkit-tap-highlight-color:transparent; }
+.touch-canvas { overscroll-behavior:contain; }
+.touch-hotspot { min-width:48px;min-height:48px; }
+.lab-pill { min-width:48px;min-height:48px; }
+.lab-toolbar { flex-wrap:wrap; gap:10px; }
+.lab-toolbar button { touch-action:manipulation; }
+.touchlab-inspector { scroll-margin-top:20px; }
+.photo-main { object-fit:fill; }
+@media (max-width:900px){.touchlab-gallery{padding:10px}.touchlab-inspector{padding:18px}.lab-zoom-buttons button{min-width:54px;min-height:54px}.touch-canvas{min-height:360px;}}
+@media (max-width:650px){.touch-canvas{aspect-ratio:4/5;min-height:320px}.touch-hotspot{--d:48px}.lab-toolbar > span{width:100%;line-height:1.5}.lab-toggle{min-height:52px}}
+@media (prefers-reduced-motion: reduce){.touch-hotspot{transition:none}}
+</style>
+  <script>
+/*
+ * SPUREN DER STEPPE - editierbare Museumsdaten. Historische Aussagen: Quellen in docs/QUELLEN.md
+ * Kulturzuschreibungen wurden nach Met-Objektkatalog übernommen; Fremddarstellung ist klar gekennzeichnet.
+ * Originalfotografien sind die EINZIGEN Objektbilder; lokale Kopien können mit fetch_originale.py ergänzt werden.
+ */
+window.SKYTHEN_PACK = {
+  exhibition: {
+    title: 'SPUREN DER STEPPE',
+    subtitle: 'Sieben Objekte. Sieben Geschichten. Eine große Frage: Was können Dinge erzählen?',
+    collection: 'Eine interaktive Entdeckungsreise an sieben Originalobjekten',
+    maker: 'Paul Fürst',
+    makerRole: 'Konzept & Entwicklung',
+    museumName: 'Digitale Sammlung · Originalfundlabor',
+    idleMinutes: 4,
+    opening: 'Vor rund 2.500 Jahren lebten in den eurasischen Steppen verschiedene Gemeinschaften, die antike Autoren unter anderem als Skythen bezeichneten. Ihre Funde erzählen Geschichten von Kunst, Pferden und Begegnungen mit anderen Kulturen.',
+    disclaimer: 'Die Bezeichnung „Skythen“ umfasst unterschiedliche Gruppen. Nicht jedes Objekt dieser Sammlung wurde von skythischen Handwerkern hergestellt: Eine Reiterfigur zeigt ausdrücklich eine Darstellung von außen.',
+    research: 'Wissenschaftliche Grundlage: Objektkataloge des Metropolitan Museum of Art und Forschungsaufsatz von Anatoly Grablevsky (2024). Vor einer Ausstellung wird eine kuratorische Prüfung empfohlen.'
+  },
+  sharedSources: [
+    { title: 'Gold, Griffins, and Greeks: Scythian Art and Cultural Interactions in the Black Sea (A. Grablevsky, 2024)', url: 'https://www.metmuseum.org/essays/scythian-art' },
+    { title: 'The Met Open Access', url: 'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access' }
+  ],
+  objects: [
+    {
+      id:'hirsch',n:'01',short:'Der Goldhirsch',title:'Ein Hirsch, drei versteckte Vögel',section:'TIERSTIL',era:'ca. 5. Jh. v. Chr.',kind:'Als skythisch katalogisiert', material:'Gold',dimensions:'2,9 × 2,9 × 0,2 cm',origin:'Nördlicher Schwarzmeerraum, möglicherweise Maikop', museum:'The Metropolitan Museum of Art',inventory:'24.97.55',metId:328966,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/328966/2191684/main-image',imageLocal:'assets/photos/hirsch.jpg',imageNote:'Goldhirschfoto aus dem bereitgestellten PDF extrahiert; Abbildung des Met-Objekts 24.97.55. Lokal offline verfügbar.',
+      intro:'Was fällt dir am Geweih auf? Es zeigt nicht nur einen Hirsch.',fact:'Im kunstvoll gestalteten Geweih lassen sich drei Vogelköpfe erkennen. Die symbolische Bedeutung ist ungeklärt.',
+      mission:{kind:'single',eyebrow:'SPURENSUCHE',heading:'Sieh genau hin',prompt:'Was hat die Forschung im Geweih des Goldhirsches entdeckt?',options:['Eine geheime Schrift','Drei stilisierte Vogelköpfe','Eingesetzte Edelsteine'],correct:[1],explain:'Der Forschungsaufsatz des Met beschreibt drei Vogelköpfe, die in das Geweih eingearbeitet sind. Das ist eine Beobachtung – keine entschlüsselte Botschaft.'},
+      research:{statement:'Der Hirsch sollte seinen Besitzer sicher vor bösen Geistern schützen.',answer:'open',why:'Eine Schutzfunktion gehört zu den diskutierten Deutungen skythischer Tiermotive. Für diesen Hirsch lässt sie sich nicht belegen.'},
+      takeaway:'Tierbilder konnten ineinander übergehen. Ihre genaue Bedeutung kennen wir nicht.',badge:'Detailblick',symbol:'♞'
+    },
+    {
+      id:'greif',n:'02',short:'Der Goldgreif',title:'Ein Wesen aus mehreren Tieren',section:'MISCHWESEN',era:'ca. 5. Jh. v. Chr.',kind:'Als skythisch katalogisiert',material:'Gold',dimensions:'2,7 × 2,5 × 0,15 cm',origin:'Nördlicher Schwarzmeerraum, möglicherweise Maikop',museum:'The Metropolitan Museum of Art',inventory:'24.97.50',metId:328961,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/328961/2340715/main-image',imageLocal:'assets/photos/greif.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Dieser Greif kombiniert Eigenschaften verschiedener Tiere. Kannst du sie zuordnen?',fact:'Das Met beschreibt den Greif mit einem katzenartigen Körper sowie Vogelkopf und Vogelflügeln. Auf der Rückseite befindet sich eine Öse zur Befestigung.',
+      mission:{kind:'multi',eyebrow:'TIERLABOR',heading:'Bauplan eines Greifs',prompt:'Wähle die ZWEI Tiergruppen, deren Merkmale dieser Greif verbindet.',options:['Vogel','Fisch','Raubkatze','Hirsch'],correct:[0,2],explain:'Ein Greif ist ein Mischwesen: Vogelkopf und Flügel treffen hier auf einen katzenartigen Körper. Solche Verbindungen sind typisch für viele Tierdarstellungen der Steppe.'},
+      research:{statement:'Am Original befindet sich eine Befestigungsöse auf der Rückseite.',answer:'documented',why:'Das Met beschreibt eine kleine Schlaufe auf der Rückseite des Goldornaments. Das lässt sich direkt am Gegenstand untersuchen.'},
+      takeaway:'Mischwesen zeigen, wie Bildmotive aus unterschiedlichen Traditionen zusammenkamen.',badge:'Mischwesen',symbol:'✦'
+    },
+    {
+      id:'eber',n:'03',short:'Der Eberbeschlag',title:'Gold, Knochen – und ein Wildschwein',section:'PFERDE & STATUS',era:'ca. 5. Jh. v. Chr.',kind:'Als skythisch katalogisiert',material:'Gold, Knochen, Silber',dimensions:'3,7 × 7,15 × 2,9 cm',origin:'Eurasische Steppe',museum:'The Metropolitan Museum of Art',inventory:'1979.352.1',metId:326619,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/326619/2179342/main-image',imageLocal:'assets/photos/eber.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Was aussieht wie ein kleines Tier, könnte einst Teil einer prächtig ausgestatteten Pferdetrense gewesen sein.',fact:'Das Met führt das Objekt als Zierbeschlag für Pferdegeschirr oder Trense. Es besteht aus Gold, Knochen und Silber.',
+      mission:{kind:'multi',eyebrow:'MATERIALLABOR',heading:'Drei Materialien',prompt:'Aus welchen DREI Materialien besteht das Eberornament laut Museumskatalog?',options:['Gold','Knochen','Eisen','Silber','Glas'],correct:[0,1,3],explain:'Das Material ist ungewöhnlich kombiniert: Gold, Knochen und Silber. Das zeigt, dass ein kleines Objekt aus mehreren Werkstoffen entstehen konnte.'},
+      research:{statement:'Dieser Beschlag gehörte vermutlich zum Pferdegeschirr oder zur Trense.',answer:'inferred',why:'Die Museumsbezeichnung ist „Harness or bridle ornament“. Die genaue ursprüngliche Anbringung am einzelnen Pferd kennen wir nicht.'},
+      takeaway:'Pferde konnten mit aufwendig gestalteten Beschlägen ausgestattet werden.',badge:'Materiallabor',symbol:'◆'
+    },
+    {
+      id:'trense',n:'04',short:'Das Trensenteil',title:'Ein Pferdekopf aus Knochen',section:'PFERDE & TECHNIK',era:'ca. 7. Jh. v. Chr.',kind:'Als skythisch katalogisiert',material:'Knochen',dimensions:'15,4 × 3,1 × 1,1 cm',origin:'Iran (Sammlungsangabe des Met)',museum:'The Metropolitan Museum of Art',inventory:'58.131.1',metId:324817,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/324817/710200/main-image',imageLocal:'assets/photos/trense.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Manche Objekte zeigen uns sowohl Kunst als auch Technik des Reitens.',fact:'Das Stück ist als seitliches Trensenteil katalogisiert und endet in einem stilisierten Pferdekopf und -huf.',
+      mission:{kind:'single',eyebrow:'AUSRÜSTUNG',heading:'Wo gehört das hin?',prompt:'An welchem Ausrüstungsgegenstand war dieses Objekt angebracht?',options:['An einem Pferdezaum','An einer Trinkschale','An einer Schuhsohle'],correct:[0],explain:'Es ist ein Trensenteil. Teile des Zaumzeugs helfen dabei, Gebiss und Zügel mit dem Pferdekopf zu verbinden. Seine genaue historische Montage lässt sich aus diesem Einzelstück nicht vollständig rekonstruieren.'},
+      research:{statement:'Das Trensenteil besteht laut Museumskatalog aus Knochen.',answer:'documented',why:'Knochen und Maße sind im Objektdatensatz dokumentiert. Für eine Aussage über den konkreten Besitzer fehlen Angaben.'},
+      takeaway:'Das Pferd war wichtig – selbst technische Teile konnten Tiermotive tragen.',badge:'Pferdeausrüstung',symbol:'♜'
+    },
+    {
+      id:'scheide',n:'05',short:'Die Schwertscheide',title:'Ein Schwert zwischen zwei Welten',section:'KULTURKONTAKTE',era:'ca. 340–320 v. Chr.',kind:'Griechisch oder skythisch (Met)',material:'Gold',dimensions:'54,5 cm lang',origin:'Fundort nicht sicher überliefert; nördlicher Schwarzmeerraum vermutet',museum:'The Metropolitan Museum of Art',inventory:'30.11.12',metId:253056,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/253056/538540/main-image',imageLocal:'assets/photos/scheide.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Die Form gehört zur skythischen Schwerttradition. Doch wer gestaltete die Bilder auf dem Gold?',fact:'Das Met beschreibt eine Schwertscheiden-Verzierung skythischen Typs mit Darstellungen griechischen Stils und griechischer Handwerkskunst.',
+      mission:{kind:'multi',eyebrow:'KULTURDETEKTIV',heading:'Zwei Traditionen',prompt:'Welche ZWEI Aussagen passen zu diesem Fundstück?',options:['Skythischer Schwertscheiden-Typ','Griechisch geprägte Bildgestaltung','In einem einzigen Stück aus Bronze gegossen','Sicher in einem griechischen Tempel gefunden'],correct:[0,1],explain:'Hier treffen skythische Formen und griechische Gestaltung aufeinander. Wo das Stück ursprünglich gefertigt wurde und wie es zu seinem Besitzer kam, lässt sich nicht restlos klären.'},
+      research:{statement:'Wir wissen, wer diese Goldverzierung in Auftrag gegeben hat.',answer:'open',why:'Das Met beschreibt die handwerkliche Ausführung als griechisch. Wer das Stück in Auftrag gab und wie es in seinen vermuteten Nutzungskontext gelangte, ist nicht gesichert.'},
+      takeaway:'Objekte gehören nicht immer eindeutig zu einer einzigen Kultur.',badge:'Kulturkontakte',symbol:'⚔'
+    },
+    {
+      id:'rosette',n:'06',short:'Das Mini-Goldstück',title:'Ein Goldornament, nur 7,5 mm breit',section:'HANDWERK & MASS',era:'ca. 5. Jh. v. Chr.',kind:'Als skythisch katalogisiert',material:'Gold',dimensions:'0,75 × 0,75 × 0,2 cm',origin:'Nördlicher Schwarzmeerraum, möglicherweise Maikop',museum:'The Metropolitan Museum of Art',inventory:'24.97.58',metId:328969,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/328969/2190589/main-image',imageLocal:'assets/photos/rosette.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Dieses Goldornament ist gerade einmal 7,5 Millimeter breit. Auf dem Tablet erscheint es riesig.',fact:'Der Katalog nennt eine Breite von 0,75 cm. Das ist viel kleiner als der Durchmesser einer 1-Euro-Münze (23,25 mm).',
+      mission:{kind:'single',eyebrow:'GRÖSSENLABOR',heading:'Winziges Gold',prompt:'Wie oft passt die Breite der Rosette ungefähr in den Durchmesser einer 1-Euro-Münze?',options:['Ungefähr einmal','Ungefähr dreimal','Ungefähr zehnmal'],correct:[1],explain:'23,25 mm geteilt durch 7,5 mm ergibt rund 3,1. Die Münze ist also etwa dreimal so breit. Achtung: Die Bilder auf Tablets sind nicht lebensgroß.'},
+      research:{statement:'Das kleine Kleiderornament ist laut Met-Katalog etwa 7,5 Millimeter breit.',answer:'documented',why:'Die Maße 0,75 × 0,75 × 0,2 cm stammen direkt aus dem offiziellen Katalog. Die Zahl ist kein Schätzwert.'},
+      takeaway:'Das Original ist winzig: Ein großes Bildschirmbild sagt nichts über die echte Größe.',badge:'Größenlabor',symbol:'❈'
+    },
+    {
+      id:'reiter',n:'07',short:'Der Reiter',title:'Wie andere einen Skythen sahen',section:'FREMDPERSPEKTIVE',era:'frühes 5. Jh. v. Chr.',kind:'Etruskisch-kampanische Darstellung',material:'Bronze',dimensions:'12,6 cm hoch',origin:'Kampanien (Italien); kein skythisches Herstellungsgebiet',museum:'The Metropolitan Museum of Art',inventory:'1989.281.78',metId:255955,
+      image:'https://collectionapi.metmuseum.org/api/collection/v1/iiif/255955/542510/main-image',imageLocal:'assets/photos/reiter.jpg',imageNote:'Originalfoto aus dem hochgeladenen 6.zip lokal integriert; Met-Objektkatalog und Inventarnummer im Quellenbereich. Bilddetails noch ohne kuratorische Freigabe.',
+      intro:'Dieser Reiter stellt einen Skythen dar – aber er wurde nicht von Skythen hergestellt.',fact:'Die Bronzefigur stammt aus etruskisch-kampanischem Kontext. Der Reiter trägt eine typische Mütze und enganliegende Jacke, mit denen er als Skythe gekennzeichnet wird.',
+      mission:{kind:'single',eyebrow:'PERSPEKTIVWECHSEL',heading:'Wer hat ihn geschaffen?',prompt:'Woher stammt diese Darstellung eines skythischen Reiters?',options:['Aus einem skythischen Kurgan','Aus etruskisch-kampanischem Kontext in Italien','Aus dem mittelalterlichen Norden Europas'],correct:[1],explain:'Die Figur wurde in Italien gefertigt und verzierte einst den Deckel einer Graburne. Sie zeigt, wie Menschen einer anderen Kultur einen Skythen darstellten.'},
+      research:{statement:'Aus dieser Bronzefigur lässt sich die tatsächliche Alltagskleidung des dargestellten Reiters vollständig rekonstruieren.',answer:'open',why:'Es ist eine bildliche Darstellung von außen. Sie gibt Hinweise auf Vorstellungen und Bildkonventionen, aber keinen vollständigen Beweis für Kleidung oder Alltag sämtlicher skythischer Gruppen.'},
+      takeaway:'Ein Bild über eine Kultur ist nicht dasselbe wie ein Objekt aus dieser Kultur.',badge:'Fremdperspektive',symbol:'♘'
+    }
+  ]
+};
+
+  </script>
+  <script>
+/*
+   REDAKTIONSDATEN V2.0 / Fotos: Originalobjekte des Metropolitan Museum of Art.
+   x,y = relative Position in der GESAMTEN ORIGINALFOTOGRAFIE (0–100).
+   Positionen visuell anhand der öffentlich sichtbaren Met-Aufnahmen gesetzt;
+   produktive Nutzung verlangt letzte Bildkalibrierung und kuratorische Freigabe.
+   Nur Merkmale, die in der Vorderansicht sichtbar sind; keine spekulativen Rückseiten-Hotspots.
+*/
+window.SKYTHEN_DETAILS = {
+ hirsch: {
+  prompt:'Untersuche das wirkliche Goldornament: Geweih, Tierkopf, Körper und Beine. Der Forschungsbeitrag des Met beschreibt außerdem drei Vogelköpfe im Geweih.',
+  spots:[
+   {x:32,y:42,label:'Geweih und Tierformen',tag:'BILDDETAIL',cert:'Beobachtung',body:'Die ausgreifenden Geweihformen sind kunstvoll ineinander geführt. Der Met-Forschungsbeitrag beschreibt drei stilisierte Vogelköpfe im Geweih – die genaue Bedeutung ist nicht gesichert.',source:'Met-Forschungsaufsatz 2024'},
+   {x:49,y:31,label:'Eingerolltes Geweihdetail',tag:'KOMPOSITION',cert:'Beobachtung',body:'An dieser Stelle ist eine eingerollte Form innerhalb des Geweihs erkennbar. Solche Formen lassen Tierelemente auf engem Raum ineinander übergehen.',source:'Met-Forschungsaufsatz 2024'},
+   {x:66,y:39,label:'Der Hirschkopf',tag:'TIERDARSTELLUNG',cert:'Beobachtung',body:'Kopf, Auge und Maul sind stark hervorgehoben. Was ein Hirsch symbolisch für die damaligen Träger bedeutete, wissen wir nicht sicher.',source:'Met-Objektdatensatz 24.97.55'},
+   {x:51,y:71,label:'Die Standfläche und Beine',tag:'MASSSTAB',cert:'Katalogangabe',body:'Das gesamte Goldornament ist nur 2,9 Zentimeter hoch und breit. Auf dem Bildschirm erscheint es stark vergrößert – nicht lebensgroß.',source:'Met-Objektdatensatz 24.97.55'}
+  ]
+ },
+ greif: {
+  prompt:'Finde die einzelnen Tiermerkmale des Mischwesens direkt auf der antiken Goldarbeit.',
+  spots:[
+   {x:33,y:38,label:'Vogelschnabel',tag:'MISCHWESEN',cert:'Beobachtung',body:'Der gebogene Schnabel gehört zum Vogelkopf des Greifs. Er zeigt, dass dieses Wesen nicht nach einem einzigen echten Tier gestaltet wurde.',source:'Met-Objektdatensatz 24.97.50'},
+   {x:55,y:43,label:'Vogelflügel',tag:'MISCHWESEN',cert:'Katalogangabe',body:'Die großen Flügelformen gehören zu den Vogelmerkmalen. Der Katalog beschreibt Kopf und Flügel als vogelartig.',source:'Met-Objektdatensatz 24.97.50'},
+   {x:51,y:67,label:'Katzenartiger Körper',tag:'MISCHWESEN',cert:'Katalogangabe',body:'Der Körper des Mischwesens ist nach der Objektbeschreibung katzenartig gestaltet. Der Künstler verband unterschiedliche Tiergruppen.',source:'Met-Objektdatensatz 24.97.50'},
+   {x:70,y:44,label:'Gebogener Schwanz',tag:'FORMDETAIL',cert:'Beobachtung',body:'Der Schwanz bildet eine nach hinten aufsteigende Schleife. Die Befestigungsöse liegt dagegen auf der Rückseite und ist auf dieser Aufnahme nicht zu sehen.',source:'Met-Objektdatensatz 24.97.50'}
+  ]
+ },
+ eber: {
+  prompt:'Dieses Objekt ist kein glattes Goldsymbol: Erforsche den Körper, das Ohr, das Maul und die Form des Beschlags.',
+  spots:[
+   {x:43,y:49,label:'Körper des Ebers',tag:'TIERFORM',cert:'Beobachtung',body:'Der gedrungene Körper formt den Beschlag als Wildschwein. Die ursprüngliche Bedeutung dieser Tierdarstellung ist nicht eindeutig belegt.',source:'Met-Objektdatensatz 1979.352.1'},
+   {x:68,y:43,label:'Aufgerichtetes Ohr',tag:'KÖRPERDETAIL',cert:'Beobachtung',body:'Das groß ausgeführte Ohr hilft, das dargestellte Tier zu erkennen. Aus solchen Formen lässt sich jedoch nicht unmittelbar auf die Verwendung schließen.',source:'Met-Objektdatensatz 1979.352.1'},
+   {x:72,y:55,label:'Maul und Schnauze',tag:'KÖRPERDETAIL',cert:'Beobachtung',body:'Das Maul ist durch eine dunkle Linie abgesetzt. Der Katalog spricht ausdrücklich von einem eberförmigen Pferdegeschirr- oder Trensenornament.',source:'Met-Objektdatensatz 1979.352.1'},
+   {x:49,y:70,label:'Unterer Beschlag',tag:'MATERIAL UND NUTZUNG',cert:'Katalogangabe',body:'Das Original besteht laut Met aus Gold, Knochen und Silber. Einzelne Werkstoffe sollte man aus einer Fotografie allein nicht sicher bestimmen.',source:'Met-Objektdatensatz 1979.352.1'}
+  ]
+ },
+ trense: {
+  prompt:'Erkunde den geschnitzten Pferdekopf und die Öffnungen des wirklichen Knochenteils.',
+  spots:[
+   {x:45,y:9,label:'Pferdeohr',tag:'TIERMOTIV',cert:'Beobachtung',body:'Das stark verlängerte Ohr gehört zur stilisierten Pferdekopf-Darstellung am Ende des Trensenteils.',source:'Met-Objektdatensatz 58.131.1'},
+   {x:60,y:13,label:'Pferdekopf',tag:'TIERMOTIV',cert:'Katalogangabe',body:'Kopf, Nase und Auge sind deutlich herausgearbeitet. Selbst ein Bestandteil der Pferdeausrüstung konnte Tierbilder tragen.',source:'Met-Objektdatensatz 58.131.1'},
+   {x:47,y:38,label:'Öffnung im Knochen',tag:'TECHNIK',cert:'Beobachtung',body:'Eine der deutlich sichtbaren Öffnungen gehört zur Form dieses Seitenteils. Die exakte Montage einer vollständigen historischen Trense ist daraus nicht allein zu erschließen.',source:'Met-Objektdatensatz 58.131.1'},
+   {x:47,y:56,label:'Reihe der Durchbrüche',tag:'TECHNIK',cert:'Beobachtung',body:'Am erhaltenen Stück sind mehrere Öffnungen übereinander zu erkennen. Das Material ist laut Met Knochen, nicht Gold oder Bronze.',source:'Met-Objektdatensatz 58.131.1'},
+   {x:45,y:90,label:'Gestaltetes Ende',tag:'TIERMOTIV',cert:'Katalogangabe',body:'Das andere Ende wird im Katalog als Huf beschrieben. Tierdarstellung und Gegenstandsfunktion wurden miteinander verbunden.',source:'Met-Objektdatensatz 58.131.1'}
+  ]
+ },
+ scheide: {
+  prompt:'Die Originalaufnahme zeigt zwei Bildzonen. Suche Greifen, Tierkampf und das lange Kampffries.',
+  spots:[
+   {x:15,y:41,label:'Greifen am breiten Ende',tag:'MYTHISCHE TIERE',cert:'Katalogangabe',body:'Links am breiten Ende beschreibt das Met zwei Greifen. Auf dieser kleinen Fotoansicht lassen sich Details erst nach dem Hineinzoomen besser erkennen.',source:'Met-Objektdatensatz 30.11.12'},
+   {x:25,y:45,label:'Tierkampfszene',tag:'BILDZONE',cert:'Katalogangabe',body:'Über dem Hauptfries zeigen die Goldreliefs zwei attackierte Hirsche – nach Met durch einen Löwen und einen Greif.',source:'Met-Objektdatensatz 30.11.12'},
+   {x:43,y:56,label:'Kampffries',tag:'KULTURKONTAKT',cert:'Katalogangabe',body:'Im langen Fries ist eine Schlacht zwischen Griechen und als „Barbaren“ dargestellten Kämpfern zu sehen. Das Met ordnet den Stil griechischer Goldschmiedekunst zu.',source:'Met-Objektdatensatz 30.11.12'},
+   {x:83,y:59,label:'Schmales Ende der Verzierung',tag:'OBJEKTFUNKTION',cert:'Katalogangabe',body:'Die 54,5 Zentimeter lange Goldarbeit verzierte einst eine Schwertscheide aus einem anderen Material. Sie ist nicht die Schwertklinge selbst.',source:'Met-Objektdatensatz 30.11.12'}
+  ]
+ },
+ rosette: {
+  prompt:'Untersuche vier Vertiefungen und das Zentrum dieses winzigen Goldstücks – nur 7,5 Millimeter breit.',
+  spots:[
+   {x:42,y:40,label:'Vertiefung links oben',tag:'GEOMETRIE',cert:'Beobachtung',body:'Die kreuzförmige Goldarbeit enthält vier quadratische Ausläufer mit vertieften Mittelpunkten. Die Werkzeugtechnik ist aus diesem Foto allein nicht sicher zu bestimmen.',source:'Met-Objektdatensatz 24.97.58'},
+   {x:57,y:40,label:'Vertiefung rechts oben',tag:'FORMDETAIL',cert:'Beobachtung',body:'In einer der rechteckigen Partien liegt eine kleine runde Vertiefung. Der Katalog führt das Stück als Kleidungsornament.',source:'Met-Objektdatensatz 24.97.58'},
+   {x:50,y:51,label:'Mittelpunkt des Ornaments',tag:'MOTIV',cert:'Beobachtung',body:'Auch das Zentrum ist vertieft gestaltet. Eine religiöse oder magische Bedeutung kann daraus nicht sicher abgeleitet werden.',source:'Met-Objektdatensatz 24.97.58'},
+   {x:57,y:64,label:'Unterer Ausläufer',tag:'MASSSTAB',cert:'Katalogangabe',body:'Das gesamte Ornament ist 0,75 Zentimeter breit: 7,5 Millimeter. Eine 1-Euro-Münze hat mit 23,25 Millimetern gut den dreifachen Durchmesser.',source:'Met-Objektdatensatz 24.97.58'}
+  ]
+ },
+ reiter: {
+  prompt:'Was zeigt der bronzene Reiter? Berühre Reiter, Mütze und Pferd – und frage dich, wer dieses Bild geschaffen hat.',
+  spots:[
+   {x:39,y:31,label:'Pferdekopf',tag:'REITDARSTELLUNG',cert:'Beobachtung',body:'Das Pferd ist stark in Bewegung dargestellt. Diese Bronze stammt allerdings aus Italien und ist keine skythische Eigenproduktion.',source:'Met-Objektdatensatz 1989.281.78'},
+   {x:65,y:31,label:'Kopfbedeckung des Reiters',tag:'FREMDPERSPEKTIVE',cert:'Katalogangabe',body:'Die nach hinten auslaufende Mütze kennzeichnet den Reiter nach dem Met als Skythen. Sie zeigt eine antike Vorstellung, nicht eine vollständige Uniform aller Skythen.',source:'Met-Objektdatensatz 1989.281.78'},
+   {x:58,y:48,label:'Körperhaltung des Reiters',tag:'DARSTELLUNG',cert:'Beobachtung',body:'Der Reiter sitzt zurückgelehnt auf dem Pferd. Die Figur war Teil des Deckelschmucks einer kampanischen Graburne.',source:'Met-Objektdatensatz 1989.281.78'},
+   {x:29,y:49,label:'Vorderbein des Pferdes',tag:'BEWEGUNG',cert:'Beobachtung',body:'Ein Vorderbein streckt sich weit nach vorn. Solche künstlerischen Gesten inszenieren Bewegung – sie sind keine Momentfotografie.',source:'Met-Objektdatensatz 1989.281.78'},
+   {x:63,y:80,label:'Standfuß und Bronze',tag:'MATERIAL',cert:'Katalogangabe',body:'Die erhaltene Reitergruppe besteht aus Bronze und ist 12,6 Zentimeter hoch. Die grüne Oberfläche ist Teil ihres heutigen Zustands.',source:'Met-Objektdatensatz 1989.281.78'}
+  ]
+ }
+};
+
+  </script>
+  <script>
+document.addEventListener('DOMContentLoaded',()=>{
+'use strict';
+const pack=window.SKYTHEN_PACK;
+const labData=window.SKYTHEN_DETAILS||{};
+const root=document.querySelector('#app');
+if(!pack||!root){document.body.textContent='Inhaltspaket fehlt.';return;}
+const byId=Object.fromEntries(pack.objects.map(o=>[o.id,o]));
+const editorMode=new URLSearchParams(window.location.search).get('kalibrieren')==='1';
+const strictOffline=new URLSearchParams(window.location.search).get('offline')==='1';
+// Anonyme lokale Pilotstatistik: aggregierte Zähler, keine Besucherkennungen oder Netzwerkanfragen.
+const ANALYTICS_KEY='spuren-steppe-pilot-v1';
+const PILOT_ENABLED_KEY='spuren-steppe-pilot-enabled';
+let pilotEnabled=false;try{pilotEnabled=localStorage.getItem(PILOT_ENABLED_KEY)==='yes';}catch(e){}
+function emptyStats(){return {version:1,starts:0,completed:0,abandoned:0,idleResets:0,byObject:{},feedback:{klar:0,teilweise:0,unklar:0},stepVisits:{},lastUpdate:null};}
+let stats;
+try {stats=JSON.parse(localStorage.getItem(ANALYTICS_KEY))||emptyStats();}catch(e){stats=emptyStats();}
+let activeVisit=null;
+function recordSave(){if(!pilotEnabled)return;stats.lastUpdate=new Date().toISOString();try{localStorage.setItem(ANALYTICS_KEY,JSON.stringify(stats));}catch(e){}}
+function objStats(id){return stats.byObject[id]||(stats.byObject[id]={starts:0,complete:0,aborts:0,secondsTotal:0,feedback:{klar:0,teilweise:0,unklar:0}});}
+function visitStart(id){if(!pilotEnabled)return;if(activeVisit&&activeVisit.id===id)return;if(activeVisit)visitAbort();activeVisit={id,start:Date.now(),feedbackGiven:false};stats.starts++;objStats(id).starts++;recordSave();}
+function visitAbort(){if(!activeVisit)return;stats.abandoned++;objStats(activeVisit.id).aborts++;activeVisit=null;recordSave();}
+function visitComplete(){if(!activeVisit)return;stats.completed++;const st=objStats(activeVisit.id);st.complete++;st.secondsTotal+=Math.max(0,Math.min(3600,Math.round((Date.now()-activeVisit.start)/1000)));activeVisit=null;recordSave();}
+function stepMark(page){if(!activeVisit)return;const key=activeVisit.id+':'+page;stats.stepVisits[key]=(stats.stepVisits[key]||0)+1;recordSave();}
+function feedbackRecord(id,answer){if(!pilotEnabled)return;if(!['klar','teilweise','unklar'].includes(answer)||!id)return;stats.feedback[answer]++;objStats(id).feedback[answer]++;recordSave();}
+function statsExport(){const blob=new Blob([JSON.stringify(stats,null,2)],{type:'application/json'});const href=URL.createObjectURL(blob);const a=document.createElement('a');a.href=href;a.download='spuren-der-steppe-anonyme-auswertung.json';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);}
+function pilotDashboard(){const pct=(a,b)=>b?Math.round(100*a/b)+' %':'–';return `<div class="pilot-dashboard"><h2>Besucher-Testmodus · nur auf diesem Gerät</h2><p>Aggregierte Nutzungszahlen ohne Namen, IP-Adressen, Nutzerkennungen oder Serverübertragung. Besuche gelten als abgebrochen, wenn eine Station vor dem Fundbericht verlassen wird. Bearbeitungszeiten messen Zeit bis zum Fundbericht einschließlich möglicher Pausen.</p><div class="pilot-kpis"><div><b>${stats.starts}</b><span>Stationsstarts</span></div><div><b>${stats.completed}</b><span>Abschlüsse</span></div><div><b>${pct(stats.completed,stats.starts)}</b><span>Abschlussquote</span></div><div><b>${stats.abandoned}</b><span>Abbrüche</span></div></div><div class="pilot-table"><table><thead><tr><th>Fundstück</th><th>Starts</th><th>Fertig</th><th>Abbruch</th><th>Ø Dauer</th><th>Verständlich</th></tr></thead><tbody>${pack.objects.map(o=>{const v=objStats(o.id);return `<tr><td>${esc(o.short)}</td><td>${v.starts}</td><td>${v.complete}</td><td>${v.aborts}</td><td>${v.complete?Math.round(v.secondsTotal/v.complete)+' s':'–'}</td><td>${v.feedback.klar}/${v.feedback.teilweise}/${v.feedback.unklar}</td></tr>`}).join('')}</tbody></table></div><p>Feedback-Reihenfolge: Ja / Teilweise / Nein. Die Daten sind nur lokal gespeichert und können durch Browserdaten-Löschung verschwinden. Nicht als repräsentative Lernwirkungsmessung interpretieren.</p><div class="pilot-actions"><button class="btn btn-outline" data-action="pilot-export">Daten als JSON exportieren</button><button class="btn btn-outline" data-action="pilot-reset">Lokale Testdaten löschen</button><button class="btn btn-outline" data-action="pilot-close">Auswertung schließen</button></div></div>`;}
+let showPilot=false;
+
+const state={shortMode:true,page:'gallery',objectId:null,selected:[],checked:false,done:new Set(),zoom:1,x:0,y:0,showHint:false,showSources:false,labView:'photo',activeSpot:null,discovered:{},photoPoint:null,calibrateSpot:0,hotspotsVisible:true,comparePick:[0,1],compareNote:false,fieldAnswer:null,fieldChecked:false,fieldDocument:null};
+let inactivityTimer=null,lastPointer=null;
+const pointers=new Map(); let touchMoved=false,gestureStart=null;
+const localPhotos=Object.create(null);
+let photoDbPromise=null;
+function photoDB(){
+ if(!('indexedDB' in window))return Promise.reject(new Error('IndexedDB nicht verfügbar'));
+ if(!photoDbPromise) photoDbPromise=new Promise((resolve,reject)=>{
+  const r=indexedDB.open('spuren-der-steppe-originalbilder',1);
+  r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('images'))r.result.createObjectStore('images')};
+  r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);
+ });
+ return photoDbPromise;
+}
+function photoSrc(o){return localPhotos[o.id] || o.imageLocal;}
+function registerPhoto(oId,blob){if(localPhotos[oId]?.startsWith('blob:'))URL.revokeObjectURL(localPhotos[oId]);localPhotos[oId]=URL.createObjectURL(blob);}
+async function loadLocalPhotos(){try{
+ const db=await photoDB();const tr=db.transaction('images','readonly');const store=tr.objectStore('images');
+ for(const o of pack.objects){const blob=await new Promise(res=>{const r=store.get(o.id);r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)});if(blob)registerPhoto(o.id,blob)}
+ render();
+ }catch(e){/* Browsers without IndexedDB still load museum URLs */}}
+async function saveLocalPhoto(oId,file){const db=await photoDB();await new Promise((resolve,reject)=>{const tr=db.transaction('images','readwrite');tr.objectStore('images').put(file,oId);tr.oncomplete=resolve;tr.onerror=()=>reject(tr.error)});registerPhoto(oId,file);render()}
+window.metPhotoLoaded=(img)=>{
+ const frame=img.closest('.art-frame');if(frame){frame.classList.add('is-loaded');frame.classList.remove('not-loaded')}
+ if(img.closest('#photo-frame')){const canvas=img.closest('#lab-canvas');canvas?.classList.remove('photo-error');fitPhoto();}
+};
+window.metPhotoError=(img)=>{
+ const id=img.dataset.object;const o=byId[id];if(!o)return;
+ if(!strictOffline && img.dataset.stage!=='remote' && img.src!==o.image){img.dataset.stage='remote';img.src=o.image;return;}
+ const frame=img.closest('.art-frame');if(frame)frame.classList.add('not-loaded');
+ const canvas=img.closest('#lab-canvas');if(canvas)canvas.classList.add('photo-error');
+};
+function fitPhoto(){
+ const canvas=document.querySelector('#lab-canvas');const frame=document.querySelector('#photo-frame');const img=frame?.querySelector('img');
+ if(!canvas||!frame||!img?.naturalWidth)return;
+ const cw=canvas.clientWidth,ch=canvas.clientHeight;
+ const scale=Math.min(cw/img.naturalWidth,ch/img.naturalHeight);
+ frame.style.width=`${Math.round(img.naturalWidth*scale)}px`;
+ frame.style.height=`${Math.round(img.naturalHeight*scale)}px`;
+ frame.classList.add('photo-ready');
+}
+window.addEventListener('resize',fitPhoto);
+
+const esc=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const me=()=>byId[state.objectId];
+const progress=()=>`${state.done.size} / ${pack.objects.length}`;
+const museum=pack.exhibition;
+function resets(){state.selected=[];state.checked=false;state.zoom=1;state.x=0;state.y=0;state.showHint=false;state.showSources=false;state.labView='photo';state.activeSpot=null;state.photoPoint=null;state.calibrateSpot=0;state.fieldAnswer=null;state.fieldChecked=false;state.fieldDocument=null;pointers.clear();gestureStart=null;}
+function go(page,id){if(page==='shortfinish'){visitComplete();state.done.add(state.objectId);page='report';}if(page==='object' && id)visitStart(id);else if(activeVisit && ['gallery','about','final'].includes(page))visitAbort();if(id)state.objectId=id;state.page=page;stepMark(page);resets();render();window.scrollTo({top:0,behavior:'instant'});}
+function restart(){if(activeVisit)visitAbort();state.done.clear();state.discovered={};state.objectId=null;go('gallery');}
+function idle(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(()=>{if(pilotEnabled){stats.idleResets++;recordSave();}restart();},Math.max(8,Number(museum.idleMinutes)||8)*60000)}
+['pointerdown','keydown','wheel','touchstart'].forEach(name=>window.addEventListener(name,idle,{passive:true}));idle();
+function logo(){return `<span class="sigil" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M8 34L16 12L24 24L32 12L39 34Z M14 34H36 M23 24V36"/></svg></span>`}
+function masthead(){return `<header class="masthead"><button class="brand" data-action="home" aria-label="Zur Sammlung">${logo()}<span class="brand-text"><strong>SPUREN DER STEPPE</strong><small>ENTDECKEN · SPIELEN · FORSCHEN</small></span></button><div class="masthead-right"><span class="tiny-maker">KONZEPT & ENTWICKLUNG <b>${esc(museum.maker)}</b></span><button class="icon-circle" data-action="about" aria-label="Über das Projekt und Quellen">i</button></div></header>`}
+function footer(){return `<footer class="footer"><span><i class="dot"></i> ${esc(museum.museumName)} · Forschungsbasierter Prototyp</span><span>Eine Arbeit von <strong>${esc(museum.maker)}</strong></span><button class="text-button" data-action="about">Impressum & Quellen ↗</button></footer>`}
+function thumb(o,size='card'){return `<div class="art-frame art-${size}" data-art="${esc(o.id)}"><img class="art-original" src="${esc(photoSrc(o))}" data-object="${o.id}" data-stage="local" alt="Originalfoto: ${esc(o.short)} · The Metropolitan Museum of Art" loading="${size==='hero'?'eager':'lazy'}" onload="window.metPhotoLoaded(this)" onerror="window.metPhotoError(this)"><span class="art-offline">Originalfoto noch nicht geladen · Fundstück öffnen</span><span class="art-stamp">${size==='card'?'MET · '+esc(o.inventory):'THE MET · ORIGINALFOTOGRAFIE'}</span></div>`}
+function ornament(){return `<span class="ornament-line" aria-hidden="true">◈ <span>───</span> ◈ <span>───</span> ◈</span>`}
+function gallery(){let all=state.done.size===pack.objects.length;
+return `${masthead()}<main class="main main-gallery modern-gallery">
+  <section class="hero museum-hero"><div class="hero-copy"><span class="eyebrow"><span class="eyebrow-line"></span> DEINE DIGITALE AUSSTELLUNG</span><h1>SPUREN <em>DER STEPPE.</em></h1><p class="hero-lead">Sieben echte Fundstücke. Sieben kleine Abenteuer.</p><p class="hero-intro">Schau genau hin, entdecke verborgene Details und löse die Rätsel der Archäologie.</p><div class="hero-actions"><button class="btn btn-gold primary-cta" data-action="open" data-id="hirsch">Jetzt entdecken <span>→</span></button><button class="btn btn-outline quiet-cta" data-action="go-collection">Fundstücke auswählen ↓</button></div></div><div class="mode-choice" role="group" aria-label="Spieltempo wählen"><span>Wie möchtest du spielen?</span><button class="mode-chip ${state.shortMode?'selected':''}" data-action="mode-short" aria-pressed="${state.shortMode}">⚡ Kurz spielen</button><button class="mode-chip ${!state.shortMode?'selected':''}" data-action="mode-long" aria-pressed="${!state.shortMode}">⌕ Alles entdecken</button><small>${state.shortMode?'Eine kurze Mission pro Fundstück.':'Mit Fotovergleich, Wissensfragen und Quellenprüfung.'}</small></div></div><div class="hero-visual">${thumb(pack.objects[0],'hero')}<div class="hero-visual-caption"><span>ORIGINALFUND · 5. JH. V. CHR.</span><strong>DER GOLDHIRSCH</strong></div></div></section>
+  <section class="three-tips" aria-label="In drei Schritten spielen"><div><b>1</b><span>Fundstück wählen</span></div><div><b>2</b><span>Details antippen</span></div><div><b>3</b><span>Rätsel lösen</span></div></section>
+  <section class="collection-intro" id="sammlung"><div><span class="kicker">DEINE ENTDECKUNGSREISE</span><h2>Welche Vitrine <em>zuerst?</em></h2><p>Tippe auf ein Fundstück und leg los.</p></div><div class="collection-progress"><div class="progress-number">${progress()}</div><div class="progress-sub">ENTDECKT</div><div class="progress-track"><span style="width:${state.done.size/pack.objects.length*100}%"></span></div></div></section>
+  <section class="object-grid" aria-label="Sieben Fundstücke">${pack.objects.map(o=>`<button class="object-card ${state.done.has(o.id)?'explored':''}" data-action="open" data-id="${esc(o.id)}" aria-label="${esc(o.short)} erkunden"><div class="card-upper"><span class="card-number">${o.n} <span>/ 07</span></span><span class="card-state">${state.done.has(o.id)?'✓ Geschafft':'Entdecken →'}</span></div>${thumb(o)}<div class="card-details"><span class="card-topic">${esc(o.section)}</span><h3>${esc(o.short)}</h3><p>${esc(o.material)}</p><div class="card-bottom"><span>${esc(o.badge)}</span><strong>Spielen →</strong></div></div></button>`).join('')}</section>
+  ${all?`<div class="all-done"><span class="kicker">ALLE FUNDSTÜCKE ENTDECKT</span><h2>Ausgezeichnet geforscht!</h2><button class="btn btn-gold" data-action="final">Fundbericht ansehen →</button></div>`:''}
+  <section class="principle"><div class="principle-icon">?</div><div><span class="kicker">ARCHÄOLOGIE LIVE</span><h3>Was wissen wir wirklich?</h3><p>Im Spiel entdeckst du, was durch Funde belegt ist – und wo die Forschung noch Fragen hat.</p></div><button class="btn btn-outline" data-action="about">Zu den Quellen ↗</button></section>
+</main>${footer()}`}
+function steps(active){return `<div class="stepper" aria-label="Fortschritt dieser Station"><span class="${active>=0?'active':''}">01 <b>BETRACHTEN</b></span><i></i><span class="${active>=1?'active':''}">02 <b>ANFASSEN</b></span><i></i><span class="${active>=2?'active':''}">03 <b>PRÜFEN</b></span><i></i><span class="${active>=3?'active':''}">04 <b>EINORDNEN</b></span></div>`}
+function stationTop(o,step){return `${masthead()}<main class="main station-main"><nav class="breadcrumbs"><button data-action="home">← Zur Sammlung</button><span>/</span><span>EXPONAT ${o.n}</span><span>/</span><b>${esc(o.section)}</b></nav><div class="station-title-row"><div><span class="kicker">FUNDSTÜCK ${o.n} / 07 · ${esc(o.kind)}</span><h1>${esc(o.title)}</h1></div><div class="index-stamp">${o.n}<span> / 07</span></div></div>${steps(step)}<div class="station-mode"><span>${state.shortMode?'⚡ Kurzer Spielweg':'⌕ Ausführlicher Forschungsweg'}</span><span>${state.shortMode?'Foto ansehen → Mission → Fertig':'Foto → Vergleich → Mission → Fragen'}</span></div>`}
+function museumTag(o){return `<div class="museum-tag"><div class="tag-mark">✧</div><div><strong>${esc(o.museum)}</strong><small>Inv. ${esc(o.inventory)} · ${esc(o.era)}</small></div></div>`}
+function factRows(o){return `<dl class="facts"><div><dt>MATERIAL</dt><dd>${esc(o.material)}</dd></div><div><dt>MASSE</dt><dd>${esc(o.dimensions)}</dd></div><div><dt>ZUSCHREIBUNG</dt><dd>${esc(o.kind)}</dd></div><div><dt>HERKUNFT</dt><dd>${esc(o.origin)}</dd></div></dl>`}
+function objectPage(){const o=me();return `${stationTop(o,0)}<section class="station-layout"><div class="display-column"><div class="gallery-glass">${thumb(o,'large')}<div class="object-mark"><span>THE METROPOLITAN MUSEUM OF ART</span><b>${esc(o.inventory)}</b></div></div><div class="image-foot">Originalaufnahme des Metropolitan Museum of Art. Zur Offline-Nutzung lässt sich das gemeinfreie Foto lokal einrichten.</div></div><div class="details-column"><span class="kicker">01 / BETRACHTEN</span><h2>Sieh ganz <em>genau hin.</em></h2><p class="lead-copy">${esc(o.intro)}</p><div class="field-note"><span class="field-note-symbol">✧</span><p>${esc(o.fact)}</p></div>${factRows(o)}${museumTag(o)}<button class="btn btn-gold btn-wide" data-action="next" data-to="detail">Details entdecken <span>→</span></button></div></section></main>${footer()}`}
+function zoomControls(){return `<div class="zoom-controls"><button data-action="zoom-out" aria-label="Bild verkleinern">−</button><span id="zoom-readout">${state.zoom.toFixed(1)}×</span><button data-action="zoom-in" aria-label="Bild vergrößern">+</button><button data-action="zoom-reset" aria-label="Vergrößerung zurücksetzen">⟲</button></div>`}
+function detailFound(o){return state.discovered[o.id]||new Set()}
+function detailPage(){
+ const o=me(),d=labData[o.id],found=detailFound(o);
+ const current=state.activeSpot!==null?d.spots[state.activeSpot]:null;
+ const sourceUrl=o.id==='hirsch'?'https://www.metmuseum.org/essays/scythian-art':`https://www.metmuseum.org/art/collection/search/${o.metId}`;
+ return `${stationTop(o,1)}<section class="touchlab-layout"><div class="touchlab-gallery">
+ <div class="lab-titlebar"><div><span class="kicker">02 / ORIGINALFUNDLABOR</span><h2>Was fällt dir auf?</h2></div><div class="lab-visit"><b>${found.size} / ${d.spots.length}</b><span>Funddetails geöffnet</span></div></div>
+ <div class="touch-canvas mode-photo" id="lab-canvas" aria-label="Originalaufnahme mit antippbaren Objektmerkmalen" style="--inv-z:${(1/state.zoom).toFixed(4)}">
+  <div class="touch-world" id="touch-world">
+   <div class="photo-frame" id="photo-frame">
+    <img class="photo-main" src="${esc(photoSrc(o))}" data-object="${esc(o.id)}" data-stage="local" alt="Originalaufnahme: ${esc(o.short)}" draggable="false" onload="window.metPhotoLoaded(this)" onerror="window.metPhotoError(this)">
+    ${d.spots.map((sp,i)=>`<button type="button" class="touch-hotspot ${found.has(i)?'revealed':''} ${state.activeSpot===i?'active':''} ${state.hotspotsVisible?'':'spot-hidden'}" style="left:${sp.x}%;top:${sp.y}%" data-action="spot" data-index="${i}" aria-label="Detail ${i+1}: ${esc(sp.label)}" aria-pressed="${state.activeSpot===i}"><span>${found.has(i)?'✓':i+1}</span></button>`).join('')}
+   </div>
+  </div>
+  <div class="touch-photo-error"><strong>Das Originalfoto ist noch nicht geladen.</strong><span>Das lokale Foto konnte nicht geladen werden. Bitte prüfe, ob der Ordner assets/photos vollständig mit dem Spiel hochgeladen wurde. Du kannst das Originalfoto auch hier auswählen. Es wird keine Zeichnung als Ersatz angezeigt.</span><label class="import-label">Originalfoto auswählen<input class="photo-import" type="file" accept="image/png,image/jpeg,image/webp" data-id="${o.id}"></label><a target="_blank" rel="noopener" href="https://www.metmuseum.org/art/collection/search/${o.metId}">Zum Original im Met-Katalog ↗</a></div>
+  <div class="touch-corner">ORIGINALFOTOGRAFIE · THE MET · CC0</div>
+ </div>
+ <div class="lab-toolbar"><div class="lab-zoom-buttons"><button data-action="zoom-out" aria-label="Verkleinern">−</button><span id="zoom-readout">${state.zoom.toFixed(1)}×</span><button data-action="zoom-in" aria-label="Vergrößern">+</button><button data-action="zoom-reset" aria-label="Gesamtansicht">⟲</button></div><button type="button" class="lab-toggle" data-action="toggle-spots" aria-pressed="${state.hotspotsVisible}">${state.hotspotsVisible?'◉ Markierungen ausblenden':'◎ Markierungen zeigen'}</button><span>Tippe auf die Punkte · 2 Finger zum Zoomen</span></div>
+ ${editorMode?`<div class="calibration-panel"><strong>REDAKTION · Koordinaten auf dem Originalfoto anpassen</strong><p>Detailnummer wählen und danach das entsprechende Bildmerkmal antippen. Die Bildposition wird neu gesetzt und kann als JSON-Datei exportiert werden. Dieser Modus ist nicht für Museumsbesucher bestimmt. Kalibrierung erst nach sorgfältiger Bildkontrolle freigeben.</p><div class="calib-tools">${d.spots.map((sp,i)=>`<button class="calib-choice ${state.calibrateSpot===i?'selected':''}" data-action="calib-pick" data-index="${i}">${i+1} · ${esc(sp.label)} (${sp.x.toFixed(1)}, ${sp.y.toFixed(1)})</button>`).join('')}</div><button class="btn btn-outline" data-action="export-spots">Alle Hotspot-Koordinaten exportieren ↓</button></div>`:''}
+ <div class="review-banner"><strong>Fachlicher Status:</strong> Alle sieben Originalfotografien liegen lokal vor. Die 30 Markierungen sind visuell vorpositioniert, jedoch noch nicht kuratorisch abgenommen. <a href="./FACHPRUEFUNG.html" target="_blank" rel="noopener">Prüfliste öffnen ↗</a></div><p class="lab-auth-note">Originalfoto: <strong>The Metropolitan Museum of Art, Public Domain.</strong> Die Fundpunkte wurden visuell gesetzt und müssen für die Ausstellung noch am Bild kontrolliert und fachlich freigegeben werden.</p>
+ </div><aside class="touchlab-inspector"><div class="lab-brief"><span class="kicker">DEIN ENTDECKUNGSAUFTRAG</span><h2>${esc(o.short)}</h2><p>${esc(d.prompt)}</p></div>
+  <div class="lab-discovery-bar">${d.spots.map((sp,i)=>`<button data-action="spot" data-index="${i}" title="${esc(sp.label)}" class="lab-pill ${found.has(i)?'found':''} ${state.activeSpot===i?'selected':''}">${found.has(i)?'✓':i+1}<span class="visually-hidden">${esc(sp.label)}</span></button>`).join('')}<span>${found.size} von ${d.spots.length} Details</span></div>
+  <div class="lab-fact" aria-live="polite">${current?`<div class="lab-fact-meta"><span>${esc(current.tag)}</span><small>${esc(current.cert)}</small></div><h3>${esc(current.label)}</h3><p>${esc(current.body)}</p><button type="button" class="lab-focus-button" data-action="focus-spot">⌕ Detail vergrößern</button><div class="lab-fact-source">Quelle: ${esc(current.source)} · <a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">Originalbeleg ↗</a></div>`:`<div class="lab-empty-icon">✧</div><h3>Tippe auf einen Fundpunkt!</h3><p>Jeder goldene Punkt verrät dir ein neues Detail.</p><span class="lab-empty-note">Alternativ kannst du die nummerierten Felder oberhalb dieses Textes antippen.</span>`}</div>
+  <div class="lab-inspector-footer"><p>${found.size===d.spots.length?'Alle Details entdeckt. Jetzt kannst du die Forschungsfrage lösen.':`Noch ${d.spots.length-found.size} Stellen kannst du untersuchen. Du darfst jederzeit weiterspielen.`}</p><button class="btn btn-gold btn-wide" data-action="next" data-to="${state.shortMode?'fieldmission':'compare'}">${found.size===d.spots.length?'Weiter zum Vergleich':'Zum Detailvergleich'} <span>→</span></button></div>
+ </aside></section></main>${footer()}`;
+}
+function comparePage(){
+ const o=me(),d=labData[o.id],p=state.comparePick;
+ const selected=p.map(i=>d.spots[i]);
+ const panes=selected.map((sp,j)=>`<div class="compare-pane"><span class="kicker">DETAIL ${j===0?'A':'B'} · ${esc(sp.cert)}</span><h3>${esc(sp.label)}</h3><div class="compare-photo" aria-label="Vergrößerter Ausschnitt des Originalfotos"><img src="${esc(photoSrc(o))}" alt="Fotoausschnitt: ${esc(sp.label)}" style="--cx:${sp.x};--cy:${sp.y}" onerror="this.closest('.compare-photo').classList.add('missing')"><span>Originalfoto benötigt</span></div><p>${esc(sp.body)}</p><small>Quelle: ${esc(sp.source)}</small></div>`).join('');
+ return `${stationTop(o,2)}<section class="compare-head"><span class="kicker">03 / OBJEKTE GENAU ANSEHEN</span><h2>Zwei Details. <em>Eine neue Frage.</em></h2><p>Wähle unten zwei Merkmale desselben Originalfundstücks. Vergleiche Form, Gestaltung und mögliche Funktion. Die Ausschnitte sind vergrößert, nicht maßstabsgetreu.</p></section><section class="compare-grid">${panes}</section><section class="compare-control"><h3>Welche Details willst du vergleichen?</h3><div class="compare-select">${[0,1].map((slot)=>`<label>Detail ${slot===0?'A':'B'}<select data-compare-slot="${slot}">${d.spots.map((sp,i)=>`<option value="${i}" ${p[slot]===i?'selected':''}>${i+1} · ${esc(sp.label)}</option>`).join('')}</select></label>`).join('')}</div><button type="button" class="btn btn-outline" data-action="compare-reflect">${state.compareNote?'Beobachtungsfragen ausblenden':'Was soll ich vergleichen?'} →</button>${state.compareNote?`<div class="compare-prompt"><strong>Forscherfragen</strong><p>Was unterscheidet die beiden sichtbaren Merkmale? Welches Detail ist im Foto klar erkennbar? Welche Bedeutung ist durch Quellen belegt – und welche bleibt offen?</p><p>Wichtig: Die Ausschnitte zeigen keine zusätzlichen Befunde. Für die Einordnung zählt der jeweilige Museumsdatensatz.</p></div>`:''}<div class="compare-actions"><button class="btn btn-outline" data-action="next" data-to="detail">← Zurück ans Originalfoto</button><button class="btn btn-gold" data-action="next" data-to="fieldmission">Jetzt Mission spielen →</button></div><p class="lab-auth-note">Fotografie: The Metropolitan Museum of Art · ${esc(o.inventory)} · Hotspot-Ausschnitte am gelieferten Bild vorpositioniert; kuratorische Abnahme ausstehend.</p></section></main>${footer()}`;
+}
+
+// Sieben unterschiedliche mechanische Forschungsmissionen; alle Hinweise sind didaktische Aufgaben,
+// keine Behauptung über nicht dokumentierte Fundumstände.
+const researchGames={
+ hirsch:{kind:'sequence',tag:'FORMENDETEKTIV',title:'Vom Geweih zum Vogelkopf',intro:'Arbeite dich vom ganzen Objekt zum kleinen Bilddetail vor.',steps:['Gesamten Goldhirsch betrachten','Geweih im Originalfoto untersuchen','Die dort beschriebenen Vogelköpfe suchen'],note:'Die drei Vogelköpfe im Geweih werden in der Forschung beschrieben. Ihre symbolische Bedeutung ist nicht abschließend geklärt.'},
+ greif:{kind:'pair',tag:'MISCHWESEN-LABOR',title:'Welche Tiere stecken im Greif?',intro:'Wähle die beiden Tiergruppen, deren Merkmale diese Figur kombiniert.',options:['Vogel','Fisch','Raubkatze','Pferd'],correct:[0,2],note:'Ein Greif kombiniert Vogelmerkmale mit einem raubkatzenartigen Körper. Die Interpretation einzelner Motive kann variieren.'},
+ eber:{kind:'sort',tag:'MATERIALLABOR',title:'Woraus besteht der Eberbeschlag?',intro:'Ordne drei Werkstoffe dem Fund zu. Alle drei sind im Museumskatalog genannt.',options:['Gold','Knochen','Silber','Glas','Holz'],correct:[0,1,2],note:'Der Met-Katalog nennt Gold, Knochen und Silber. Die Materialzuordnung stammt aus der Dokumentation, nicht allein aus der Farbe des Fotos.'},
+ trense:{kind:'order',tag:'AUSRÜSTUNGS-LABOR',title:'Drei Schritte einer Objektanalyse',intro:'Bringe die Untersuchung in eine nachvollziehbare Reihenfolge.',steps:['Öffnungen und Form beobachten','Mit dokumentierten Trensenteilen vergleichen','Eine mögliche Funktion begründet formulieren'],note:'Eine Vergleichsanalyse hilft bei der Ansprache als Trensenteil. Eine exakte Montage am damaligen Zaumzeug lässt sich aus dem Einzelobjekt nicht vollständig ableiten.'},
+ scheide:{kind:'pair',tag:'KULTURKONTAKT',title:'Zwei Traditionen auf einem Objekt',intro:'Wähle die beiden Aspekte, die bei der Beschreibung zusammenkommen.',options:['Skythischer Schwertscheidentyp','Griechisch geprägte Bildgestaltung','Sicherer Fundort: griechischer Tempel','Eindeutig bekannter Auftraggeber'],correct:[0,1],note:'Form und Bildgestaltung lassen Kulturkontakte erkennen; die genaue Geschichte des einzelnen Objekts bleibt in Teilen offen.'},
+ rosette:{kind:'ratio',tag:'GRÖSSEN-LABOR',title:'Winzig oder riesig?',intro:'Wie viele Rosettenbreiten (7,5 mm) passen ungefähr in den Durchmesser einer 1-Euro-Münze (23,25 mm)?',note:'23,25 ÷ 7,5 ≈ 3,1. Auf dem Tablet ist die Abbildung nicht in Originalgröße.'},
+ reiter:{kind:'perspective',tag:'QUELLENKRITIK',title:'Wer zeigt hier wen?',intro:'Unterscheide die dargestellte Person von der Kultur, in der das Objekt entstanden ist.',options:['Darstellung: skythischer Reiter','Herstellung: etruskisch-kampanischer Kontext in Italien','Herstellung: nachweislich in einem skythischen Kurgan','Darstellung: mittelalterlicher Ritter'],correct:[0,1],note:'Die Reiterfigur ist eine antike Fremddarstellung. Die Herkunft des Bildes und die Identität der dargestellten Person sind nicht dasselbe.'}
+};
+function fieldMission(){
+ const o=me(),g=researchGames[o.id],picked=Array.isArray(state.fieldAnswer)?state.fieldAnswer:[],isArray=['pair','sort','perspective'].includes(g.kind);
+ let activity='';
+ if(g.kind==='sequence'||g.kind==='order'){
+  const expected=g.steps.length,done=picked.length;
+  activity=`<div class="research-steps" aria-label="Forschungsreihenfolge">${picked.map((v,i)=>`<div class="research-slot">${i+1}. ${esc(g.steps[v])}</div>`).join('')}${done<expected?`<div class="research-slot empty">Schritt ${done+1} auswählen</div>`:''}</div><div class="field-options">${g.steps.map((v,i)=>picked.includes(i)?'':`<button class="field-option" data-action="research-pick" data-index="${i}">${esc(v)} →</button>`).join('')}</div><button class="btn btn-outline" data-action="research-clear">Reihenfolge zurücksetzen</button>`;
+ }else if(g.kind==='ratio'){
+  const val=typeof state.fieldAnswer==='number'?state.fieldAnswer:3;
+  activity=`<div class="research-ratio"><label for="ratio-choice">Deine Schätzung: <strong>${val} Rosettenbreiten</strong></label><input id="ratio-choice" type="range" min="1" max="8" step="1" value="${val}"/><div class="ratio-bars"><div>1-Euro-Münze <span style="width:100%"></span></div><div>Rosette <span style="width:${Math.round(100/val)}%"></span></div></div></div>`;
+ }else{
+  activity=`<p class="field-tip">${g.kind==='sort'?'Wähle genau drei Materialien.':'Wähle genau zwei Aussagen.'}</p><div class="field-options">${g.options.map((v,i)=>`<button class="field-option ${picked.includes(i)?'picked':''}" data-action="research-pick" data-index="${i}" aria-pressed="${picked.includes(i)}"><span>${picked.includes(i)?'✓':'+'}</span>${esc(v)}</button>`).join('')}</div>`;
+ }
+ const target=g.kind==='ratio'?Math.abs((state.fieldAnswer??3)-3)<=1:g.kind==='sequence'||g.kind==='order'?picked.length===g.steps.length&&picked.every((x,i)=>x===i):picked.length===g.correct.length&&g.correct.every(x=>picked.includes(x));
+ const canCheck=g.kind==='ratio'||g.kind==='sequence'||g.kind==='order'?g.kind==='ratio'||picked.length===g.steps.length:picked.length===g.correct.length;
+ return `${stationTop(o,2)}<section class="field-mission"><span class="kicker">04 / INTERAKTIVE FORSCHUNGSMISSION</span><h2>Sieben Objekte. <em>Sieben Aufgaben.</em></h2><p>Jede Vitrine erforschst du auf andere Weise. Die dokumentierten Originalfotos und der Met-Katalog bleiben unsere Quellen.</p><div class="field-layout"><div class="field-photo">${thumb(o,'large')}<p>Originalaufnahme · The Metropolitan Museum of Art · ${esc(o.inventory)} · Bei fehlendem Foto bitte eine Originalaufnahme importieren.</p><button class="btn btn-outline" data-action="next" data-to="detail">↖ Originalfoto untersuchen</button></div><div class="field-panel"><span class="kicker">${esc(g.tag)}</span><h3>${esc(g.title)}</h3><p>${esc(g.intro)}</p>${activity}${state.fieldChecked?`<div class="field-feedback" role="status"><strong>${target?'Gut untersucht!':'Eine wichtige Unterscheidung:'}</strong><p>${esc(g.note)}</p>${!target?'<p>Vergleiche deine Auswahl noch einmal mit der Erklärung.</p>':''}<small>Forschungsübung · Quellen und Deutungen getrennt</small></div><button class="btn btn-gold btn-wide" data-action="next" data-to="${state.shortMode?'shortfinish':'exercise'}">${state.shortMode?'Fundstück abschließen →':'Weiter zur Wissensfrage →'}</button>`:`<button class="btn btn-gold btn-wide" data-action="research-check" ${canCheck?'':'disabled'}>Ergebnis überprüfen →</button>`}</div></div></section></main>${footer()}`;
+}
+function challenge(){const o=me(),q=o.mission;return `${stationTop(o,2)}<section class="workbench-layout"><div class="workbench-art"><div class="workbench-header"><span class="kicker">UNTER DER LUPE</span>${zoomControls()}</div><div class="zoom-stage" data-pan="true">${thumb(o,'zoom')}</div><p class="image-foot">Mit + vergrößern · vergrößertes Bild mit dem Finger verschieben · Originalfoto; bei fehlender Datei Fotoimport verwenden</p><div class="museum-minilink"><a href="https://www.metmuseum.org/art/collection/search/${o.metId}" target="_blank" rel="noopener noreferrer">Objektkatalog des Met öffnen ↗</a></div></div><div class="workbench-task"><div class="task-top"><span class="kicker">02 / ${esc(q.eyebrow)}</span><span class="task-label">${q.kind==='multi'?'MEHRFACHAUSWAHL':'ENTSCHEIDUNGSFRAGE'}</span></div><h2>${esc(q.heading)}</h2><p class="task-question">${esc(q.prompt)}</p>${o.id==='rosette'?`<div class="size-diagram"><div><span class="diagram-coin">1 €</span><small>Münze · 23,25 mm</small></div><div><span class="diagram-piece">✦</span><small>Goldplättchen · 7,5 mm</small></div><span class="diagram-note">Maßstabsgetreues Verhältnis, keine Bildschirm-Echtgröße</span></div>`:''}<p class="task-hint">${q.kind==='multi'?`Wähle genau ${q.correct.length} Antworten aus.`:'Wähle eine Antwort aus.'}</p><div class="choices" role="group" aria-label="Antworten">${q.options.map((text,i)=>`<button class="choice ${state.selected.includes(i)?'chosen':''} ${state.checked && q.correct.includes(i)?'correct':''}" data-action="pick" data-index="${i}" ${state.checked?'disabled':''} aria-pressed="${state.selected.includes(i)}"><span class="choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(text)}</span><span class="choice-tick">${state.selected.includes(i)?'✓':'＋'}</span></button>`).join('')}</div>${state.checked?`<div class="feedback ${equal(state.selected,q.correct)?'right':'learning'}" role="status"><strong>${equal(state.selected,q.correct)?'Gut beobachtet.':'Schau dir diesen Hinweis an.'}</strong><p>${esc(q.explain)}</p><small>Die Erklärung gilt unabhängig davon, welche Antwort du ausgewählt hast.</small></div><button class="btn btn-gold btn-wide" data-action="next" data-to="evidence">Zur Forschungsfrage <span>→</span></button>`:`<div class="task-buttons"><button class="btn btn-outline" data-action="hint">${state.showHint?'Hinweis ausblenden':'Objekthinweis anzeigen'}</button><button class="btn btn-gold" data-action="check" ${state.selected.length===0?'disabled':''}>Antwort prüfen →</button></div>${state.showHint?`<div class="light-hint">${esc(o.fact)}</div>`:''}`}</div></section></main>${footer()}`}
+function equal(a,b){return a.length===b.length && b.every(x=>a.includes(x))}
+function evidence(){const o=me();let opts=[{id:'documented',t:'Belegt',d:'Direkt am Objekt oder im Katalog dokumentiert'},{id:'inferred',t:'Gut begründet',d:'Eine Deutung mit nachvollziehbaren Hinweisen'},{id:'open',t:'Nicht belegt / offen',d:'Behauptung ohne sicheren Beweis oder noch ungeklärt'}];let pick=state.selected[0];return `${stationTop(o,3)}<section class="evidence-layout"><div class="evidence-art">${thumb(o,'evidence')}<div class="evidence-art-label">DIE FORSCHUNGSFRAGE</div></div><div class="evidence-content"><span class="kicker">03 / FORSCHUNGSWERKSTATT</span><h2>Wissen.<br><em>Oder Vermutung?</em></h2><p>Ordne die Aussage ein. Archäologie lebt davon, dass wir auch Grenzen unseres Wissens erkennen.</p><blockquote>„${esc(o.research.statement)}“</blockquote><div class="evidence-choices">${opts.map((e,i)=>`<button class="evidence-choice ${pick===i?'chosen':''}" data-action="pick" data-index="${i}" ${state.checked?'disabled':''} aria-pressed="${pick===i}"><span class="evidence-radio">${pick===i?'●':'○'}</span><span><strong>${e.t}</strong><small>${e.d}</small></span></button>`).join('')}</div>${state.checked?`<div class="feedback ${opts[pick]?.id===o.research.answer?'right':'learning'}"><strong>${opts[pick]?.id===o.research.answer?'Gute Einordnung!':'Das zeigt uns die Quellenlage:'}</strong><p>${esc(o.research.why)}</p></div><button class="btn btn-gold btn-wide" data-action="finish">Fundbericht ansehen <span>→</span></button>`:`<button class="btn btn-gold btn-wide" data-action="check" ${state.selected.length===0?'disabled':''}>Einordnung prüfen <span>→</span></button>`}</div></section></main>${footer()}`}
+function report(){const o=me(),next=pack.objects.find(x=>!state.done.has(x.id));return `${stationTop(o,4)}<section class="report"><div class="report-seal"><span>✓</span><small>MISSION GESCHAFFT!</small></div><div class="finish-count">${state.done.size} von 7 Fundstücken geschafft</div><span class="kicker">DEIN FORSCHUNGSBERICHT · ${o.n} / 07</span><h2>Stark! <em>Gut beobachtet.</em></h2><p class="report-intro">${esc(o.takeaway)}</p><div class="report-book"><div class="report-object">${thumb(o,'report')}<div><span class="kicker">OBJEKT</span><h3>${esc(o.short)}</h3><p>${esc(o.inventory)} · ${esc(o.era)}</p></div></div><div class="report-explain"><span class="kicker">DAS BLEIBT</span><p>${esc(o.fact)}</p><span class="report-source">Quelle: ${esc(o.museum)} · ${esc(o.inventory)}</span></div></div>${pilotEnabled?`<div class="pilot-feedback" id="pilot-feedback"><strong>War diese Station verständlich?</strong><p>Eine freiwillige anonyme Rückmeldung.</p><div><button data-action="pilot-feedback" data-value="klar">Ja</button><button data-action="pilot-feedback" data-value="teilweise">Teilweise</button><button data-action="pilot-feedback" data-value="unklar">Nein</button></div></div>`:``}<div class="report-actions"><button class="btn btn-outline" data-action="home">Zur Sammlung (${progress()})</button>${next?`<button class="btn btn-gold" data-action="open" data-id="${next.id}">Nächstes Fundstück <span>↗</span></button>`:`<button class="btn btn-gold" data-action="final">Sammlung abschließen <span>↗</span></button>`}</div><button class="subtle-link" data-action="about">Wissenschaftliche Quellen und Bildnachweise ansehen ↗</button></section></main>${footer()}`}
+function finalPage(){return `${masthead()}<main class="main final-page"><div class="final-ornament">${ornament()}</div><span class="kicker">SIEBEN OBJEKTE · SIEBEN PERSPEKTIVEN</span><h1>DU HAST DIE <em>SPUREN</em><br>DER STEPPE GELESEN.</h1><p>Goldschmuck, Tiermotive und Pferdegeschirr zeigen Facetten des Lebens. Die Schwertscheide spricht von Kulturkontakten, die Bronze-Reiterfigur davon, wie Menschen andere sahen.</p><div class="final-three"><div><b>01</b><strong>Genau hinschauen</strong><span>Was zeigt uns das Objekt?</span></div><div><b>02</b><strong>Belege prüfen</strong><span>Woher stammt unser Wissen?</span></div><div><b>03</b><strong>Fragen offenlassen</strong><span>Was können wir nicht sicher sagen?</span></div></div><div class="final-sign">KONZEPT & ENTWICKLUNG <strong>${esc(museum.maker)}</strong></div><div class="final-buttons"><button class="btn btn-gold" data-action="home">Zur Sammlung zurück ↗</button><button class="btn btn-outline" data-action="restart">Neue Entdeckungsreise</button></div></main>${footer()}`}
+function about(){return `${masthead()}<main class="main about-page"><nav class="breadcrumbs"><button data-action="home">← Zur Sammlung</button><span>/</span><b>IMPRESSUM & QUELLEN</b></nav><span class="kicker">ÜBER DIESE DIGITALE AUSSTELLUNG</span><h1>Gute Fragen.<br><em>Gute Quellen.</em></h1><div class="about-layout"><section><h2>Ein Spiel von ${esc(museum.maker)}</h2><p>Konzept, Entwicklung und digitale Gestaltung: <strong>${esc(museum.maker)}</strong>. Diese Anwendung ist ein eigenständiger Museumsprototyp und keine offizielle Produktion des Metropolitan Museum of Art.</p><p>${esc(museum.disclaimer)}</p><p>${esc(museum.research)}</p><h3>Besucher-Testmodus</h3><p>Eine optionale, ausschließlich lokale Testauswertung kann durch das Museum vor einem betreuten Pilotversuch aktiviert werden. Die Verwaltung erfolgt separat.</p><h3>Offline-Bildprüfung für dieses Gerät</h3><p>Der folgende Test zählt nur lokal gespeicherte Fotodateien und importierte Bilder – niemals Bilder, die bloß über das Internet geladen werden.</p><button type="button" class="btn btn-outline" data-action="photo-check">Sieben Originalfotos lokal prüfen</button><pre class="offline-result" id="offline-result" aria-live="polite">Noch nicht geprüft.</pre><h3>Bildnachweise und Offline-Modus</h3><p>Alle sieben Stationen sind für originale Met-Fotografien eingerichtet. Die Anwendung sucht zuerst die lokalen Dateien in assets/photos/ und nutzt bei Internetverbindung andernfalls den Met-Bildserver. Alle sieben Originalfotos sind in dieser Version lokal im Ordner assets/photos/ enthalten. Für den vollständig netzunabhängigen Betrieb die Anwendung über den mitgelieferten lokalen Server starten. Fehlt ein Bild, erscheint kein Ersatzobjekt.</p><h3>Originalfotografien für die Offline-Nutzung einrichten</h3><p>Wähle die passende Originaldatei aus dem Met-Objektkatalog. Die Auswahl bleibt lokal in diesem Browser gespeichert (IndexedDB); keine Besucherdateien werden übertragen.</p><div class="import-grid">${pack.objects.map(o=>`<label class="import-label">${esc(o.n)} · ${esc(o.short)}<input type="file" class="photo-import" data-id="${esc(o.id)}" accept="image/png,image/jpeg,image/webp"></label>`).join('')}</div><h3>Für Museen anpassbar</h3><p>In <code>pack.js</code> stehen Ausstellungsname, Urhebernennung, Objekttexte, Fragen, Bildpfade und Quellen. Die Fotografien können in <code>assets/photos/</code> gespeichert werden. Zusätzlich ist ein Fotoimport direkt am Tablet mit lokaler Browserspeicherung möglich. Bildmarker müssen vor dem Museumseinsatz am verwendeten Foto kalibriert und kuratorisch freigegeben werden.</p></section><section class="source-list"><h2>Objektquellen</h2>${pack.objects.map(o=>`<a href="https://www.metmuseum.org/art/collection/search/${o.metId}" target="_blank" rel="noopener noreferrer"><span>${o.n}</span><div><b>${esc(o.short)}</b><small>Met · ${esc(o.inventory)} · ${esc(o.kind)}</small></div><span>↗</span></a>`).join('')}<h2>Forschung</h2>${pack.sharedSources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><div><b>${esc(s.title)}</b><small>Externe wissenschaftliche Referenz</small></div><span>↗</span></a>`).join('')}</section></div><button class="btn btn-gold" data-action="home">Zur Sammlung zurück →</button></main>${footer()}`}
+function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();document.title=`${state.page==='gallery'?'Spuren der Steppe':(me()?.short||'Digitale Sammlung')} · ${museum.maker}`;updateZoom();}
+async function checkOfflinePhotos(){
+ const status=document.querySelector('#offline-result');if(!status)return;
+ status.textContent='Prüfung der sieben lokalen Originaldateien läuft …';
+ let success=0;const lines=[];
+ for (const o of pack.objects){
+  const imported=!!localPhotos[o.id];
+  const asset=await new Promise(resolve=>{const i=new Image();i.onload=()=>resolve({ok:true,w:i.naturalWidth,h:i.naturalHeight});i.onerror=()=>resolve({ok:false});i.src=o.imageLocal+'?check='+Date.now()});
+  const found=imported||asset.ok;if(found)success++;
+  const label=imported?'lokal im Browser importiert':asset.ok?`lokale Datei (${asset.w} × ${asset.h} px)`:'NICHT lokal vorhanden';
+  lines.push(`${o.n} ${o.short}: ${label}`);
+ }
+ status.textContent=`${success}/7 Originalaufnahmen lokal verfügbar.\n`+lines.join('\n')+(success===7?'\nAlle sieben Fotos sind auf diesem Gerät lokal vorhanden.':'\nFür einen sicheren Offline-Betrieb die fehlenden Originale ergänzen.');
+}
+function updateZoom(){const w=document.querySelector('#touch-world');if(w){w.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.zoom})`;const canvas=document.querySelector('#lab-canvas');if(canvas)canvas.style.setProperty('--inv-z',(1/state.zoom).toFixed(4));const readout=document.querySelector('#zoom-readout');if(readout)readout.textContent=state.zoom.toFixed(1)+'×';return;} const z=document.querySelector('.zoom-stage .art-frame');if(!z)return;let v=z.querySelectorAll('img');v.forEach(img=>{img.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.zoom})`});const lbl=document.querySelector('#zoom-readout');if(lbl)lbl.textContent=state.zoom.toFixed(1)+'×';}
+root.addEventListener('change',async(ev)=>{
+ const sel=ev.target.closest('[data-compare-slot]');if(sel){state.comparePick[Number(sel.dataset.compareSlot)]=Number(sel.value);render();return;}
+ const input=ev.target.closest('.photo-import');if(!input)return;
+ const file=input.files?.[0];if(!file||!file.type.startsWith('image/'))return;
+ if(file.size>35*1024*1024){alert('Die Datei ist zu groß (maximal 35 MB).');return;}
+ try{await saveLocalPhoto(input.dataset.id,file)}catch(e){alert('Dieses Tablet konnte das Bild nicht dauerhaft speichern. Nutze das beiliegende Download-Skript.')} 
+});
+root.addEventListener('input',(ev)=>{if(ev.target.id==='ratio-choice'){state.fieldAnswer=Number(ev.target.value);const label=document.querySelector('.research-ratio strong');if(label)label.textContent=state.fieldAnswer+' Rosettenbreiten';const bar=document.querySelector('.ratio-bars>div:nth-child(2)>span');if(bar)bar.style.width=Math.round(100/state.fieldAnswer)+'%';}});
+root.addEventListener('click',(ev)=>{const b=ev.target.closest('[data-action]');if(!b)return;const a=b.dataset.action;
+ if(a==='mode-short' || a==='mode-long'){state.shortMode=a==='mode-short';render();return;}
+ if(a==='research-clear'&&state.page==='fieldmission'){state.fieldAnswer=[];state.fieldChecked=false;render();return;}
+ if(a==='research-pick'&&state.page==='fieldmission'&&!state.fieldChecked){const game=researchGames[me().id],i=Number(b.dataset.index),v=Array.isArray(state.fieldAnswer)?state.fieldAnswer:[];if(['order','sequence'].includes(game.kind)){if(!v.includes(i))state.fieldAnswer=[...v,i];}else{const max=game.correct.length;state.fieldAnswer=v.includes(i)?v.filter(x=>x!==i):v.length<max?[...v,i]:v;}render();return;}
+ if(a==='research-check'&&state.page==='fieldmission'){state.fieldChecked=true;render();return;}
+ if(a==='field-hint'&&state.page==='fieldmission'){state.showHint=!state.showHint;render();return;}
+ if(a==='field-pick'&&state.page==='fieldmission'&&!state.fieldChecked){state.fieldAnswer=Number(b.dataset.index);render();return;}
+ if(a==='field-check'&&state.page==='fieldmission'&&state.fieldAnswer!==null){state.fieldChecked=true;render();return;}
+ if(a==='field-document'&&state.page==='fieldmission'){state.fieldDocument=b.dataset.choice;render();return;}
+ if(a==='compare-reflect'&&state.page==='compare'){state.compareNote=!state.compareNote;render();return;}
+ if(a==='toggle-spots'&&state.page==='detail'){state.hotspotsVisible=!state.hotspotsVisible;document.querySelectorAll('.touch-hotspot').forEach(h=>h.classList.toggle('spot-hidden',!state.hotspotsVisible));const toggle=document.querySelector('.lab-toggle');if(toggle){toggle.textContent=state.hotspotsVisible?'◉ Markierungen ausblenden':'◎ Markierungen zeigen';toggle.setAttribute('aria-pressed',String(state.hotspotsVisible));}return;}
+ if(a==='pilot-show'&&state.page==='about'){showPilot=true;render();return;}
+ if(a==='pilot-close'){showPilot=false;render();return;}
+ if(a==='pilot-export'){statsExport();return;}
+ if(a==='pilot-reset'){if(confirm('Wirklich sämtliche lokalen anonymen Pilotdaten löschen?')){stats=emptyStats();recordSave();render();}return;}
+ if(a==='pilot-feedback'&&state.page==='report'){const feedbackBox=document.querySelector('#pilot-feedback');if(feedbackBox?.dataset.done==='1')return;feedbackRecord(state.objectId,b.dataset.value);if(feedbackBox){feedbackBox.dataset.done='1';feedbackBox.innerHTML='<p>Danke für deine Rückmeldung!</p>';}return;}
+ if(a==='photo-check'&&state.page==='about'){checkOfflinePhotos();return;}
+ if(a==='calib-pick' && editorMode && state.page==='detail'){state.calibrateSpot=Number(b.dataset.index);render();return;}
+ if(a==='export-spots' && editorMode){const data={exhibition:pack.exhibition.title,object:me()?.id,review_status:'Entwurf – fotografische und kuratorische Prüfung ausstehend',updated:new Date().toISOString(),hotspots:Object.fromEntries(Object.entries(labData).map(([k,v])=>[k,v.spots.map(s=>({label:s.label,x:s.x,y:s.y}))]))};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='spuren_der_steppe_hotspots_kalibriert.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return;}
+ if(a==='spot'&&state.page==='detail'){
+  const i=Number(b.dataset.index),d=labData[me().id];if(!d||!d.spots[i])return;
+  if(!state.discovered[me().id])state.discovered[me().id]=new Set();
+  state.discovered[me().id].add(i);state.activeSpot=i;
+
+  render();return;
+ }
+ if(a==='focus-spot'&&state.page==='detail'&&state.activeSpot!==null){
+
+  const spot=labData[me().id].spots[state.activeSpot],canvas=document.querySelector('#lab-canvas');
+  if(!canvas)return;
+  const photoFrame=document.querySelector('#photo-frame');if(!photoFrame)return;
+  state.zoom=2.5;state.x=(.5-spot.x/100)*photoFrame.clientWidth*state.zoom;
+  state.y=(.5-spot.y/100)*photoFrame.clientHeight*state.zoom;
+  clampPan();updateZoom();return;
+ }
+ if(a==='lab-view'&&state.page==='detail'){
+  state.labView=b.dataset.view==='photo'?'photo':'schema';state.zoom=1;state.x=state.y=0;state.photoPoint=null;
+  state.activeSpot=null;render();return;
+ }
+ if(a==='go-collection'){document.getElementById('sammlung')?.scrollIntoView({behavior:'smooth'});return;}if(a==='home'){go('gallery');return;}if(a==='about'){go('about');return;}if(a==='restart'){restart();return;}if(a==='final'){go('final');return;}if(a==='open'){go('object',b.dataset.id);return;}if(a==='next'){go(b.dataset.to);return;}
+ if(a==='hint'){state.showHint=!state.showHint;render();return;}
+ if(a==='pick'&&!state.checked){let i=Number(b.dataset.index);const multi=state.page==='exercise'&&me().mission.kind==='multi';if(multi){if(state.selected.includes(i))state.selected=state.selected.filter(x=>x!==i);else if(state.selected.length<me().mission.correct.length)state.selected=[...state.selected,i];}else state.selected=[i];render();return;}
+ if(a==='check'){if(state.selected.length){state.checked=true;render();}return;}
+ if(a==='finish'){visitComplete();state.done.add(state.objectId);go('report');return;}
+ if(a==='zoom-in'||a==='zoom-out'||a==='zoom-reset'){state.zoom=a==='zoom-reset'?1:Math.max(1,Math.min(state.page==='detail'?4.5:3.4,state.zoom+(a==='zoom-in'?.5:-.5)));if(state.zoom===1){state.x=0;state.y=0;}updateZoom();return;}
+});
+root.addEventListener('pointerdown',(e)=>{if(!e.target.closest('[data-pan]')||state.zoom===1)return;lastPointer={id:e.pointerId,x:e.clientX,y:e.clientY};e.target.closest('[data-pan]').setPointerCapture?.(e.pointerId)});
+root.addEventListener('pointermove',(e)=>{if(!lastPointer||lastPointer.id!==e.pointerId||state.zoom===1)return;const stage=e.target.closest('[data-pan]')||document.querySelector('[data-pan]');const w=stage?.clientWidth||400,h=stage?.clientHeight||300;state.x=Math.max(-w*(state.zoom-1)/2,Math.min(w*(state.zoom-1)/2,state.x+e.clientX-lastPointer.x));state.y=Math.max(-h*(state.zoom-1)/2,Math.min(h*(state.zoom-1)/2,state.y+e.clientY-lastPointer.y));lastPointer.x=e.clientX;lastPointer.y=e.clientY;updateZoom()});
+['pointerup','pointercancel','lostpointercapture'].forEach(t=>root.addEventListener(t,()=>{lastPointer=null}));
+// Touch-Fundlabor: Ein-Finger-Verschieben und Zwei-Finger-Zoom; Bilder bleiben im Browser, keine Trackingdaten.
+function clampPan(){
+ const el=document.querySelector('#lab-canvas');if(!el)return;
+ const frame=document.querySelector('#photo-frame');const maxX=Math.max(0,(frame?.clientWidth||el.clientWidth)*(state.zoom-1)/2),maxY=Math.max(0,(frame?.clientHeight||el.clientHeight)*(state.zoom-1)/2);
+ state.x=Math.min(maxX,Math.max(-maxX,state.x));state.y=Math.min(maxY,Math.max(-maxY,state.y));
+}
+function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function pointerPositions(){return [...pointers.values()]}
+root.addEventListener('pointerdown',e=>{
+ const el=e.target.closest('#lab-canvas');if(!el||e.target.closest('.touch-hotspot')||e.target.closest('button'))return;
+ pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});touchMoved=false;
+ try{el.setPointerCapture(e.pointerId)}catch{}
+ const pp=pointerPositions();
+ if(pp.length===2)gestureStart={distance:distance(pp[0],pp[1]),zoom:state.zoom};
+});
+root.addEventListener('pointermove',e=>{
+ if(!pointers.has(e.pointerId)||state.page!=='detail')return;
+ const previous=pointers.get(e.pointerId),dx=e.clientX-previous.x,dy=e.clientY-previous.y;
+ if(Math.abs(dx)+Math.abs(dy)>3)touchMoved=true;
+ pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(pointers.size===2 && gestureStart){const [a,b]=pointerPositions();state.zoom=Math.min(4.5,Math.max(1,gestureStart.zoom*distance(a,b)/Math.max(1,gestureStart.distance)));if(state.zoom===1){state.x=state.y=0;}clampPan();updateZoom();return;}
+ if(state.zoom>1){state.x+=dx;state.y+=dy;clampPan();updateZoom();}
+});
+root.addEventListener('pointerup',e=>{
+ if(!pointers.has(e.pointerId)||state.page!=='detail')return;
+ const before=pointers.size; pointers.delete(e.pointerId);
+ if(before===2){gestureStart=null;touchMoved=true;return;}
+ if(!touchMoved&&state.labView==='photo'){
+  const el=document.querySelector('#lab-canvas');if(!el)return;
+  const frame=document.querySelector('#photo-frame');if(!frame)return;
+  const rect=frame.getBoundingClientRect();
+  const px=Math.min(1,Math.max(0,(e.clientX-rect.left)/rect.width));
+  const py=Math.min(1,Math.max(0,(e.clientY-rect.top)/rect.height));
+  if(editorMode){const spot=labData[me().id].spots[state.calibrateSpot];if(spot){spot.x=Math.round(px*1000)/10;spot.y=Math.round(py*1000)/10;render();}return;}
+  state.zoom=state.zoom<1.6?2.5:Math.min(4.5,state.zoom+.6);
+  state.x=(0.5-px)*frame.clientWidth*state.zoom;
+  state.y=(0.5-py)*frame.clientHeight*state.zoom;
+  state.photoPoint={x:Math.min(100,Math.max(0,px*100)),y:Math.min(100,Math.max(0,py*100))};
+  clampPan();updateZoom();
+  const dot=document.querySelector('.photo-focus-dot');if(dot){dot.style.left=state.photoPoint.x+'%';dot.style.top=state.photoPoint.y+'%';dot.style.display='block';}
+ }
+});
+root.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);if(pointers.size<2)gestureStart=null;});
+render();loadLocalPhotos();
+// iPad: double tap in empty photo area resets the image to the full object.
+let lastCanvasTap=0;
+root.addEventListener('pointerup',e=>{
+ if(state.page!=='detail'||!e.target.closest('#lab-canvas')||e.target.closest('button'))return;
+ const now=Date.now();if(now-lastCanvasTap<320){state.zoom=1;state.x=0;state.y=0;clampPan();updateZoom();lastCanvasTap=0;}else lastCanvasTap=now;
+});
+});
+  </script>
+<style>
+.pilot-feedback{border:1px solid #8b805f;background:#1e2b22;padding:18px;margin:24px auto;max-width:650px;text-align:center}.pilot-feedback strong{font-size:19px}.pilot-feedback p{color:#bebba9;font-size:13px}.pilot-feedback>div{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.pilot-feedback button{padding:13px 21px;background:#384735;color:#f4e7c6;border:1px solid #b29965;font-size:15px;min-height:48px}.pilot-dashboard{background:#1b281f;border:1px solid #af9160;padding:20px;margin:25px 0;overflow-x:auto}.pilot-dashboard h2{font:27px Georgia,serif}.pilot-dashboard p{font-size:13px;line-height:1.6}.pilot-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.pilot-kpis div{padding:12px;background:#2b392e;display:flex;flex-direction:column}.pilot-kpis b{color:#edce8a;font-size:25px}.pilot-kpis span{font-size:12px}.pilot-table{overflow-x:auto}.pilot-table table{width:100%;border-collapse:collapse;font-size:12px;min-width:590px}.pilot-table td,.pilot-table th{padding:10px;text-align:left;border-bottom:1px solid #495143}.pilot-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.pilot-actions button{min-height:44px}
+</style>
+
+<style id="museum-tablet-v81">
+:root{--bg:#111c19;--panel:#1d2e29;--gold:#d9b578;--paper:#f7eddd;--muted:#c2c8bd}
+body{font-size:17px;background:linear-gradient(170deg,#111c19,#172720 68%,#101b18)}
+.main{width:min(calc(100% - 40px),1280px)}
+.masthead{min-height:72px;padding:12px max(20px,calc((100vw - 1280px)/2));position:sticky;top:0;backdrop-filter:blur(18px);background:rgba(16,29,24,.94)}
+.brand strong{font-size:15px;letter-spacing:.09em}.brand small{letter-spacing:.1em;font-size:9px}.tiny-maker{font-size:9px}.tiny-maker b{font-size:11px}
+.museum-hero{grid-template-columns:1.05fr .95fr;min-height:0;gap:26px;padding:32px 0}.museum-hero h1{white-space:normal;font-size:clamp(48px,5.7vw,86px);letter-spacing:-.055em;line-height:.96;margin:18px 0}.museum-hero .hero-lead{font-size:clamp(23px,2.7vw,31px);line-height:1.18}.museum-hero .hero-intro{font-size:17px;line-height:1.5;color:#d8ddd1;max-width:580px}.museum-hero .hero-visual{height:390px;padding:8px;border-radius:24px;background:#24342c}.museum-hero .hero-visual-caption{border-radius:12px;bottom:14px;left:14px;right:14px}
+.museum-time{font-size:13px;color:#cdd3c7;margin-top:18px}.hero-actions{gap:12px;margin-top:24px}.btn{border-radius:14px;min-height:57px;font-size:16px;padding:13px 22px;letter-spacing:0;gap:12px}.primary-cta{min-height:70px;font-size:20px;padding:18px 27px;box-shadow:0 7px 20px #0004}.quiet-cta{min-height:62px}
+.three-tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 26px}.three-tips>div{border:1px solid #566652;background:#24362d;display:flex;align-items:center;gap:13px;border-radius:14px;padding:13px 16px;font-weight:600;font-size:16px}.three-tips b{background:#d9b578;color:#16221b;width:37px;height:37px;display:grid;place-items:center;border-radius:50%;font-size:19px;flex:none}
+.collection-intro{padding:24px 0;align-items:center}.collection-intro h2{font-size:clamp(34px,4vw,50px)}.collection-intro p{font-size:16px;color:#d0d6ca}.collection-progress{border-radius:14px;min-width:158px}
+.object-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.object-card{border-radius:20px;padding:11px;background:#22322b;box-shadow:0 7px 22px #0002}.object-card .art-card{height:225px;border-radius:12px}.card-upper{padding:0 5px 10px}.card-state{font-size:12px;letter-spacing:0;padding:8px 11px;border:1px solid #9a8c68;border-radius:30px;color:#f9e5b7}.card-details{padding:15px 8px 8px}.card-topic{letter-spacing:.12em;font-size:11px}.card-details h3{font-size:29px;margin:8px 0}.card-details p{font-size:15px;color:#d4d6c9}.card-bottom{font-size:14px}.card-bottom strong{font-size:16px}
+.principle{border-radius:20px;margin-top:22px}.principle p{color:#cbd0c5;font-size:15px}
+.station-title-row h1{font-size:clamp(38px,5vw,64px)}.station-layout{gap:22px}.details-column{padding:22px}.details-column h2{font-size:clamp(35px,3.5vw,52px)}.lead-copy{font-size:18px;line-height:1.45}.facts{font-size:13px}.field-note p{font-size:15px;line-height:1.5}
+.breadcrumbs button{min-height:46px;padding:0 10px}.stepper{gap:7px}.stepper span{font-size:12px;letter-spacing:.03em;white-space:nowrap}.stepper span b{font-size:12px}
+.touchlab-layout{grid-template-columns:minmax(0,1.25fr) minmax(290px,.75fr);gap:16px}.touchlab-gallery,.touchlab-inspector{min-width:0}.lab-titlebar h2{font-size:clamp(27px,3vw,38px)}.touch-canvas{border-radius:18px;min-height:420px;background:#202923}.touch-hotspot{min-width:47px;min-height:47px;display:grid;place-items:center}.touch-hotspot span{font-weight:700;font-size:18px}.lab-pill{min-width:50px;min-height:50px;font-size:17px}.lab-brief h2{font-size:30px}.lab-brief p{font-size:17px;line-height:1.5}.lab-fact h3{font-size:27px}.lab-fact p{font-size:17px;line-height:1.5}.lab-inspector-footer .btn{min-height:64px;font-size:18px}.lab-zoom-buttons button,.lab-toggle,.lab-focus-button{min-width:52px;min-height:50px;border-radius:12px}
+.field-option,.research-slot,.compare-select select{min-height:56px;border-radius:12px;font-size:17px}.field-panel h3{font-size:31px}.field-panel p{font-size:17px}.workbench-task{padding:24px}.task-question{font-size:19px}
+button:focus-visible,a:focus-visible{outline:4px solid #f3d38b;outline-offset:3px}
+@media(max-width:1000px){.museum-hero{grid-template-columns:1fr 1fr}.museum-hero .hero-visual{height:330px}.object-grid{grid-template-columns:repeat(2,1fr)}.touchlab-layout{grid-template-columns:1fr}.touch-canvas{min-height:460px}.touchlab-inspector{border-radius:18px}.tiny-maker{display:none}}
+@media(max-width:650px){.main{width:calc(100% - 24px)}.masthead{padding:10px 12px}.museum-hero{grid-template-columns:1fr;padding:20px 0}.museum-hero h1{font-size:50px}.museum-hero .hero-visual{height:270px}.three-tips{grid-template-columns:1fr;gap:7px}.three-tips>div{min-height:55px}.object-grid{grid-template-columns:1fr}.object-card .art-card{height:220px}.collection-intro{flex-direction:column;align-items:stretch}.collection-progress{text-align:left}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions .btn{width:100%}.touch-canvas{min-height:340px}.station-title-row h1{font-size:36px}.stepper{overflow:auto;white-space:nowrap}.footer{width:calc(100% - 24px)}.brand strong{font-size:12px}.brand small{font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<style id="museum-game-82">
+:root{--gold:#deb976;--gold-soft:#f2d7a1}
+.mode-choice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:14px;border:1px solid rgba(218,184,112,.3);background:#19261e;border-radius:20px;max-width:800px}
+.mode-choice>span{font-size:15px;font-weight:700;min-width:100%;color:#f3e7cf}
+.mode-chip{min-height:52px;padding:12px 18px;border-radius:999px;border:2px solid #66725c;background:#243329;color:#fff1d2;font-size:15px;font-weight:700}
+.mode-chip.selected{background:#e4bc75;color:#18231b;border-color:#e4bc75}
+.mode-chip:focus-visible{outline:3px solid #fff5d5;outline-offset:3px}
+.mode-choice small{color:#c5c6b5;font-size:13px;line-height:1.4;flex-basis:100%}
+.station-mode{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#203027;padding:14px 17px;border-radius:16px;margin:8px 0 18px;border:1px solid rgba(218,184,112,.22);font-size:15px}
+.station-mode span:first-child{color:#edd09a;font-weight:700}
+.station-mode span:last-child{color:#d6d0bd}
+.finish-count{font-size:20px;font-weight:700;letter-spacing:.02em;background:#243829;border:1px solid #8f9c72;display:inline-block;padding:14px 20px;border-radius:99px;margin:16px auto 20px;color:#f0dfba}
+.report-seal span{background:#e5bf7e;color:#1e2e21;border-radius:50%;display:inline-grid;place-items:center;width:78px;height:78px;font-size:42px}
+.object-card:active,.btn:active,.field-option:active{transform:scale(.985)}
+@media (max-width:760px){.mode-choice{align-items:stretch}.mode-chip{flex:1 1 130px}.station-mode{flex-direction:column;align-items:flex-start}.finish-count{font-size:17px}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+  <div id="app"><div class="loading">Die Sammlung wird vorbereitet …</div></div>
+  <noscript>Bitte JavaScript aktivieren, damit die interaktiven Museumsstationen funktionieren.</noscript>
+
+<script>
+(function(){
+  const badge=document.createElement('aside');badge.id='pwa-status';badge.setAttribute('aria-live','polite');
+  badge.style.cssText='position:fixed;bottom:env(safe-area-inset-bottom, 12px);right:12px;z-index:9999;background:#17271f;color:#f5daa5;border:1px solid #ad8851;padding:8px 13px;font:12px Arial,sans-serif;border-radius:8px;max-width:270px;box-shadow:0 5px 22px #0007;pointer-events:none;';
+  document.body.append(badge);
+  function update(){badge.textContent=navigator.onLine?'Online · App bereit':'Offline · gespeicherte Fotos verfügbar';}
+  window.addEventListener('online',update);window.addEventListener('offline',update);update();
+  if('serviceWorker' in navigator && location.protocol==='https:'){
+   navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(r=>navigator.serviceWorker.ready).catch(e=>{badge.textContent='Offline-Installation fehlgeschlagen';console.warn(e)});
+  }else if(location.protocol==='file:'){
+   badge.textContent='Für die App-Installation über HTTPS öffnen';
+  }
+})();
+</script>
+</body>
+</html>
