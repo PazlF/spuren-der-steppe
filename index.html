@@ -466,7 +466,7 @@ function setupExcavation(){
   revealDone=true;phase=2;
   stage.classList.add('excavation-cleaned-102');canvas.style.pointerEvents='none';fineCanvas.style.pointerEvents='none';
   path(1).classList.add('done');path(2).classList.add('active');step(2).classList.remove('locked');
-  step1Note.textContent='Fund freigelegt ✓ Das Originalfoto ist sichtbar. Jetzt maßstabsgetreu dokumentieren üben.';
+  step1Note.textContent='Fund freigelegt ✓ Das Originalfoto ist sichtbar. Jetzt die Übungs-Fotodokumentation beginnen.';
   safe.hidden=false;scale.hidden=false;boardZone.hidden=false;signboard.hidden=false;
   autoBtn.disabled=false;boardAuto.disabled=false;
   docNote.textContent='Jetzt dokumentieren: Maßstab links, fertige Stecktafel rechts. Ziehen oder einfach beide Platzieren-Tasten drücken.';
@@ -911,12 +911,14 @@ button:focus-visible,a:focus-visible{outline:4px solid #f3d38b;outline-offset:3p
 <style id="excavation-two-layers-102">
 /* Das Originalfoto liegt unter zwei fiktiven Erd-/Staubschichten. */
 #excavation-fine-dirt,#j87-fine-canvas{pointer-events:none!important}
-#excavation-stage #excavation-fine-dirt,#j87-stage #j87-fine-canvas{z-index:1}
+#excavation-stage #excavation-fine-dirt,.j87-stage #j87-fine-canvas{z-index:1}
 #excavation-stage #excavation-canvas,.j87-stage #j87-canvas{z-index:2}
 #excavation-stage.excavation-cleaned-102 #excavation-canvas,#excavation-stage.excavation-cleaned-102 #excavation-fine-dirt,
 .j87-stage.j87-cleaned-102 #j87-canvas,.j87-stage.j87-cleaned-102 #j87-fine-canvas{opacity:0;transition:opacity .65s ease}
 .excavation-page .excavation-scale,.excavation-page .excavation-signboard{z-index:4}
 .excavation-page .excavation-safezone,.excavation-page .excavation-boardzone{z-index:3}
+#excavation-stage #excavation-hint,#excavation-stage #excavation-toolghost{z-index:3}
+#excavation-stage #excavation-flash{z-index:5;pointer-events:none}
 .exc-tool:disabled,#j87-brush:disabled,#j87-spatel:disabled{opacity:.46;cursor:not-allowed}
 #j87-brush,#j87-spatel{min-height:54px}
 </style>
