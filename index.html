@@ -432,15 +432,15 @@ function setupExcavation(){
  grad.addColorStop(0,'#96704e');grad.addColorStop(.48,'#c7a16e');grad.addColorStop(1,'#775b40');
  ctx.fillStyle=grad;ctx.fillRect(0,0,width,height);
  for(let i=0;i<900;i++){ctx.fillStyle=i%3?'rgba(72,49,28,.20)':'rgba(245,220,171,.35)';ctx.beginPath();ctx.arc(random()*width,random()*height,1+random()*3,0,Math.PI*2);ctx.fill();}
- fineCtx.fillStyle='rgba(146,123,90,.76)';fineCtx.fillRect(0,0,width,height);
- for(let i=0;i<1100;i++){fineCtx.fillStyle=i%3?'rgba(86,64,41,.14)':'rgba(233,217,173,.30)';fineCtx.beginPath();fineCtx.arc(random()*width,random()*height,.5+random()*2.3,0,Math.PI*2);fineCtx.fill();}
+ const fineInfo=window.SKYTHEN_RESIDUE_103(fineCanvas,stage.querySelector('img'),gridW,gridH);
+ const fineMask=fineInfo.mask,fineTotal=fineInfo.total;
  function activateBrush(){
   if(toolPhase==='coarse'){step1Note.textContent='Noch etwas grobe Erde entfernen, dann ist der Pinsel dran.';return;}
   if(toolPhase==='fine'){
    currentTool='brush';spatulaBtn.disabled=true;spatulaBtn.classList.remove('active');brushBtn.classList.add('active');
    ghost.textContent='Pinsel aktiv · feinen Dreck entfernen';
    hint.hidden=false;hint.textContent='Jetzt mit dem Pinsel den Staub vom Fundstück streichen';
-   step1Note.textContent='Grob geschafft ✓ Jetzt den feinen Staub entfernen, damit das Originalfoto darunter sichtbar wird.';
+   step1Note.textContent='Nur noch die sichtbaren Schmutzflecken vom Fund wegpinseln. Der Spatel kann sie nicht entfernen.';
   }
  }
  spatulaBtn.addEventListener('click',()=>{if(toolPhase!=='coarse')return;currentTool='spatel';spatulaBtn.classList.add('active');brushBtn.classList.remove('active');ghost.textContent='Spatel aktiv · grobe Erde';});
@@ -449,7 +449,7 @@ function setupExcavation(){
   const cells=which==='coarse'?coarseCells:fineCells;
   for(let yy=0;yy<gridH;yy++)for(let xx=0;xx<gridW;xx++){
    const cx=(xx+.5)*width/gridW,cy=(yy+.5)*height/gridH,idx=yy*gridW+xx;
-   if(!cells[idx]&&Math.hypot(cx-x,cy-y)<=rad){cells[idx]=1;if(which==='coarse')coarseCount++;else fineCount++;}
+   if(!cells[idx]&&(which==='coarse'||fineMask[idx])&&Math.hypot(cx-x,cy-y)<=rad){cells[idx]=1;if(which==='coarse')coarseCount++;else fineCount++;}
   }
  }
  function erasePoint(g,x,y,rad,soft){
@@ -480,27 +480,27 @@ function setupExcavation(){
   for(let j=0;j<=n;j++){
    const xx=p.x+(x-p.x)*j/n,yy=p.y+(y-p.y)*j/n;
    if(currentTool==='spatel'){
-    erasePoint(ctx,xx,yy,rad,false);markCells(xx,yy,rad*.9,'coarse');
+    if(toolPhase==='coarse'){erasePoint(ctx,xx,yy,rad,false);markCells(xx,yy,rad*.9,'coarse');}
    }else{
-    erasePoint(ctx,xx,yy,rad*1.08,false);erasePoint(fineCtx,xx,yy,rad,true);markCells(xx,yy,rad*.80,'fine');
+    erasePoint(fineCtx,xx,yy,rad,true);markCells(xx,yy,rad*.85,'fine');
    }
   }
   lastStroke={x,y};
   if(currentTool==='spatel'){
    const p=Math.round(100*coarseCount/coarseCells.length);
-   progressLabel.textContent='1/2 · Grobe Erde: '+p+' %';progressBar.style.width=Math.min(100,p/24*50)+'%';
-   if(p>=24&&toolPhase==='coarse'){
-    toolPhase='fine';brushBtn.disabled=false;
-    step1Note.textContent='Grob geschafft ✓ Jetzt Pinsel wählen und den feinen Dreck direkt vom Fundfoto entfernen.';
-    hint.hidden=false;hint.textContent='Pinsel antippen · feine Erde entfernen';
+   progressLabel.textContent='1/2 · Grobe Erde: '+Math.min(100,Math.round(p/38*100))+' %';progressBar.style.width=Math.min(50,p/38*50)+'%';
+   if(p>=38&&toolPhase==='coarse'){
+    toolPhase='fine';stage.classList.add('excavation-coarse-cleared-103');brushBtn.disabled=false;spatulaBtn.disabled=true;
+    step1Note.textContent='Grobe Erde weg ✓ Einzelne Flecken bleiben auf dem Fund. Nur der Pinsel entfernt sie.';
+    hint.hidden=false;hint.textContent='Jetzt Pinsel wählen und verbliebene Flecken wegpinseln';
    }
   }else{
-   const p=Math.round(100*fineCount/fineCells.length);
-   progressLabel.textContent='2/2 · Feiner Staub: '+p+' %';progressBar.style.width=(50+Math.min(50,p/32*50))+'%';
-   if(p>=32)finishReveal();
+   const p=Math.min(100,Math.round(100*fineCount/fineTotal));
+   progressLabel.textContent='2/2 · Schmutzflecken entfernt: '+p+' %';progressBar.style.width=(50+Math.min(50,p/80*50))+'%';
+   if(p>=80)finishReveal();
   }
  }
- canvas.addEventListener('pointerdown',e=>{if(phase!==1||excavationPointer!==null)return;e.preventDefault();excavationPointer=e.pointerId;lastStroke=null;try{canvas.setPointerCapture(e.pointerId)}catch{};if(currentTool==='spatel'||toolPhase==='fine')hint.hidden=true;erase(e);});
+ canvas.addEventListener('pointerdown',e=>{if(phase!==1||excavationPointer!==null||toolPhase==='fine'&&currentTool!=='brush'){if(toolPhase==='fine'&&currentTool!=='brush')step1Note.textContent='Pinsel antippen: Nur damit gehen die letzten Schmutzflecken weg.';return;}e.preventDefault();excavationPointer=e.pointerId;lastStroke=null;try{canvas.setPointerCapture(e.pointerId)}catch{};if(currentTool==='spatel'||toolPhase==='fine')hint.hidden=true;erase(e);});
  canvas.addEventListener('pointermove',e=>{if(phase===1&&excavationPointer===e.pointerId){e.preventDefault();erase(e);}});
  for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,e=>{if(excavationPointer===e.pointerId){excavationPointer=null;lastStroke=null;}});
  // Dokumentationsfoto: zwei vorgefertigte Hilfsmittel, keine Formulare und keine Texteingabe.
@@ -922,6 +922,50 @@ button:focus-visible,a:focus-visible{outline:4px solid #f3d38b;outline-offset:3p
 .exc-tool:disabled,#j87-brush:disabled,#j87-spatel:disabled{opacity:.46;cursor:not-allowed}
 #j87-brush,#j87-spatel{min-height:54px}
 </style>
+<script id="skythen-residue-103">
+/* Die zweite Reinigungsschicht sind lokale Schmutzreste, keine gleichmäßige Vollbildhaut. */
+window.SKYTHEN_RESIDUE_103=function(canvas,img,cols,rows){
+ const w=canvas.width,h=canvas.height,g=canvas.getContext('2d'),mask=new Uint8Array(cols*rows);
+ if(!g)return {mask,total:1};
+ g.clearRect(0,0,w,h);
+ const nw=img?.naturalWidth||w,nh=img?.naturalHeight||h,k=Math.min(w/nw,h/nh);
+ const fw=nw*k,fh=nh*k,left=(w-fw)/2,top=(h-fh)/2;
+ const coords=[[.30,.24,.115],[.66,.29,.125],[.51,.48,.15],[.27,.62,.105],[.72,.69,.125],[.49,.80,.11]];
+ const regions=coords.map(([u,v,s])=>({x:left+u*fw,y:top+v*fh,r:Math.max(18,Math.min(fw,fh)*s)}));
+ let seed=107;function rnd(){seed=seed*16807%2147483647;return seed/2147483647;}
+ for(const spot of regions){
+  const {x,y,r}=spot;
+  const grad=g.createRadialGradient(x-r*.13,y-r*.1,r*.04,x,y,r);
+  grad.addColorStop(0,'rgba(104,77,46,.97)');
+  grad.addColorStop(.40,'rgba(126,94,54,.94)');
+  grad.addColorStop(.72,'rgba(150,118,72,.75)');
+  grad.addColorStop(1,'rgba(172,140,95,0)');
+  g.fillStyle=grad;g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();
+  for(let i=0;i<25;i++){
+   const ang=rnd()*Math.PI*2,dist=Math.sqrt(rnd())*r*.82;
+   const px=x+Math.cos(ang)*dist,py=y+Math.sin(ang)*dist,pr=1+rnd()*r*.065;
+   g.fillStyle=i%3?'rgba(103,79,48,.35)':'rgba(219,189,137,.48)';
+   g.beginPath();g.arc(px,py,pr,0,Math.PI*2);g.fill();
+  }
+ }
+ let total=0;
+ for(let yy=0;yy<rows;yy++)for(let xx=0;xx<cols;xx++){
+  const cx=(xx+.5)*w/cols,cy=(yy+.5)*h/rows;
+  if(regions.some(s=>Math.hypot(cx-s.x,cy-s.y)<s.r*.88)){mask[yy*cols+xx]=1;total++;}
+ }
+ return {mask,total:Math.max(1,total)};
+};
+</script>
+<style id="excavation-residual-dirt-v103">
+/* Erste Erdschicht weicht nach grober Arbeit; lokale Rückstände bleiben nur für den Pinsel. */
+#excavation-stage.excavation-coarse-cleared-103 #excavation-canvas,
+.j87-stage.j87-coarse-cleared-103 #j87-canvas{opacity:0;transition:opacity .55s ease}
+#excavation-stage.excavation-coarse-cleared-103 #excavation-canvas,
+.j87-stage.j87-coarse-cleared-103 #j87-canvas{touch-action:none;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){
+#excavation-stage.excavation-coarse-cleared-103 #excavation-canvas,
+.j87-stage.j87-coarse-cleared-103 #j87-canvas{transition:none}}
+</style>
 </head>
 <body>
   <div id="app"><div class="loading">Die Sammlung wird vorbereitet …</div></div>
@@ -1044,8 +1088,8 @@ ctx=canvas.getContext('2d');const dustCtx=dustCanvas.getContext('2d');if(!ctx||!
 let seed=33;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
 ctx.fillStyle='#b39465';ctx.fillRect(0,0,cw,ch);
 for(let i=0;i<850;i++){ctx.fillStyle=i%2?'rgba(243,218,176,.4)':'rgba(87,59,33,.28)';ctx.beginPath();ctx.arc(rnd()*cw,rnd()*ch,1+rnd()*3,0,Math.PI*2);ctx.fill();}
-dustCtx.fillStyle='rgba(145,121,84,.72)';dustCtx.fillRect(0,0,cw,ch);
-for(let i=0;i<900;i++){dustCtx.fillStyle=i%2?'rgba(241,215,165,.28)':'rgba(87,64,38,.16)';dustCtx.beginPath();dustCtx.arc(rnd()*cw,rnd()*ch,.5+rnd()*2,0,Math.PI*2);dustCtx.fill();}
+const dustInfo=window.SKYTHEN_RESIDUE_103(dustCanvas,stage.querySelector('img'),24,18);
+const dustMask=dustInfo.mask,dustTotal=dustInfo.total;
 const gw=24,gh=18,roughCells=new Uint8Array(gw*gh),cleanCells=new Uint8Array(gw*gh);
 let coarseCount=0,cleanCount=0,phase='coarse',pointer=null,lastErase=null;
 brush=false;rough=false;painted=false;
@@ -1056,13 +1100,13 @@ pencil.onclick=()=>{
  brush=true;rough=true;spatel.disabled=true;
  pencil.style.background='#e6c387';pencil.style.color='#18251d';
  spatel.style.background='#354c39';spatel.style.color='#f3e2be';
- msg.textContent='Jetzt den feinen Staub wegpinseln, bis das Fundfoto darunter sichtbar wird.';
+ msg.textContent='Jetzt die sichtbaren Erd- und Staubflecken vom Fundstück pinseln.';
 };
 spatel.style.background='#e6c387';spatel.style.color='#18251d';
 function markCells(x,y,rad,kind){
  const arr=kind==='coarse'?roughCells:cleanCells;
  for(let row=0;row<gh;row++)for(let col=0;col<gw;col++){const idx=row*gw+col;
-  if(arr[idx])continue;
+  if(arr[idx]||(kind==='fine'&&!dustMask[idx]))continue;
   if(Math.hypot((col+.5)*cw/gw-x,(row+.5)*ch/gh-y)<rad){arr[idx]=1;if(kind==='coarse')coarseCount++;else cleanCount++;}
  }
 }
@@ -1075,19 +1119,19 @@ function erase(e){
  const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*cw/Math.max(1,rect.width),y=(e.clientY-rect.top)*ch/Math.max(1,rect.height),r=Math.min(cw,ch)*(brush?.065:.11);
  const from=lastErase||{x,y},steps=Math.max(1,Math.ceil(Math.hypot(x-from.x,y-from.y)/Math.max(5,r*.45)));
  for(let k=0;k<=steps;k++){const xx=from.x+(x-from.x)*k/steps,yy=from.y+(y-from.y)*k/steps;
-  if(brush){circleErase(ctx,xx,yy,r*1.1,false);circleErase(dustCtx,xx,yy,r,true);markCells(xx,yy,r*.8,'fine');}
-  else{circleErase(ctx,xx,yy,r,false);markCells(xx,yy,r*.9,'coarse');}
+  if(brush){circleErase(dustCtx,xx,yy,r,true);markCells(xx,yy,r*.85,'fine');}
+  else if(phase==='coarse'){circleErase(ctx,xx,yy,r,false);markCells(xx,yy,r*.9,'coarse');}
  }
  lastErase={x,y};
  if(!brush){const p=Math.round(100*coarseCount/roughCells.length);
-  $('#j87-pct').textContent='1/2 · Grobe Erde: '+p+' %';$('#j87-fill').style.width=Math.min(50,50*p/25)+'%';
-  if(p>=25&&phase==='coarse'){phase='fine';pencil.disabled=false;msg.textContent='Grob geschafft ✓ Jetzt den Pinsel wählen und den feinen Dreck entfernen.';}
- }else{const p=Math.round(100*cleanCount/cleanCells.length);
-  $('#j87-pct').textContent='2/2 · Feiner Staub: '+p+' %';$('#j87-fill').style.width=(50+Math.min(50,50*p/32))+'%';
-  if(p>=32&&!painted){painted=true;stage.classList.add('j87-cleaned-102');canvas.style.pointerEvents='none';dustCanvas.style.pointerEvents='none';msg.textContent='Fund sichtbar ✓ Jetzt darfst du ihn dokumentieren.';$('#j87-next').disabled=false;}
+  $('#j87-pct').textContent='1/2 · Grobe Erde: '+Math.min(100,Math.round(p/38*100))+' %';$('#j87-fill').style.width=Math.min(50,50*p/38)+'%';
+  if(p>=38&&phase==='coarse'){phase='fine';stage.classList.add('j87-coarse-cleared-103');pencil.disabled=false;spatel.disabled=true;msg.textContent='Grobe Erde weg ✓ Jetzt nur die verbliebenen Flecken mit dem Pinsel entfernen.';}
+ }else{const p=Math.min(100,Math.round(100*cleanCount/dustTotal));
+  $('#j87-pct').textContent='2/2 · Schmutzflecken entfernt: '+p+' %';$('#j87-fill').style.width=(50+Math.min(50,50*p/80))+'%';
+  if(p>=80&&!painted){painted=true;stage.classList.add('j87-cleaned-102');canvas.style.pointerEvents='none';dustCanvas.style.pointerEvents='none';msg.textContent='Fund sichtbar ✓ Jetzt darfst du ihn dokumentieren.';$('#j87-next').disabled=false;}
  }
 }
-canvas.addEventListener('pointerdown',e=>{if(painted||pointer!==null)return;e.preventDefault();pointer=e.pointerId;lastErase=null;try{canvas.setPointerCapture(e.pointerId)}catch{}erase(e);});
+canvas.addEventListener('pointerdown',e=>{if(painted||pointer!==null||phase==='fine'&&!brush){if(phase==='fine'&&!brush)msg.textContent='Pinsel auswählen – nur damit gehen die restlichen Flecken weg.';return;}e.preventDefault();pointer=e.pointerId;lastErase=null;try{canvas.setPointerCapture(e.pointerId)}catch{}erase(e);});
 canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&!painted){e.preventDefault();erase(e);}});
 for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,e=>{if(pointer===e.pointerId){pointer=null;lastErase=null;}});
 $('#j87-next').onclick=()=>{if(painted)next()};
