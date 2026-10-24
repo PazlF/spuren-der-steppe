@@ -798,11 +798,29 @@ root.addEventListener('pointerup',e=>{
 });
 root.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);if(pointers.size<2)gestureStart=null;});
 render();loadLocalPhotos();
-// iPad: double tap in empty photo area resets the image to the full object.
-let lastCanvasTap=0;
-root.addEventListener('pointerup',e=>{
+// iPad: reset on two deliberate taps, never after a drag or pinch gesture.
+let lastCanvasTap=0, lastCanvasTapX=0, lastCanvasTapY=0;
+const canvasTapPointers=new Map();
+root.addEventListener('pointerdown',e=>{
  if(state.page!=='detail'||!e.target.closest('#lab-canvas')||e.target.closest('button'))return;
- const now=Date.now();if(now-lastCanvasTap<320){state.zoom=1;state.x=0;state.y=0;clampPan();updateZoom();lastCanvasTap=0;}else lastCanvasTap=now;
+ if(canvasTapPointers.size)for(const p of canvasTapPointers.values())p.moved=true;
+ canvasTapPointers.set(e.pointerId,{x:e.clientX,y:e.clientY,moved:canvasTapPointers.size>0});
+});
+root.addEventListener('pointermove',e=>{
+ const p=canvasTapPointers.get(e.pointerId);
+ if(p&&Math.hypot(e.clientX-p.x,e.clientY-p.y)>12)p.moved=true;
+});
+root.addEventListener('pointerup',e=>{
+ const p=canvasTapPointers.get(e.pointerId);if(!p)return;
+ canvasTapPointers.delete(e.pointerId);
+ if(p.moved||canvasTapPointers.size){lastCanvasTap=0;return;}
+ const now=Date.now();
+ if(now-lastCanvasTap<320&&Math.hypot(e.clientX-lastCanvasTapX,e.clientY-lastCanvasTapY)<40){
+  state.zoom=1;state.x=0;state.y=0;clampPan();updateZoom();lastCanvasTap=0;
+ }else{lastCanvasTap=now;lastCanvasTapX=e.clientX;lastCanvasTapY=e.clientY;}
+});
+for(const eventName of ['pointercancel','lostpointercapture'])root.addEventListener(eventName,e=>{
+ if(canvasTapPointers.delete(e.pointerId))lastCanvasTap=0;
 });
 });
   </script>
