@@ -141,6 +141,58 @@ button,select,input { -webkit-tap-highlight-color:transparent; }
 @media (max-width:900px){.touchlab-gallery{padding:10px}.touchlab-inspector{padding:18px}.lab-zoom-buttons button{min-width:54px;min-height:54px}.touch-canvas{min-height:360px;}}
 @media (max-width:650px){.touch-canvas{aspect-ratio:4/5;min-height:320px}.touch-hotspot{--d:48px}.lab-toolbar > span{width:100%;line-height:1.5}.lab-toggle{min-height:52px}}
 @media (prefers-reduced-motion: reduce){.touch-hotspot{transition:none}}
+
+/* Museum tablet touch refinements – preserve the existing visual identity and gameplay. */
+@media (pointer:coarse) {
+  button, a, [role="button"], .object-card, .touch-hotspot {
+    -webkit-tap-highlight-color:transparent;
+  }
+  button, .btn, .icon-circle, .zoom-controls button,
+  .lab-zoom-buttons button, .lab-toggle, .lab-pill,
+  .lab-focus-button, .lab-mode-switch button {
+    touch-action:manipulation;
+  }
+  .icon-circle, .zoom-controls button, .lab-zoom-buttons button {
+    min-width:48px;
+    min-height:48px;
+  }
+  .breadcrumbs button, .text-button, .subtle-link {
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+  }
+  .choice, .evidence-choice {min-height:72px;}
+  .touch-hotspot {--d:52px;}
+  .lab-pill {min-width:52px;min-height:52px;}
+  .btn:not(:disabled):hover, .object-card:hover {
+    transform:none;
+  }
+  .btn:not(:disabled):active {background:var(--panel2);}
+  .btn-gold:not(:disabled):active {background:var(--gold-soft);}
+  .object-card:active {border-color:var(--gold);}
+  input, select, textarea {font-size:max(16px,1em);}
+}
+@media (pointer:coarse) and (min-width:700px) and (max-width:1366px) {
+  .main {width:calc(100% - 48px);}
+  .masthead {padding-left:24px;padding-right:24px;}
+  .footer {width:calc(100% - 48px);}
+  .hero {gap:28px;}
+  .hero-intro, .collection-intro p, .lead-copy, .lab-brief p {
+    line-height:1.65;
+  }
+  .card-details p, .field-note p, .lab-fact p {font-size:max(13px,1em);}
+  .card-topic, .card-state, .lab-fact-meta span {font-size:11px;}
+  .touchlab-gallery {min-width:0;}
+  .lab-toolbar {row-gap:14px;}
+  .lab-mode-switch button {min-height:60px;}
+  .lab-toggle, .import-label, .lab-focus-button {min-height:54px;}
+  .stepper {flex-wrap:wrap;row-gap:10px;}
+}
+@media (pointer:coarse) and (max-width:699px) {
+  .touch-hotspot {--d:48px;}
+  .lab-pill {min-width:48px;min-height:48px;}
+}
+
 </style>
   <script>
 /*
