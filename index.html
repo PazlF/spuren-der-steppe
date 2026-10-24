@@ -384,7 +384,7 @@ function statsExport(){const blob=new Blob([JSON.stringify(stats,null,2)],{type:
 function pilotDashboard(){const pct=(a,b)=>b?Math.round(100*a/b)+' %':'–';return `<div class="pilot-dashboard"><h2>Besucher-Testmodus · nur auf diesem Gerät</h2><p>Aggregierte Nutzungszahlen ohne Namen, IP-Adressen, Nutzerkennungen oder Serverübertragung. Besuche gelten als abgebrochen, wenn eine Station vor dem Fundbericht verlassen wird. Bearbeitungszeiten messen Zeit bis zum Fundbericht einschließlich möglicher Pausen.</p><div class="pilot-kpis"><div><b>${stats.starts}</b><span>Stationsstarts</span></div><div><b>${stats.completed}</b><span>Abschlüsse</span></div><div><b>${pct(stats.completed,stats.starts)}</b><span>Abschlussquote</span></div><div><b>${stats.abandoned}</b><span>Abbrüche</span></div></div><div class="pilot-table"><table><thead><tr><th>Fundstück</th><th>Starts</th><th>Fertig</th><th>Abbruch</th><th>Ø Dauer</th><th>Verständlich</th></tr></thead><tbody>${pack.objects.map(o=>{const v=objStats(o.id);return `<tr><td>${esc(o.short)}</td><td>${v.starts}</td><td>${v.complete}</td><td>${v.aborts}</td><td>${v.complete?Math.round(v.secondsTotal/v.complete)+' s':'–'}</td><td>${v.feedback.klar}/${v.feedback.teilweise}/${v.feedback.unklar}</td></tr>`}).join('')}</tbody></table></div><p>Feedback-Reihenfolge: Ja / Teilweise / Nein. Die Daten sind nur lokal gespeichert und können durch Browserdaten-Löschung verschwinden. Nicht als repräsentative Lernwirkungsmessung interpretieren.</p><div class="pilot-actions"><button class="btn btn-outline" data-action="pilot-export">Daten als JSON exportieren</button><button class="btn btn-outline" data-action="pilot-reset">Lokale Testdaten löschen</button><button class="btn btn-outline" data-action="pilot-close">Auswertung schließen</button></div></div>`;}
 let showPilot=false;
 
-const state={shortMode:true,page:'gallery',objectId:null,selected:[],checked:false,done:new Set(),zoom:1,x:0,y:0,showHint:false,showSources:false,labView:'photo',activeSpot:null,discovered:{},photoPoint:null,calibrateSpot:0,hotspotsVisible:true,comparePick:[0,1],compareNote:false,fieldAnswer:null,fieldChecked:false,fieldDocument:null};
+const state={shortMode:true,page:'gallery',objectId:null,selected:[],checked:false,done:new Set(),zoom:1,x:0,y:0,showHint:false,showSources:false,labView:'photo',activeSpot:null,discovered:{},photoPoint:null,calibrateSpot:0,hotspotsVisible:true,labTool:'none',dossierNotes:{},labLightX:50,labLightY:50,comparePick:[0,1],compareNote:false,fieldAnswer:null,fieldChecked:false,fieldDocument:null};
 let inactivityTimer=null,lastPointer=null;
 const pointers=new Map(); let touchMoved=false,gestureStart=null;
 const localPhotos=Object.create(null);
@@ -431,7 +431,7 @@ const esc=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':
 const me=()=>byId[state.objectId];
 const progress=()=>`${state.done.size} / ${pack.objects.length}`;
 const museum=pack.exhibition;
-function resets(){state.selected=[];state.checked=false;state.zoom=1;state.x=0;state.y=0;state.showHint=false;state.showSources=false;state.labView='photo';state.activeSpot=null;state.photoPoint=null;state.calibrateSpot=0;state.fieldAnswer=null;state.fieldChecked=false;state.fieldDocument=null;pointers.clear();gestureStart=null;}
+function resets(){state.selected=[];state.checked=false;state.zoom=1;state.x=0;state.y=0;state.showHint=false;state.showSources=false;state.labView='photo';state.activeSpot=null;state.photoPoint=null;state.labTool='none';state.labLightX=50;state.labLightY=50;state.calibrateSpot=0;state.fieldAnswer=null;state.fieldChecked=false;state.fieldDocument=null;pointers.clear();gestureStart=null;}
 function go(page,id){if(page==='shortfinish'){visitComplete();state.done.add(state.objectId);page='report';}if(page==='object' && id)visitStart(id);else if(activeVisit && ['gallery','about','final'].includes(page))visitAbort();if(id)state.objectId=id;state.page=page;stepMark(page);resets();render();window.scrollTo(0,0);}
 function restart(){if(activeVisit)visitAbort();state.done.clear();state.discovered={};state.objectId=null;go('gallery');}
 function idle(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(()=>{if(pilotEnabled){stats.idleResets++;recordSave();}restart();},Math.max(8,Number(museum.idleMinutes)||8)*60000)}
@@ -606,15 +606,18 @@ function detailPage(){
     ${d.spots.map((sp,i)=>`<button type="button" class="touch-hotspot ${found.has(i)?'revealed':''} ${state.activeSpot===i?'active':''} ${state.hotspotsVisible?'':'spot-hidden'}" style="left:${sp.x}%;top:${sp.y}%" data-action="spot" data-index="${i}" aria-label="Detail ${i+1}: ${esc(sp.label)}" aria-pressed="${state.activeSpot===i}"><span>${found.has(i)?'✓':i+1}</span></button>`).join('')}
    </div>
   </div>
+  <div class="research-light ${state.labTool==='light'?'on':''}" id="research-light" style="--light-x:${state.labLightX}%;--light-y:${state.labLightY}%" aria-hidden="true"></div><div class="research-loupe ${state.labTool==='loupe'?'on':''}" id="research-loupe" aria-hidden="true"></div>
   <div class="touch-photo-error"><strong>Das Originalfoto ist noch nicht geladen.</strong><span>Das lokale Foto konnte nicht geladen werden. Bitte prüfe, ob der Ordner assets/photos vollständig mit dem Spiel hochgeladen wurde. Du kannst das Originalfoto auch hier auswählen. Es wird keine Zeichnung als Ersatz angezeigt.</span><label class="import-label">Originalfoto auswählen<input class="photo-import" type="file" accept="image/png,image/jpeg,image/webp" data-id="${o.id}"></label><a target="_blank" rel="noopener" href="https://www.metmuseum.org/art/collection/search/${o.metId}">Zum Original im Met-Katalog ↗</a></div>
   <div class="touch-corner">ORIGINALFOTOGRAFIE · THE MET · CC0</div>
  </div>
+ <div class="research-tools" role="group" aria-label="Digitale Untersuchungswerkzeuge"><button type="button" data-action="research-tool" data-tool="none" class="${state.labTool==='none'?'active':''}">Hand / Zoom</button><button type="button" data-action="research-tool" data-tool="light" class="${state.labTool==='light'?'active':''}">☼ Untersuchungslampe</button><button type="button" data-action="research-tool" data-tool="loupe" class="${state.labTool==='loupe'?'active':''}">⌕ Lupe</button></div><p class="research-instruction">${state.labTool==='light'?'Finger über das Foto bewegen: simulierte Lichtführung, keine neue Materialanalyse.':state.labTool==='loupe'?'Auf das Foto tippen, um ein Detail zu vergrößern. Zwei Finger zum Zoomen bleiben aktiv.':'Originalfoto frei bewegen und mit zwei Fingern zoomen.'}</p>
  <div class="lab-toolbar"><div class="lab-zoom-buttons"><button data-action="zoom-out" aria-label="Verkleinern">−</button><span id="zoom-readout">${state.zoom.toFixed(1)}×</span><button data-action="zoom-in" aria-label="Vergrößern">+</button><button data-action="zoom-reset" aria-label="Gesamtansicht">⟲</button>${o.id==='reiter'?'<button class="r98-focus" data-action="zoom-focus-horse" type="button">Pferdekopf</button><button class="r98-focus" data-action="zoom-focus-rider" type="button">Reiterkopf</button><button class="r98-focus" data-action="zoom-focus-reiter" type="button">Ganzes Motiv</button>':''}</div><button type="button" class="lab-toggle" data-action="toggle-spots" aria-pressed="${state.hotspotsVisible}">${state.hotspotsVisible?'◉ Markierungen ausblenden':'◎ Markierungen zeigen'}</button><span>Tippe auf die Punkte · 2 Finger zum Zoomen</span></div>
  ${editorMode?`<div class="calibration-panel"><strong>REDAKTION · Koordinaten auf dem Originalfoto anpassen</strong><p>Detailnummer wählen und danach das entsprechende Bildmerkmal antippen. Die Bildposition wird neu gesetzt und kann als JSON-Datei exportiert werden. Dieser Modus ist nicht für Museumsbesucher bestimmt. Kalibrierung erst nach sorgfältiger Bildkontrolle freigeben.</p><div class="calib-tools">${d.spots.map((sp,i)=>`<button class="calib-choice ${state.calibrateSpot===i?'selected':''}" data-action="calib-pick" data-index="${i}">${i+1} · ${esc(sp.label)} (${sp.x.toFixed(1)}, ${sp.y.toFixed(1)})</button>`).join('')}</div><button class="btn btn-outline" data-action="export-spots">Alle Hotspot-Koordinaten exportieren ↓</button></div>`:''}
  <div class="review-banner"><strong>Fachlicher Status:</strong> Alle sieben Originalfotografien liegen lokal vor. Die 30 Markierungen sind visuell vorpositioniert, jedoch noch nicht kuratorisch abgenommen. <a href="./FACHPRUEFUNG.html" target="_blank" rel="noopener">Prüfliste öffnen ↗</a></div><p class="lab-auth-note">Originalfoto: <strong>The Metropolitan Museum of Art, Public Domain.</strong> Die Fundpunkte wurden visuell gesetzt und müssen für die Ausstellung noch am Bild kontrolliert und fachlich freigegeben werden.</p>
  </div><aside class="touchlab-inspector"><div class="lab-brief"><span class="kicker">DEIN ENTDECKUNGSAUFTRAG</span><h2>${esc(o.short)}</h2><p>${esc(d.prompt)}</p></div>
   <div class="lab-discovery-bar">${d.spots.map((sp,i)=>`<button data-action="spot" data-index="${i}" title="${esc(sp.label)}" class="lab-pill ${found.has(i)?'found':''} ${state.activeSpot===i?'selected':''}">${found.has(i)?'✓':i+1}<span class="visually-hidden">${esc(sp.label)}</span></button>`).join('')}<span>${found.size} von ${d.spots.length} Details</span></div>
   <div class="lab-fact" aria-live="polite">${current?`<div class="lab-fact-meta"><span>${esc(current.tag)}</span><small>${esc(current.cert)}</small></div><h3>${esc(current.label)}</h3><p>${esc(current.body)}</p><button type="button" class="lab-focus-button" data-action="focus-spot">⌕ Detail vergrößern</button><div class="lab-fact-source">Quelle: ${esc(current.source)} · <a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">Originalbeleg ↗</a></div>`:`<div class="lab-empty-icon">✧</div><h3>Tippe auf einen Fundpunkt!</h3><p>Jeder goldene Punkt verrät dir ein neues Detail.</p><span class="lab-empty-note">Alternativ kannst du die nummerierten Felder oberhalb dieses Textes antippen.</span>`}</div>
+  <section class="research-dossier" aria-label="Deine digitale Fundakte"><div class="research-dossier-head"><span>FUNDLABOR · DOKUMENTATION</span><h3>Fundakte: ${esc(o.short)}</h3><small>Beobachtungen aus freigegebenen Texten der Station · keine eigene Materialmessung</small></div><div class="research-dossier-progress">${(state.dossierNotes[o.id]||[]).length} von ${d.spots.length} Beobachtungen notiert</div><div class="research-dossier-list">${(state.dossierNotes[o.id]||[]).length?(state.dossierNotes[o.id]||[]).map(i=>`<div class="research-dossier-entry"><b>${esc(d.spots[i].label)}</b><span>${esc(d.spots[i].tag)} · ${esc(d.spots[i].cert)}</span></div>`).join(''):'<p>Wähle einen Fundpunkt und übernimm seine Beobachtung in deine Akte.</p>'}</div>${current?`<button type="button" class="research-save" data-action="research-save">${(state.dossierNotes[o.id]||[]).includes(state.activeSpot)?'✓ Bereits in Fundakte':'＋ Beobachtung übernehmen'}</button>`:''}<p>Didaktisches Untersuchungsprotokoll, kein archäologischer Originalbefund.</p></section>
   <div class="lab-inspector-footer"><p>${found.size===d.spots.length?'Alle Details entdeckt. Jetzt kannst du die Forschungsfrage lösen.':`Noch ${d.spots.length-found.size} Stellen kannst du untersuchen. Du darfst jederzeit weiterspielen.`}</p><button class="btn btn-gold btn-wide" data-action="next" data-to="${state.shortMode?'fieldmission':'compare'}">${found.size===d.spots.length?'Weiter zum Vergleich':'Zum Detailvergleich'} <span>→</span></button></div>
  </aside></section></main>${footer()}`;
 }
@@ -692,6 +695,8 @@ root.addEventListener('click',(ev)=>{const b=ev.target.closest('[data-action]');
  if(a==='field-check'&&state.page==='fieldmission'&&state.fieldAnswer!==null){state.fieldChecked=true;render();return;}
  if(a==='field-document'&&state.page==='fieldmission'){state.fieldDocument=b.dataset.choice;render();return;}
  if(a==='compare-reflect'&&state.page==='compare'){state.compareNote=!state.compareNote;render();return;}
+ if(a==='research-tool'&&state.page==='detail'){state.labTool=b.dataset.tool;render();return;}
+ if(a==='research-save'&&state.page==='detail'&&state.activeSpot!==null){const id=me().id;const notes=state.dossierNotes[id]||(state.dossierNotes[id]=[]);if(!notes.includes(state.activeSpot))notes.push(state.activeSpot);render();return;}
  if(a==='toggle-spots'&&state.page==='detail'){state.hotspotsVisible=!state.hotspotsVisible;document.querySelectorAll('.touch-hotspot').forEach(h=>h.classList.toggle('spot-hidden',!state.hotspotsVisible));const toggle=document.querySelector('.lab-toggle');if(toggle){toggle.textContent=state.hotspotsVisible?'◉ Markierungen ausblenden':'◎ Markierungen zeigen';toggle.setAttribute('aria-pressed',String(state.hotspotsVisible));}return;}
  if(a==='pilot-show'&&state.page==='about'){showPilot=true;render();return;}
  if(a==='pilot-close'){showPilot=false;render();return;}
@@ -748,6 +753,14 @@ root.addEventListener('pointermove',e=>{if(!challengePointers98.has(e.pointerId)
  clampChallenge98(stage);updateZoom();});
 function finishChallenge98(e){if(!challengePointers98.has(e.pointerId))return;challengePointers98.delete(e.pointerId);challengeStart98=null;}
 for(const evt of ['pointerup','pointercancel','lostpointercapture'])root.addEventListener(evt,finishChallenge98);
+// Digital research tools: screen-space spotlight and focused photo inspection.
+root.addEventListener('pointermove',e=>{
+ if(state.page!=='detail'||!e.target.closest('#lab-canvas'))return;
+ const canvas=root.querySelector('#lab-canvas');if(!canvas)return;
+ const box=canvas.getBoundingClientRect(),x=Math.max(0,Math.min(100,(e.clientX-box.left)/box.width*100)),y=Math.max(0,Math.min(100,(e.clientY-box.top)/box.height*100));
+ if(state.labTool==='light'){const light=root.querySelector('#research-light');if(light){light.style.setProperty('--light-x',x+'%');light.style.setProperty('--light-y',y+'%');}}
+ if(state.labTool==='loupe'){const loupe=root.querySelector('#research-loupe');if(loupe){loupe.style.left=x+'%';loupe.style.top=y+'%';}}
+});
 // Touch-Fundlabor: Ein-Finger-Verschieben und Zwei-Finger-Zoom; Bilder bleiben im Browser, keine Trackingdaten.
 function clampPan(){
  const el=document.querySelector('#lab-canvas');if(!el)return;
@@ -1419,6 +1432,27 @@ window.openForschungsreise=open;
  .excavation-page .exc-sign-object strong{font-size:11px}
  .excavation-page .exc-sign-slots>span{height:16px}
 }
+</style>
+<style id="fundlabor-research-preview-v1">
+.research-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.research-tools button,.research-save{min-height:54px;border:1px solid var(--border);padding:10px 15px;background:#26332a;color:var(--paper);font-size:14px;touch-action:manipulation}
+.research-tools button.active{background:var(--gold);color:#152119;border-color:var(--gold);font-weight:bold}
+.research-instruction{font-size:12px;color:var(--muted);margin:9px 0 5px;line-height:1.55}
+.research-light{display:none;position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at var(--light-x,50%) var(--light-y,50%),transparent 0 13%,rgba(6,12,9,.14) 24%,rgba(5,10,7,.58) 80%); }
+.research-light.on{display:block}
+.research-loupe{display:none;position:absolute;z-index:5;width:80px;height:80px;left:50%;top:50%;transform:translate(-50%,-50%);border:2px solid #e5c78f;border-radius:50%;box-shadow:0 0 0 6px #d4b37726,0 3px 12px #0009;pointer-events:none}
+.research-loupe.on{display:block}
+.research-dossier{border:1px solid var(--border);padding:17px;background:#15221b;display:grid;gap:12px}
+.research-dossier-head span{font-size:10px;color:var(--gold);letter-spacing:.12em}
+.research-dossier h3{font:25px/1.2 var(--serif);color:var(--gold-soft);margin:9px 0 6px}
+.research-dossier-head small,.research-dossier>p{font-size:11px;line-height:1.5;color:var(--muted);margin:0}
+.research-dossier-progress{font-size:12px;color:var(--gold-soft)}
+.research-dossier-list{display:grid;gap:7px;max-height:210px;overflow:auto}
+.research-dossier-entry{display:grid;gap:4px;background:#24352a;padding:9px 11px;border-left:2px solid var(--gold)}
+.research-dossier-entry b{font-size:13px}.research-dossier-entry span{font-size:11px;color:var(--muted)}
+.research-dossier-list>p{font-size:13px;line-height:1.5;color:var(--muted)}
+.research-save{background:#394b37;border-color:var(--gold-deep)}
+@media(max-width:650px){.research-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.research-tools button{padding:9px 6px;font-size:12px}}
 </style>
 </body>
 </html>
