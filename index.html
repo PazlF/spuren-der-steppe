@@ -384,7 +384,7 @@ function statsExport(){const blob=new Blob([JSON.stringify(stats,null,2)],{type:
 function pilotDashboard(){const pct=(a,b)=>b?Math.round(100*a/b)+' %':'–';return `<div class="pilot-dashboard"><h2>Besucher-Testmodus · nur auf diesem Gerät</h2><p>Aggregierte Nutzungszahlen ohne Namen, IP-Adressen, Nutzerkennungen oder Serverübertragung. Besuche gelten als abgebrochen, wenn eine Station vor dem Fundbericht verlassen wird. Bearbeitungszeiten messen Zeit bis zum Fundbericht einschließlich möglicher Pausen.</p><div class="pilot-kpis"><div><b>${stats.starts}</b><span>Stationsstarts</span></div><div><b>${stats.completed}</b><span>Abschlüsse</span></div><div><b>${pct(stats.completed,stats.starts)}</b><span>Abschlussquote</span></div><div><b>${stats.abandoned}</b><span>Abbrüche</span></div></div><div class="pilot-table"><table><thead><tr><th>Fundstück</th><th>Starts</th><th>Fertig</th><th>Abbruch</th><th>Ø Dauer</th><th>Verständlich</th></tr></thead><tbody>${pack.objects.map(o=>{const v=objStats(o.id);return `<tr><td>${esc(o.short)}</td><td>${v.starts}</td><td>${v.complete}</td><td>${v.aborts}</td><td>${v.complete?Math.round(v.secondsTotal/v.complete)+' s':'–'}</td><td>${v.feedback.klar}/${v.feedback.teilweise}/${v.feedback.unklar}</td></tr>`}).join('')}</tbody></table></div><p>Feedback-Reihenfolge: Ja / Teilweise / Nein. Die Daten sind nur lokal gespeichert und können durch Browserdaten-Löschung verschwinden. Nicht als repräsentative Lernwirkungsmessung interpretieren.</p><div class="pilot-actions"><button class="btn btn-outline" data-action="pilot-export">Daten als JSON exportieren</button><button class="btn btn-outline" data-action="pilot-reset">Lokale Testdaten löschen</button><button class="btn btn-outline" data-action="pilot-close">Auswertung schließen</button></div></div>`;}
 let showPilot=false;
 
-const state={shortMode:true,page:'gallery',objectId:null,selected:[],checked:false,done:new Set(),zoom:1,x:0,y:0,showHint:false,showSources:false,labView:'photo',activeSpot:null,discovered:{},photoPoint:null,calibrateSpot:0,hotspotsVisible:true,hirschMission:{phase:0,answer:null},labTool:'none',dossierNotes:{},labLightX:50,labLightY:50,comparePick:[0,1],compareNote:false,fieldAnswer:null,fieldChecked:false,fieldDocument:null};
+const state={shortMode:true,page:'gallery',objectId:null,selected:[],checked:false,done:new Set(),zoom:1,x:0,y:0,showHint:false,showSources:false,labView:'photo',activeSpot:null,discovered:{},photoPoint:null,calibrateSpot:0,hotspotsVisible:true,lang:'de',hirschMission:{phase:0,answer:null},labTool:'none',dossierNotes:{},labLightX:50,labLightY:50,comparePick:[0,1],compareNote:false,fieldAnswer:null,fieldChecked:false,fieldDocument:null};
 let inactivityTimer=null,lastPointer=null;
 const pointers=new Map(); let touchMoved=false,gestureStart=null;
 const localPhotos=Object.create(null);
@@ -437,7 +437,7 @@ function restart(){if(activeVisit)visitAbort();state.done.clear();state.discover
 function idle(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(()=>{if(pilotEnabled){stats.idleResets++;recordSave();}restart();},Math.max(8,Number(museum.idleMinutes)||8)*60000)}
 ['pointerdown','keydown','wheel','touchstart'].forEach(name=>window.addEventListener(name,idle,{passive:true}));idle();
 function logo(){return `<span class="sigil" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M8 34L16 12L24 24L32 12L39 34Z M14 34H36 M23 24V36"/></svg></span>`}
-function masthead(){return `<header class="masthead"><button class="brand" data-action="home" aria-label="Zur Sammlung">${logo()}<span class="brand-text"><strong>SPUREN DER STEPPE</strong><small>ENTDECKEN · SPIELEN · FORSCHEN</small></span></button><div class="masthead-right"><span class="tiny-maker">KONZEPT & ENTWICKLUNG <b>${esc(museum.maker)}</b></span><button class="icon-circle" data-action="about" aria-label="Über das Projekt und Quellen">i</button></div></header>`}
+function masthead(){return `<header class="masthead"><button class="brand" data-action="home" aria-label="Zur Sammlung">${logo()}<span class="brand-text"><strong>SPUREN DER STEPPE</strong><small>ENTDECKEN · SPIELEN · FORSCHEN</small></span></button><div class="masthead-right"><div class="museum-language" role="group" aria-label="Sprache / Language"><button type="button" data-action="language" data-lang="de" class="${state.lang==='de'?'active':''}" aria-pressed="${state.lang==='de'}">DE</button><button type="button" data-action="language" data-lang="en" class="${state.lang==='en'?'active':''}" aria-pressed="${state.lang==='en'}">EN</button></div><span class="tiny-maker">KONZEPT & ENTWICKLUNG <b>${esc(museum.maker)}</b></span><button class="icon-circle" data-action="about" aria-label="Über das Projekt und Quellen">i</button></div></header>`}
 function footer(){return `<footer class="footer"><span><i class="dot"></i> ${esc(museum.museumName)} · Forschungsbasierter Prototyp</span><span>Eine Arbeit von <strong>${esc(museum.maker)}</strong></span><button class="text-button" data-action="about">Impressum & Quellen ↗</button></footer>`}
 function thumb(o,size='card'){return `<div class="art-frame art-${size}" data-art="${esc(o.id)}"><img class="art-original" src="${esc(photoSrc(o))}" data-object="${o.id}" data-stage="local" alt="Originalfoto: ${esc(o.short)} · The Metropolitan Museum of Art" loading="${size==='hero'?'eager':'lazy'}" onload="window.metPhotoLoaded(this)" onerror="window.metPhotoError(this)"><span class="art-offline">Originalfoto noch nicht geladen · Fundstück öffnen</span><span class="art-stamp">${size==='card'?'MET · '+esc(o.inventory):'THE MET · ORIGINALFOTOGRAFIE'}</span></div>`}
 function ornament(){return `<span class="ornament-line" aria-hidden="true">◈ <span>───</span> ◈ <span>───</span> ◈</span>`}
@@ -663,7 +663,78 @@ function evidence(){const o=me();let opts=[{id:'documented',t:'Belegt',d:'Direkt
 function report(){const o=me(),next=pack.objects.find(x=>!state.done.has(x.id)),total=pack.objects.length,completed=state.done.size;return `${masthead()}<main class="main main-report"><nav class="breadcrumbs report-breadcrumbs" aria-label="Navigation"><button data-action="home">← Zur Sammlung</button><span>/</span><b>ABSCHLUSS · ${esc(o.short)}</b></nav><section class="report"><div class="report-seal" aria-hidden="true"><span>✓</span></div><span class="report-win-label">FUNDSTÜCK ERFORSCHT</span><h1 class="report-main-title">Gut beobachtet!</h1><div class="report-progress-panel" aria-label="Fortschritt in der Sammlung"><div class="report-progress-row"><span>DEINE ENTDECKUNGSREISE</span><strong>${completed}<small> von ${total}</small></strong></div><div class="report-progress-track" role="progressbar" aria-valuenow="${completed}" aria-valuemin="0" aria-valuemax="${total}" aria-label="Abgeschlossene Fundstücke"><span style="width:${Math.min(100,completed/Math.max(1,total)*100)}%"></span></div><p>${next?`Noch ${total-completed} ${total-completed===1?"Fundstück wartet":"Fundstücke warten"} auf dich.`:"Alle Fundstücke geschafft! Die Sammlung ist vollständig."}</p></div><span class="kicker">DEIN FORSCHUNGSBERICHT · FUND ${o.n}</span><p class="report-intro">${esc(o.takeaway)}</p><div class="report-book"><div class="report-object">${thumb(o,'report')}<div><span class="kicker">OBJEKT</span><h3>${esc(o.short)}</h3><p>${esc(o.inventory)} · ${esc(o.era)}</p></div></div><div class="report-explain"><span class="kicker">DAS BLEIBT</span><p>${esc(o.fact)}</p><span class="report-source">Quelle: ${esc(o.museum)} · ${esc(o.inventory)}</span></div></div>${next?`<div class="report-next-preview"><div class="report-next-image">${thumb(next,"report")}</div><div class="report-next-copy"><span class="kicker">ALS NÄCHSTES ENTDECKEN</span><strong>${esc(next.short)}</strong><span>${esc(next.section)}</span></div><span class="report-next-arrow" aria-hidden="true">→</span></div>`:`<p class="report-everything-done">✓ Du hast alle sieben Fundstücke untersucht. Dein Abschluss wartet auf dich.</p>`}${pilotEnabled?`<div class="pilot-feedback" id="pilot-feedback"><strong>War diese Station verständlich?</strong><p>Eine freiwillige anonyme Rückmeldung.</p><div><button data-action="pilot-feedback" data-value="klar">Ja</button><button data-action="pilot-feedback" data-value="teilweise">Teilweise</button><button data-action="pilot-feedback" data-value="unklar">Nein</button></div></div>`:``}<div class="report-actions">${next?`<button class="btn btn-gold report-primary" data-action="open" data-id="${next.id}">Nächstes Fundstück entdecken <span>→</span></button>`:`<button class="btn btn-gold report-primary" data-action="final">Zum großen Abschluss <span>→</span></button>`}<button class="btn btn-outline" data-action="home">Zur Sammlung zurück</button></div><button class="subtle-link" data-action="about">Wissenschaftliche Quellen und Bildnachweise ansehen ↗</button></section></main>${footer()}`}
 function finalPage(){return `${masthead()}<main class="main final-page"><div class="final-ornament">${ornament()}</div><span class="kicker">SIEBEN OBJEKTE · SIEBEN PERSPEKTIVEN</span><h1>DU HAST DIE <em>SPUREN</em><br>DER STEPPE GELESEN.</h1><p>Goldschmuck, Tiermotive und Pferdegeschirr zeigen Facetten des Lebens. Die Schwertscheide spricht von Kulturkontakten, die Bronze-Reiterfigur davon, wie Menschen andere sahen.</p><div class="final-three"><div><b>01</b><strong>Genau hinschauen</strong><span>Was zeigt uns das Objekt?</span></div><div><b>02</b><strong>Belege prüfen</strong><span>Woher stammt unser Wissen?</span></div><div><b>03</b><strong>Fragen offenlassen</strong><span>Was können wir nicht sicher sagen?</span></div></div><div class="final-sign">KONZEPT & ENTWICKLUNG <strong>${esc(museum.maker)}</strong></div><div class="final-buttons"><button class="btn btn-gold" data-action="home">Zur Sammlung zurück ↗</button><button class="btn btn-outline" data-action="restart">Neue Entdeckungsreise</button></div></main>${footer()}`}
 function about(){return `${masthead()}<main class="main about-page"><nav class="breadcrumbs"><button data-action="home">← Zur Sammlung</button><span>/</span><b>IMPRESSUM & QUELLEN</b></nav><span class="kicker">ÜBER DIESE DIGITALE AUSSTELLUNG</span><h1>Gute Fragen.<br><em>Gute Quellen.</em></h1><div class="about-layout"><section><h2>Ein Spiel von ${esc(museum.maker)}</h2><p>Konzept, Entwicklung und digitale Gestaltung: <strong>${esc(museum.maker)}</strong>. Diese Anwendung ist ein eigenständiger Museumsprototyp und keine offizielle Produktion des Metropolitan Museum of Art.</p><p>${esc(museum.disclaimer)}</p><p>${esc(museum.research)}</p><h3>Besucher-Testmodus</h3><p>Eine optionale, ausschließlich lokale Testauswertung kann durch das Museum vor einem betreuten Pilotversuch aktiviert werden. Die Verwaltung erfolgt separat.</p><h3>Offline-Bildprüfung für dieses Gerät</h3><p>Der folgende Test zählt nur lokal gespeicherte Fotodateien und importierte Bilder – niemals Bilder, die bloß über das Internet geladen werden.</p><button type="button" class="btn btn-outline" data-action="photo-check">Sieben Originalfotos lokal prüfen</button><pre class="offline-result" id="offline-result" aria-live="polite">Noch nicht geprüft.</pre><h3>Bildnachweise und Offline-Modus</h3><p>Alle sieben Stationen sind für originale Met-Fotografien eingerichtet. Die Anwendung sucht zuerst die lokalen Dateien in assets/photos/ und nutzt bei Internetverbindung andernfalls den Met-Bildserver. Alle sieben Originalfotos sind in dieser Version lokal im Ordner assets/photos/ enthalten. Für den vollständig netzunabhängigen Betrieb die Anwendung über den mitgelieferten lokalen Server starten. Fehlt ein Bild, erscheint kein Ersatzobjekt.</p><h3>Originalfotografien für die Offline-Nutzung einrichten</h3><p>Wähle die passende Originaldatei aus dem Met-Objektkatalog. Die Auswahl bleibt lokal in diesem Browser gespeichert (IndexedDB); keine Besucherdateien werden übertragen.</p><div class="import-grid">${pack.objects.map(o=>`<label class="import-label">${esc(o.n)} · ${esc(o.short)}<input type="file" class="photo-import" data-id="${esc(o.id)}" accept="image/png,image/jpeg,image/webp"></label>`).join('')}</div><h3>Für Museen anpassbar</h3><p>In <code>pack.js</code> stehen Ausstellungsname, Urhebernennung, Objekttexte, Fragen, Bildpfade und Quellen. Die Fotografien können in <code>assets/photos/</code> gespeichert werden. Zusätzlich ist ein Fotoimport direkt am Tablet mit lokaler Browserspeicherung möglich. Bildmarker müssen vor dem Museumseinsatz am verwendeten Foto kalibriert und kuratorisch freigegeben werden.</p></section><section class="source-list"><h2>Objektquellen</h2>${pack.objects.map(o=>`<a href="https://www.metmuseum.org/art/collection/search/${o.metId}" target="_blank" rel="noopener noreferrer"><span>${o.n}</span><div><b>${esc(o.short)}</b><small>Met · ${esc(o.inventory)} · ${esc(o.kind)}</small></div><span>↗</span></a>`).join('')}<h2>Forschung</h2>${pack.sharedSources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><div><b>${esc(s.title)}</b><small>Externe wissenschaftliche Referenz</small></div><span>↗</span></a>`).join('')}</section></div><button class="btn btn-gold" data-action="home">Zur Sammlung zurück →</button></main>${footer()}`}
-function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?'Spuren der Steppe':(me()?.short||'Digitale Sammlung')} · ${museum.maker}`;updateZoom();}
+const englishMuseumText={
+ 'ENTDECKEN · SPIELEN · FORSCHEN':'EXPLORE · PLAY · RESEARCH',
+ 'KONZEPT & ENTWICKLUNG':'CONCEPT & DEVELOPMENT',
+ 'Zur Sammlung':'Back to collection',
+ 'Über das Projekt und Quellen':'About the project and sources',
+ 'Forschungsbasierter Prototyp':'Research-based prototype',
+ 'Eine Arbeit von':'Created by',
+ 'Impressum & Quellen ↗':'Legal information & sources ↗',
+ 'SPUREN DER STEPPE':'TRACES OF THE STEPPE',
+ 'DEIN ENTDECKUNGSAUFTRAG':'YOUR DISCOVERY TASK',
+ 'FUNDLABOR · DOKUMENTATION':'RESEARCH LAB · DOCUMENTATION',
+ 'Was fällt dir auf?':'What do you notice?',
+ 'Funddetails geöffnet':'Artifact details opened',
+ 'ORIGINALFOTOGRAFIE · THE MET · CC0':'ORIGINAL PHOTOGRAPH · THE MET · CC0',
+ 'Markierungen ausblenden':'Hide markers',
+ 'Markierungen zeigen':'Show markers',
+ 'Hand / Zoom':'Hand / zoom',
+ 'Untersuchungslampe':'Examination light',
+ 'Lupe':'Magnifier',
+ 'Beobachtung übernehmen':'Add observation',
+ 'Bereits in Fundakte':'Already in dossier',
+ 'Tippe auf einen Fundpunkt!':'Tap a detail marker!',
+ 'Jeder goldene Punkt verrät dir ein neues Detail.':'Each golden marker reveals a new detail.',
+ 'Detail vergrößern':'Magnify detail',
+ 'Gesamtansicht':'Full view',
+ 'Verkleinern':'Zoom out',
+ 'Vergrößern':'Zoom in',
+ 'Zum Detailvergleich':'Compare details',
+ 'Weiter zum Vergleich':'Continue to comparison',
+ 'Noch gesperrt: Zuerst Schritt 1 abschließen.':'Locked: complete step 1 first.',
+ 'FORSCHUNGSMISSION · GOLDHIRSCH':'RESEARCH MISSION · GOLDEN STAG',
+ 'Was verbirgt das Geweih?':'What does the antler reveal?',
+ 'Untersuche das Originalfoto. Tippe auf mindestens einen Fundpunkt, bevor du deine Beobachtung formulierst.':'Examine the original photo. Tap at least one detail marker before making your observation.',
+ 'Beobachtung formulieren →':'Make an observation →',
+ 'Was ist wirklich zu erkennen?':'What can you actually see?',
+ 'Welche Aussage lässt sich als Beobachtung festhalten, ohne eine unbekannte Bedeutung zu behaupten?':'Which statement describes an observation without claiming an unknown meaning?',
+ 'Im Geweih sind stilisierte Formen erkennbar.':'Stylized shapes are visible in the antler.',
+ 'Die religiöse Bedeutung ist eindeutig geklärt.':'The religious meaning is known with certainty.',
+ 'Der ursprüngliche Besitzer ist bekannt.':'The original owner is known.',
+ 'Das ist eine vorsichtige Beschreibung sichtbarer Formen.':'This is a careful description of visible forms.',
+ 'Diese Aussage ist nicht allein durch das Foto belegt. Versuche eine Beschreibung, die sich direkt am Objekt beobachten lässt.':'The photograph alone does not support this claim. Try describing something directly visible.',
+ 'Forschungsbeleg prüfen →':'Review the evidence →',
+ 'Andere Beobachtung prüfen →':'Review another observation →',
+ 'Wähle eine andere Aussage, um die Untersuchung fortzusetzen.':'Choose another statement to continue the investigation.',
+ 'Dein Forschungsergebnis':'Your research finding',
+ 'Mission erneut spielen ↻':'Restart mission ↻',
+ 'Didaktisches Untersuchungsprotokoll, kein archäologischer Originalbefund.':'Educational research notes, not an original archaeological record.',
+ 'Beobachtungen aus freigegebenen Texten der Station · keine eigene Materialmessung':'Notes from the exhibit texts · not a material measurement',
+ 'Originalfoto frei bewegen und mit zwei Fingern zoomen.':'Move the original photo and pinch with two fingers to zoom.',
+ 'Finger über das Foto bewegen: simulierte Lichtführung, keine neue Materialanalyse.':'Move your finger across the photo: simulated lighting, not a material analysis.',
+ 'Auf das Foto tippen, um ein Detail zu vergrößern. Zwei Finger zum Zoomen bleiben aktiv.':'Tap the photo to magnify a detail. Pinch zoom remains available.',
+ 'Fundstück vorsichtig freilegen':'Carefully uncover the artifact',
+ 'Fund dokumentieren':'Document the find',
+ 'Was ist Beobachtung?':'What counts as observation?',
+ 'Maßstab platzieren':'Place scale',
+ 'Stecktafel platzieren':'Place information board',
+ 'Foto aufnehmen':'Take photo',
+ 'Mission neu starten ↻':'Restart mission ↻'
+};
+function applyMuseumLanguage(){
+ document.documentElement.lang=state.lang;
+ if(state.lang!=='en')return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ for(const node of nodes){const old=node.nodeValue||'',trim=old.trim();
+  if(englishMuseumText[trim])node.nodeValue=old.replace(trim,englishMuseumText[trim]);
+  else if(/^Schritt (\\d+) von 3$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('Schritt','Step'));
+  else if(/^Fundakte: /.test(trim))node.nodeValue=old.replace('Fundakte: ','Artifact dossier: ');
+  else if(/^([0-9]+) von ([0-9]+) Beobachtungen notiert$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('von','of').replace('Beobachtungen notiert','observations recorded'));
+ }
+}
+function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?'Spuren der Steppe':(me()?.short||'Digitale Sammlung')} · ${museum.maker}`;updateZoom();applyMuseumLanguage();}
 async function checkOfflinePhotos(){
  const status=document.querySelector('#offline-result');if(!status)return;
  status.textContent='Prüfung der sieben lokalen Originaldateien läuft …';
@@ -687,6 +758,7 @@ root.addEventListener('change',async(ev)=>{
 });
 root.addEventListener('input',(ev)=>{if(ev.target.id==='ratio-choice'){state.fieldAnswer=Number(ev.target.value);const label=document.querySelector('.research-ratio strong');if(label)label.textContent=state.fieldAnswer+' Rosettenbreiten';const bar=document.querySelector('.ratio-bars>div:nth-child(2)>span');if(bar)bar.style.width=Math.round(100/state.fieldAnswer)+'%';}});
 root.addEventListener('click',(ev)=>{const b=ev.target.closest('[data-action]');if(!b)return;const a=b.dataset.action;
+ if(a==='language'){if(b.dataset.lang==='de'||b.dataset.lang==='en'){state.lang=b.dataset.lang;render();}return;}
  if(a==='excavation-reset'&&state.page==='excavation'){render();return;}
  if(a==='mode-short' || a==='mode-long'){state.shortMode=a==='mode-short';render();return;}
  if(a==='research-clear'&&state.page==='fieldmission'){state.fieldAnswer=[];state.fieldChecked=false;render();return;}
@@ -1477,5 +1549,18 @@ window.openForschungsreise=open;
 .hirsch-mission .hirsch-feedback{padding:12px;background:#273a2d;border-left:2px solid var(--gold)}
 </style>
 <style id="goldhirsch-research-feedback-v2">.hirsch-retry{display:block;font-size:13px;line-height:1.5;color:var(--gold-soft);padding:10px 12px;border-left:2px solid var(--gold)}</style>
+<style id="museum-touch-and-language-v1">
+.museum-language{display:flex;flex-shrink:0;gap:2px;border:1px solid var(--border);padding:3px;border-radius:8px;background:#1b2920}
+.museum-language button{min-width:48px;min-height:46px;border:0;border-radius:5px;color:var(--paper);background:transparent;font-size:13px;font-weight:bold;touch-action:manipulation}
+.museum-language button.active{background:var(--gold);color:#17231d}
+@media(pointer:coarse){
+ .masthead .brand{min-height:54px}
+ .icon-circle{min-width:48px;min-height:48px}
+ .exc-tool,.excavation-choice,.fl-target,.fl-card,.lab-focus-button,.research-save,.hirsch-answers button{min-height:60px;touch-action:manipulation}
+ .calib-choice,.compare-select select{min-height:54px}
+ button:active{filter:brightness(1.12)}
+}
+@media(max-width:560px){.masthead-right{gap:5px}.museum-language button{min-width:44px;min-height:44px}.brand-text small{letter-spacing:.1em}}
+</style>
 </body>
 </html>
