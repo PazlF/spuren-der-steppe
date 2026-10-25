@@ -774,7 +774,42 @@ const englishMuseumText={
  'Schritt 1 / 3':'Step 1 / 3',
  'Schritt 2 / 3':'Step 2 / 3',
  'Schritt 3 / 3':'Step 3 / 3',
- 'Forschungsbeleg':'Research evidence'
+ 'Forschungsbeleg':'Research evidence',
+ "DEINE DIGITALE AUSSTELLUNG":"YOUR DIGITAL EXHIBITION",
+ "DER STEPPE.":"OF THE STEPPE.",
+ "Sieben echte Fundstücke. Sieben kleine Abenteuer.":"Seven genuine artifacts. Seven small adventures.",
+ "Schau genau hin, entdecke verborgene Details und löse die Rätsel der Archäologie.":"Look closely, discover hidden details and explore archaeological mysteries.",
+ "Weiterforschen":"Continue exploring",
+ "Jetzt entdecken":"Start exploring",
+ "Fundstücke auswählen ↓":"Choose an artifact ↓",
+ "Wie möchtest du spielen?":"How would you like to explore?",
+ "⚡ Kurz spielen":"⚡ Short visit",
+ "⌕ Alles entdecken":"⌕ Full exploration",
+ "Eine kurze Mission pro Fundstück.":"One short mission per artifact.",
+ "Mit Fotovergleich, Wissensfragen und Quellenprüfung.":"Including photo comparison, research questions and source checks.",
+ "Spieltempo wählen":"Choose visit length",
+ "Originalfoto noch nicht geladen · Fundstück öffnen":"Original photo not yet loaded · Open artifact",
+ "THE MET · ORIGINALFOTOGRAFIE":"THE MET · ORIGINAL PHOTO",
+ "Originalaufnahme des Metropolitan Museum of Art. Zur Offline-Nutzung lässt sich das gemeinfreie Foto lokal einrichten.":"Original photograph from the Metropolitan Museum of Art. The public-domain image can be stored locally for offline use.",
+ "01 / BETRACHTEN":"01 / OBSERVE",
+ "Sieh ganz":"Look",
+ "genau hin.":"closely.",
+ "Ausgrabungsmission starten":"Start excavation mission",
+ "Direkt zum Originalfoto →":"Go straight to original photo →",
+ "TOUCH-MISSION · AUSGRABUNGSSIMULATION":"TOUCH MISSION · EXCAVATION SIMULATION",
+ "Diese Station simuliert drei Arbeitsschritte archäologischer Methodik:":"This station simulates three stages of archaeological work:",
+ "freilegen":"uncover",
+ "dokumentieren":"document",
+ "beobachten statt raten":"observe rather than guess",
+ "Fundstück":"Artifact",
+ "vorsichtig freilegen":"uncover carefully",
+ "SCHRITT 1 / 3":"STEP 1 / 3",
+ "SCHRITT 2 / 3":"STEP 2 / 3",
+ "SCHRITT 3 / 3":"STEP 3 / 3",
+ "Erst grob, dann vorsichtig":"Start broadly, then work carefully",
+ "Fertig beschriftete archäologische Stecktafel platzieren":"Place the labeled archaeological information board",
+ "Schwarz-weißen Fotomaßstab verschieben":"Move the black-and-white photo scale",
+ "Originalfotografie:":"Original photograph:"
 };
 function applyMuseumLanguage(){
  document.documentElement.lang=state.lang;
@@ -798,7 +833,7 @@ function applyMuseumLanguage(){
   }
  }
 }
-function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?'Spuren der Steppe':(me()?.short||'Digitale Sammlung')} · ${museum.maker}`;updateZoom();applyMuseumLanguage();}
+function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?(state.lang==='en'?'Traces of the Steppe':'Spuren der Steppe'):(me()?.short||(state.lang==='en'?'Digital collection':'Digitale Sammlung'))} · ${museum.maker}`;updateZoom();applyMuseumLanguage();}
 async function checkOfflinePhotos(){
  const status=document.querySelector('#offline-result');if(!status)return;
  status.textContent='Prüfung der sieben lokalen Originaldateien läuft …';
@@ -1634,6 +1669,14 @@ window.openForschungsreise=open;
  .research-tools button,.museum-language button{min-height:52px}
 }
 @media(max-width:430px){.museum-language button{min-width:46px}.hirsch-mission{padding:14px}.lab-zoom-buttons{flex-wrap:wrap}}
+</style>
+<style id="museum-lang-touch-stage-v3">
+@media(pointer:coarse){
+ .btn,.mode-chip,.lab-toggle,.exc-tool,.excavation-choice,.compare-select select{min-height:54px}
+ .research-tools button,.lab-zoom-buttons button,.museum-language button{touch-action:manipulation}
+ .lab-pill:focus-visible,.touch-hotspot:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+}
+@media(max-width:490px){.hero-actions .btn{width:100%}.masthead-right .tiny-maker{display:none}}
 </style>
 </body>
 </html>
