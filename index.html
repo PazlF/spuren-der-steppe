@@ -720,7 +720,61 @@ const englishMuseumText={
  'Maßstab platzieren':'Place scale',
  'Stecktafel platzieren':'Place information board',
  'Foto aufnehmen':'Take photo',
- 'Mission neu starten ↻':'Restart mission ↻'
+ 'Mission neu starten ↻':'Restart mission ↻',
+ 'Fundakte':'Artifact dossier',
+ 'Fundpunkt':'Detail marker',
+ 'Fundstück':'Artifact',
+ 'Fundstücke':'Artifacts',
+ 'Weiter':'Continue',
+ 'Zurück':'Back',
+ 'Starten':'Start',
+ 'Entdecken':'Explore',
+ 'Untersuchen':'Examine',
+ 'Dokumentieren':'Document',
+ 'Freilegen':'Excavate',
+ 'Beobachten':'Observe',
+ 'Originalfoto':'Original photo',
+ 'Funddetails':'Artifact details',
+ 'Detailvergleich':'Detail comparison',
+ 'Objekt':'Object',
+ 'Quelle':'Source',
+ 'Quellen':'Sources',
+ 'Forschungsfrage':'Research question',
+ 'Details':'Details',
+ 'Detail':'Detail',
+ 'Maßstab':'Photo scale',
+ 'Stecktafel':'Information board',
+ 'Noch gesperrt':'Still locked',
+ 'Forschungsergebnis':'Research finding',
+ 'Fundlabor':'Artifact lab',
+ 'Fundakte:':'Artifact dossier:',
+ 'Noch nicht entdeckt':'Not yet discovered',
+ 'DOKUMENTATION':'DOCUMENTATION',
+ 'FUND-DOKUMENTATION':'FIND DOCUMENTATION',
+ 'ORIGINALFUNDLABOR':'ORIGINAL ARTIFACT LAB',
+ 'Zum Originalfoto und seinen Details →':'View original photo and its details →',
+ 'Tippe auf die Punkte · 2 Finger zum Zoomen':'Tap markers · pinch to zoom',
+ 'Tippe auf die Punkte':'Tap the markers',
+ 'Noch kannst du die Untersuchung fortsetzen.':'You can continue investigating.',
+ 'Alternativ kannst du die nummerierten Felder oberhalb dieses Textes antippen.':'You can also tap the numbered buttons above.',
+ 'Wähle einen Fundpunkt und übernimm seine Beobachtung in deine Akte.':'Select a detail marker and add the observation to your dossier.',
+ 'Alle Details entdeckt. Jetzt kannst du die Forschungsfrage lösen.':'All details discovered. You can now solve the research question.',
+ 'Quelle:':'Source:',
+ 'FUNDKARTE':'ARTIFACT CARD',
+ 'BEOBACHTUNG':'OBSERVATION',
+ 'INTERPRETATION':'INTERPRETATION',
+ 'BEFUND':'CONTEXT',
+ 'FUND-NR.':'FIND NO.',
+ 'FOTO-NR.':'PHOTO NO.',
+ 'PROJEKT':'PROJECT',
+ 'SCHNITT':'TRENCH',
+ 'ÜBUNG':'EXERCISE',
+ 'DIDAKTISCHE SIMULATION':'EDUCATIONAL SIMULATION',
+ 'SPUREN DER STEPPE · FORSCHUNGSMISSION':'TRACES OF THE STEPPE · RESEARCH MISSION',
+ 'Schritt 1 / 3':'Step 1 / 3',
+ 'Schritt 2 / 3':'Step 2 / 3',
+ 'Schritt 3 / 3':'Step 3 / 3',
+ 'Forschungsbeleg':'Research evidence'
 };
 function applyMuseumLanguage(){
  document.documentElement.lang=state.lang;
@@ -729,9 +783,19 @@ function applyMuseumLanguage(){
  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
  for(const node of nodes){const old=node.nodeValue||'',trim=old.trim();
   if(englishMuseumText[trim])node.nodeValue=old.replace(trim,englishMuseumText[trim]);
-  else if(/^Schritt (\\d+) von 3$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('Schritt','Step'));
+  else if(/^Schritt [0-9]+ von 3$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('Schritt','Step').replace('von','of'));
+  else if(/^Noch [0-9]+ Stellen kannst du untersuchen/.test(trim))node.nodeValue=old.replace(trim,'There are more details to investigate. You may continue at any time.');
+  else if(/^([0-9]+) von ([0-9]+) Details$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('von','of'));
+  else if(/^Detail [0-9]+:/.test(trim))node.nodeValue=old.replace('Detail','Detail');
   else if(/^Fundakte: /.test(trim))node.nodeValue=old.replace('Fundakte: ','Artifact dossier: ');
   else if(/^([0-9]+) von ([0-9]+) Beobachtungen notiert$/.test(trim))node.nodeValue=old.replace(trim,trim.replace('von','of').replace('Beobachtungen notiert','observations recorded'));
+ }
+ for(const el of root.querySelectorAll('[aria-label],[title],[placeholder]')){
+  for(const attr of ['aria-label','title','placeholder']){
+   const value=el.getAttribute(attr);if(!value)continue;
+   const translated=englishMuseumText[value]||value.replace(/^Detail ([0-9]+): /,'Detail $1: ').replace(/^Beobachtung /,'Observation ').replace(/^Originalaufnahme: /,'Original photograph: ').replace(/^Fotoausschnitt: /,'Photo detail: ');
+   if(translated!==value)el.setAttribute(attr,translated);
+  }
  }
 }
 function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?'Spuren der Steppe':(me()?.short||'Digitale Sammlung')} · ${museum.maker}`;updateZoom();applyMuseumLanguage();}
@@ -1561,6 +1625,15 @@ window.openForschungsreise=open;
  button:active{filter:brightness(1.12)}
 }
 @media(max-width:560px){.masthead-right{gap:5px}.museum-language button{min-width:44px;min-height:44px}.brand-text small{letter-spacing:.1em}}
+</style>
+<style id="museum-tablet-polish-v2">
+@media(pointer:coarse){
+ button,select,[role="button"]{-webkit-tap-highlight-color:transparent}
+ button:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+ .lab-pill,.touch-hotspot{touch-action:manipulation}
+ .research-tools button,.museum-language button{min-height:52px}
+}
+@media(max-width:430px){.museum-language button{min-width:46px}.hirsch-mission{padding:14px}.lab-zoom-buttons{flex-wrap:wrap}}
 </style>
 </body>
 </html>
