@@ -37,7 +37,7 @@ async function run(lang){
   assert.equal(heading,expected,lang+': untranslated or unexpected '+id+' heading');
   const interfaceChecks={
    'fundlabor-modal':[['.fl-close','Spiel verlassen','Exit activity'],['.fl-again','Noch einmal spielen','Play again']],
-   'bf-modal':[['#bf-save','Dokumentation sichern','Record observation'],['#bf-restart','Neu starten','Start again']],
+   'bf-modal':[['#bf-save','Dokumentation sichern','Record observation'],['#bf-restart','Neu starten','Restart']],
    'journey87':[['#j87-close','Beenden','Exit']]
   };
   for(const [selector,german,english] of interfaceChecks[id]){
