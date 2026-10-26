@@ -2268,6 +2268,9 @@ Object.assign(words,{"Welche Tierform ist im Namen dieses Fundstücks genannt?":
 function translated(value){
  const t=value.trim();if(!t)return null;
  if(words[t])return words[t];
+ if(/^Richtig! /.test(t))return 'Correct! '+(words[t.slice(9)]||t.slice(9));
+ if(/^Nicht ganz\. /.test(t))return 'Not quite. '+(words[t.slice(12)]||t.slice(12));
+ if(/^Treffer: /.test(t)){const rest=t.slice(9),dot=rest.indexOf('. ');return dot<0?'Found: '+(words[rest]||rest):'Found: '+(words[rest.slice(0,dot)]||rest.slice(0,dot))+'. '+(words[rest.slice(dot+2)]||rest.slice(dot+2));}
  if(/^Originalfoto /.test(t))return 'Original photograph of '+t.slice('Originalfoto '.length).replace(/Goldhirsch|Goldgreif|Eberbeschlag|Trensenteil|Schwertscheide|Goldrosette|Reiterdarstellung/g,k=>words[k]||k);
  if(/^Etappe [1-4] von 4/.test(t))return t.replace(/^Etappe ([1-4]) von 4/,'Stage $1 of 4').replace(/Freilegen/g,'Uncover').replace(/Dokumentieren/g,'Document').replace(/Untersuchen/g,'Examine').replace(/Forschungsbericht/g,'Research report');
  if(/^Position ausgewählt: Feld ([A-D][1-4])/.test(t))return t.replace(/^Position ausgewählt: Feld /,'Selected position: cell ').replace('(noch nicht dokumentiert)','(not yet recorded)');
