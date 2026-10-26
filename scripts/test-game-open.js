@@ -155,8 +155,12 @@ async function run(lang){
    pointer('pointerdown',200,150);pointer('pointerup',200,150);
    assert.equal(good.disabled,false,lang+': identifying the photograph detail did not unlock answers');
    bad.click();
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(doc.getElementById('j87-feedback').textContent.startsWith(lang==='en'?'Not quite.':'Nicht ganz.'),lang+': wrong research answer was not localized');
    assert.equal(doc.getElementById('j87-next').disabled,true,lang+': incorrect interpretation unlocked report');
    good.click();
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(doc.getElementById('j87-feedback').textContent.startsWith(lang==='en'?'Correct!':'Richtig!'),lang+': correct research answer was not localized');
    assert.equal(doc.getElementById('j87-next').disabled,false,lang+': correct answer did not unlock report');
    doc.getElementById('j87-next').click();
    assert.equal(iw.__journeyTest.getStep(),3,lang+': research report not reached');
