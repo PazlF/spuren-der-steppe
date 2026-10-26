@@ -23,4 +23,30 @@ assert(html.includes('onclick="window.openFundlabor()"'), 'Artifact Lab launch b
 assert(html.includes('window.openBefundlabor=open'), 'Field Lab open handler missing');
 assert(html.includes('window.openForschungsreise'), 'Research journey open handler missing');
 assert(html.includes("lang:'de'"), 'Default German mode missing');
+// Validate photograph touch markers and their numbering for every museum artifact.
+const detailMatch=html.match(/window\.SKYTHEN_DETAILS\s*=\s*(\{[\s\S]*?\n\});/);
+assert(detailMatch, 'Touch-feature coordinate dataset missing');
+const details=vm.runInNewContext('('+detailMatch[1]+')');
+const counts={hirsch:4,greif:4,eber:4,trense:5,scheide:4,rosette:4,reiter:5};
+let total=0;
+for(const [id,count] of Object.entries(counts)){
+ const entry=details[id];assert(entry, 'Missing touch features for '+id);
+ assert.equal(entry.spots.length,count,id+': incorrect feature count');
+ const labels=new Set(),positions=new Set();
+ for(const [i,spot] of entry.spots.entries()){
+  assert(Number.isFinite(spot.x)&&Number.isFinite(spot.y),id+': point '+(i+1)+' is not numeric');
+  assert(spot.x>=5&&spot.x<=95&&spot.y>=5&&spot.y<=95,id+': point '+(i+1)+' outside safe image region');
+  assert(typeof spot.label==='string'&&spot.label.trim(),id+': point '+(i+1)+' missing label');
+  assert(!labels.has(spot.label),id+': repeated feature label '+spot.label);
+  labels.add(spot.label);
+  const key=spot.x+','+spot.y;assert(!positions.has(key),id+': numbers overlap at '+key);
+  positions.add(key);
+ }
+ total+=count;
+}
+assert.equal(total,30,'Total number of photo touch features changed unexpectedly');
+assert(/d\.spots\.map\(\(sp,i\)=>`<button[^\n]+class="touch-hotspot/.test(html),'Photo marker loop missing');
+assert(html.includes('data-index="${i}" aria-label="Detail ${i+1}:'),'Photo markers must have matching zero-based indices and visible one-based numbers');
+assert(html.includes('class="lab-pill')&&html.includes('>${found.has(i)?\'✓\':i+1}<span class="visually-hidden">'),'Feature list must use the same numbering');
+console.log('PASS: all 30 photo markers have valid, unique coordinates and matching 1-based index numbering.');
 console.log('PASS: ' + scripts.length + ' JavaScript blocks parse; three game launchers and language initialization checked.');
