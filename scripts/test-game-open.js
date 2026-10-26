@@ -167,6 +167,11 @@ async function run(lang){
    assert.equal(iw.__journeyTest.getStep(),3,lang+': research report not reached');
    assert(doc.querySelector('.j87-paper')?.textContent.includes('Goldhirsch'),lang+': report missing artifact');
    assert(doc.querySelector('.j87-paper')?.textContent.includes('Übungsraster'),lang+': report missing documented grid');
+   await new Promise(resolve=>setImmediate(resolve));
+   const reportTitle=doc.querySelector('.j87-complete h1')?.textContent.trim();
+   assert.equal(reportTitle,lang==='en'?'Research journey completed!':'Forschungsreise geschafft!',lang+': report heading localization failed');
+   const recordHeading=doc.querySelector('.j87-paper h3')?.textContent.trim();
+   assert.equal(recordHeading,lang==='en'?'Your research record':'Dein Forschungsprotokoll',lang+': research record title localization failed');
    console.log('PASS '+lang+': study requires photo evidence and correct answer before report');
    console.log('PASS '+lang+': research journey documentation gates the investigation stage');
    console.log('PASS '+lang+': all seven journey choices open the excavation stage');
