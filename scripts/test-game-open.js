@@ -53,6 +53,8 @@ async function run(lang){
    assert.equal(panel.querySelector('#fl-finish').hidden,true,lang+': completion appears too early');
    byItem('hirsch').click();
    byGroup('pferd').click(); // intentionally incorrect
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(panel.textContent.includes(lang==='en'?'Not quite':'Noch nicht'),lang+': wrong-match feedback language');
    assert.equal(byItem('hirsch').disabled,false,lang+': incorrect match disabled the artifact');
    assert.equal(panel.querySelector('#fl-progress-text').textContent.includes('0'),true,lang+': wrong match changed progress');
    for(let i=0;i<picks.length;i++){
@@ -62,6 +64,8 @@ async function run(lang){
     assert.equal(panel.querySelector('#fl-progress').style.width,(i+1)*20+'%',lang+': progress bar mismatch');
    }
    assert.equal(panel.querySelector('#fl-finish').hidden,false,lang+': completion remains hidden');
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(panel.textContent.includes(lang==='en'?'Artifact Lab completed':'Fundlabor geschafft'),lang+': completion translation');
    panel.querySelector('.fl-again').click();
    assert.equal(panel.querySelector('#fl-finish').hidden,true,lang+': replay did not reset completion');
    assert.equal(byItem('hirsch').disabled,false,lang+': replay did not reactivate cards');
@@ -81,8 +85,12 @@ async function run(lang){
    q('[data-clue="stones"] button').click();
    assert.equal(q('#bf-question').hidden,false,lang+': second clue did not unlock final question');
    q('[data-answer="no"]').click();
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(q('#bf-result').textContent.trim().length>15,lang+': missing incorrect-answer feedback');
    assert.equal(q('#bf-summary').hidden,true,lang+': unsupported answer completed report');
    q('[data-answer="yes"]').click();
+   await new Promise(resolve=>setImmediate(resolve));
+   assert(q('#bf-result').textContent.trim().length>15,lang+': missing correct-answer feedback');
    assert.equal(q('#bf-summary').hidden,false,lang+': correct answer did not reveal report');
    q('#bf-restart').click();
    const fresh=w.document.getElementById('bf-modal');
