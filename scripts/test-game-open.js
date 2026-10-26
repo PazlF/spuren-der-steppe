@@ -106,6 +106,32 @@ async function run(lang){
    assert(doc.getElementById('j87-coord').textContent.includes('✓'),lang+': position save not confirmed');
    doc.getElementById('j87-next').click();
    assert.equal(iw.__journeyTest.getStep(),2,lang+': study stage not reached after documentation');
+   const frame=doc.getElementById('j88-photo-frame');
+   assert(frame,lang+': investigation photo missing');
+   iw.Element.prototype.setPointerCapture=function(){};
+   frame.getBoundingClientRect=()=>({left:0,top:0,width:400,height:300,right:400,bottom:300});
+   Object.defineProperty(frame,'clientWidth',{configurable:true,value:400});
+   Object.defineProperty(frame,'clientHeight',{configurable:true,value:300});
+   const good=doc.getElementById('j87-good'),bad=doc.getElementById('j87-bad');
+   assert.equal(good.disabled,true,lang+': answer enabled without identifying a detail');
+   assert.equal(doc.getElementById('j87-next').disabled,true,lang+': report available before evidence');
+   const pointer=(type,x,y,id=1)=>{
+    const ev=new iw.MouseEvent(type,{bubbles:true,cancelable:true,clientX:x,clientY:y,button:0});
+    Object.defineProperty(ev,'pointerId',{value:id});
+    Object.defineProperty(ev,'pointerType',{value:'touch'});
+    frame.dispatchEvent(ev);
+   };
+   pointer('pointerdown',200,150);pointer('pointerup',200,150);
+   assert.equal(good.disabled,false,lang+': identifying the photograph detail did not unlock answers');
+   bad.click();
+   assert.equal(doc.getElementById('j87-next').disabled,true,lang+': incorrect interpretation unlocked report');
+   good.click();
+   assert.equal(doc.getElementById('j87-next').disabled,false,lang+': correct answer did not unlock report');
+   doc.getElementById('j87-next').click();
+   assert.equal(iw.__journeyTest.getStep(),3,lang+': research report not reached');
+   assert(doc.querySelector('.j87-paper')?.textContent.includes('Goldhirsch'),lang+': report missing artifact');
+   assert(doc.querySelector('.j87-paper')?.textContent.includes('Übungsraster'),lang+': report missing documented grid');
+   console.log('PASS '+lang+': study requires photo evidence and correct answer before report');
    console.log('PASS '+lang+': research journey documentation gates the investigation stage');
    console.log('PASS '+lang+': all seven journey choices open the excavation stage');
   }
