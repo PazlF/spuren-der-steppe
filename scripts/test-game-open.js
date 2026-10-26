@@ -35,6 +35,17 @@ async function run(lang){
   const expected=headings[id][lang];
   const heading=panel.querySelector('h1')?.textContent.trim()||'';
   assert.equal(heading,expected,lang+': untranslated or unexpected '+id+' heading');
+  const interfaceChecks={
+   'fundlabor-modal':[['.fl-close','Spiel verlassen','Exit activity'],['.fl-again','Noch einmal spielen','Play again']],
+   'bf-modal':[['#bf-save','Dokumentation sichern','Save documentation'],['#bf-restart','Neu starten','Start again']],
+   'journey87':[['#j87-close','Beenden','Exit']]
+  };
+  for(const [selector,german,english] of interfaceChecks[id]){
+   const element=panel.querySelector(selector);
+   assert(element,lang+': missing '+selector+' in '+id);
+   const visible=element.textContent.trim();
+   assert(visible.includes(lang==='en'?english:german),lang+': language mismatch in '+id+' '+selector+': '+visible);
+  }
   if(id==='fundlabor-modal'){
    const picks=[['hirsch','kleidung'],['eber','pferd'],['greif','kleidung'],['trense','pferd'],['rosette','kleidung']];
    const byItem=item=>panel.querySelector('.fl-card[data-item="'+item+'"]');
