@@ -23,6 +23,16 @@ async function run(lang){
   const panel=w.document.getElementById(id);
   assert(panel,lang+': missing '+id+' after opening');
   assert(panel.textContent.trim().length>40,lang+': '+id+' has no meaningful content');
+  // Language regression guard: visible game headings must follow the selected language.
+  // This is deliberately focused on stable headings, not untranslated archaeological data.
+  const headings={
+   'fundlabor-modal':{de:'Wohin gehört der Fund?',en:'Where does this artifact belong?'},
+   'bf-modal':{de:'Fundstelle sichern',en:'Record the findspot'},
+   'journey87':{de:'Welchen Fund möchtest du erforschen?',en:'Which artifact would you like to explore?'}
+  };
+  const expected=headings[id][lang];
+  const heading=panel.querySelector('h1')?.textContent.trim()||'';
+  assert.equal(heading,expected,lang+': untranslated or unexpected '+id+' heading');
   if(id==='fundlabor-modal'){
    const picks=[['hirsch','kleidung'],['eber','pferd'],['greif','kleidung'],['trense','pferd'],['rosette','kleidung']];
    const byItem=item=>panel.querySelector('.fl-card[data-item="'+item+'"]');
