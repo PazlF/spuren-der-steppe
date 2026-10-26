@@ -30,6 +30,8 @@ async function run(lang){
    'bf-modal':{de:'Fundstelle sichern',en:'Record the findspot'},
    'journey87':{de:'Welchen Fund möchtest du erforschen?',en:'Which artifact would you like to explore?'}
   };
+  // The journey overlay localizes via MutationObserver on the next microtask.
+  await new Promise(resolve=>setImmediate(resolve));
   const expected=headings[id][lang];
   const heading=panel.querySelector('h1')?.textContent.trim()||'';
   assert.equal(heading,expected,lang+': untranslated or unexpected '+id+' heading');
