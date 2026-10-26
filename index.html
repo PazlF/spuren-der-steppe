@@ -1440,7 +1440,7 @@ window.openFundlabor=open;
 <script id="befundlabor-86-js">
 (function befundSicherung(){
  'use strict';
- const id='bf-modal';let place=null;
+ const id='bf-modal';let place=null;let clues=new Set();
  const modal=()=>document.getElementById(id);
  function close(){modal()?.remove();document.body.style.overflow='';}
  function update(){
@@ -1451,7 +1451,7 @@ window.openFundlabor=open;
   m.querySelector('#bf-status').textContent=place?'Fundnummer 01 '+({left:'links',right:'rechts',below:'unterhalb'}[place])+' neben dem Fund platziert. Jetzt dokumentieren.':'Wähle eine Position für das Fundschild.';
  }
  function open(){
-  close();place=null;
+  close();place=null;clues=new Set();
   const m=document.createElement('div');m.id=id;m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');m.setAttribute('aria-label','Befundlabor – Fundstelle sichern');
   m.innerHTML=`<header class="bf-top"><strong>SPUREN DER STEPPE · BEFUNDLABOR</strong><button type="button" class="bf-close">✕ Schließen</button></header>
 <main class="bf-wrap"><div class="bf-meta">TOUCH-MISSION 03 · BEFUNDSICHERUNG</div><h1>Fundstelle sichern</h1>
@@ -1463,11 +1463,11 @@ window.openFundlabor=open;
 <rect width="520" height="360" fill="url(#bf-earth-v3)"/>
 <path d="M0 115Q130 96 252 121T520 106M0 259Q185 230 340 262T520 244" stroke="#d0b28c" stroke-width="9" opacity=".25" fill="none"/>
 <ellipse cx="260" cy="172" rx="99" ry="84" fill="#564835" opacity=".5"/>
-<path d="M205 127Q257 84 319 128L333 187Q304 240 250 239Q205 219 189 169Z" fill="#b98959" stroke="#ead0a7" stroke-width="5"/>
+<ellipse cx="105" cy="218" rx="59" ry="33" fill="#423a2d" opacity=".65"/><path d="M395 115l15 -12 17 8 -1 18 -18 7 -13 -10Z M437 201l23 -5 11 13 -8 15 -26 -4Z" fill="#b5a58a" stroke="#5c5140" stroke-width="3"/><path d="M205 127Q257 84 319 128L333 187Q304 240 250 239Q205 219 189 169Z" fill="#b98959" stroke="#ead0a7" stroke-width="5"/>
 <path d="M209 154Q255 119 311 151M213 182Q259 156 315 185M235 213Q270 198 305 212" fill="none" stroke="#6d4c35" stroke-width="7" stroke-linecap="round"/>
 <text x="22" y="33" font-family="Arial,sans-serif" font-size="15" font-weight="bold" fill="#fff0ce">ÜBUNGSGRABUNG · SCHEMA</text>
 </svg>
-<div class="bf-new-pin" id="bf-new-pin" data-place="none" aria-hidden="true"><span>01</span><small>Fund-Nr.</small></div>
+<div class="bf-new-pin" id="bf-new-pin" data-place="none" aria-hidden="true"><span>01</span><small>Fund-Nr.</small></div><div class="bf-clue" data-clue="soil"><button type="button" aria-label="Bodenverfärbung untersuchen">?</button></div><div class="bf-clue stones" data-clue="stones"><button type="button" aria-label="Steine untersuchen">?</button></div>
 </div>
 <p class="bf-note">Schematische Übungsdarstellung – kein realer Fundort, kein maßstabsgetreuer Befund.</p>
 </div><aside class="bf-card"><div class="bf-meta">SCHRITT 1 / FUNDNUMMER</div><h2>Markierung platzieren</h2>
@@ -1478,10 +1478,10 @@ window.openFundlabor=open;
 <button type="button" data-place="below" aria-pressed="false">↓ Unterhalb</button></div>
 <div class="bf-status" id="bf-status" role="status" aria-live="polite">Wähle eine Position für das Fundschild.</div>
 <button type="button" class="bf-save" id="bf-save" disabled>Dokumentation sichern ✓</button>
-<section class="bf-summary" id="bf-summary" hidden><strong>Dokumentationsprotokoll</strong><p>Übungsfund: Keramikfragment<br>Fundnummer: <strong>01</strong><br>Fundschild: <span id="bf-saved-place"></span></p><p>Die Fundnummer wurde in einer schematischen Übung neben dem Objekt platziert. Die tatsächliche Fundlage ist unbekannt.</p></section>
-<div class="bf-question" id="bf-question" hidden><div class="bf-meta">SCHRITT 2 / EINORDNUNG</div><h2>Was wissen wir?</h2><p>Was lässt sich aus dieser Übung sicher dokumentieren?</p>
-<button type="button" class="bf-answer" data-answer="yes">Wo wir das Fundschild in der Simulation platziert haben.</button>
-<button type="button" class="bf-answer" data-answer="no">Den ursprünglichen Fundort und das Alter des Keramikfragments.</button>
+<section class="bf-observe" id="bf-observe" hidden><div class="bf-meta">SCHRITT 2 / BEOBACHTEN</div><h2>Spuren im Boden</h2><p>Finde die zwei Hinweise. Tippe im Grabungsfeld auf die Fragezeichen.</p><div id="bf-clue-count" aria-live="polite">0 von 2 Hinweisen</div><div id="bf-clue-notes"></div></section><section class="bf-summary" id="bf-summary" hidden><strong>Dokumentationsprotokoll</strong><p>Übungsfund: Keramikfragment<br>Fundnummer: <strong>01</strong><br>Fundschild: <span id="bf-saved-place"></span></p><p>Beobachtet: Keramikfragment, dunkle Verfärbung und Steine. Ihre historische Einordnung ist offen.</p></section>
+<div class="bf-question" id="bf-question" hidden><div class="bf-meta">SCHRITT 3 / INTERPRETATION</div><h2>Was wissen wir?</h2><p>Keramik, Steine und dunkler Boden: Was können wir daraus schließen?</p>
+<button type="button" class="bf-answer" data-answer="yes">Wir können die Merkmale dokumentieren; ihr Zusammenhang muss untersucht werden.</button>
+<button type="button" class="bf-answer" data-answer="no">Die dunkle Stelle beweist eine Feuerstelle und verrät, wer dort lebte.</button>
 <div id="bf-result" role="status" aria-live="polite"></div></div>
 <div class="bf-tools"><button class="bf-outline" type="button" id="bf-restart">Neu starten ↻</button><button class="bf-outline bf-close" type="button">Zur Sammlung →</button></div>
 </aside></div><p class="bf-note"><strong>Didaktische Simulation:</strong> Das dargestellte Keramikfragment und seine Umgebung sind fiktiv. Echte archäologische Befunddokumentation erfordert unter anderem Kontext, Schichten, Zeichnungen, Messungen und Fotos.</p></main>`;
@@ -1489,9 +1489,9 @@ window.openFundlabor=open;
   m.querySelectorAll('.bf-close').forEach(b=>b.addEventListener('click',close));
   m.querySelector('#bf-restart').addEventListener('click',open);
   m.querySelectorAll('[data-place]').forEach(b=>b.addEventListener('click',()=>{place=b.dataset.place;update()}));
-  m.querySelector('#bf-save').addEventListener('click',()=>{if(!place)return;m.querySelector('#bf-saved-place').textContent={left:'links',right:'rechts',below:'unterhalb'}[place];m.querySelector('#bf-summary').hidden=false;m.querySelector('#bf-question').hidden=false;m.querySelector('#bf-save').disabled=true;m.querySelector('#bf-status').textContent='Fundnummer dokumentiert. Jetzt die Forschungsfrage beantworten.';m.querySelectorAll('[data-place]').forEach(b=>b.disabled=true);m.querySelector('#bf-question').scrollIntoView({block:'nearest',behavior:'smooth'})});
-  m.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{m.querySelectorAll('[data-answer]').forEach(x=>x.classList.toggle('selected',x===b));m.querySelector('#bf-result').textContent=b.dataset.answer==='yes'?'Richtig! Eine Markierung der Simulation ist dokumentiert. Für echte Fundgeschichte brauchen wir weitere Befunde.':'Das können wir aus dieser schematischen Übung nicht ableiten. Prüfe noch einmal, was wirklich dokumentiert wurde.'}));
-  m.querySelector('.bf-close').focus();update();
+  m.querySelector('#bf-save').addEventListener('click',()=>{if(!place)return;m.querySelector('#bf-saved-place').textContent={left:'links',right:'rechts',below:'unterhalb'}[place];m.querySelector('#bf-observe').hidden=false;m.querySelectorAll('.bf-clue').forEach(x=>x.classList.add('enabled'));m.querySelector('#bf-save').disabled=true;m.querySelector('#bf-status').textContent='Fundnummer dokumentiert. Untersuche nun die beiden Bodenhinweise.';m.querySelectorAll('[data-place]').forEach(b=>b.disabled=true);m.querySelector('#bf-observe').scrollIntoView({block:'nearest',behavior:'smooth'})});
+  m.querySelectorAll('.bf-clue button').forEach(button=>button.addEventListener('click',()=>{if(m.querySelector('#bf-observe').hidden)return;const key=button.parentElement.dataset.clue;clues.add(key);button.parentElement.classList.add('found');button.textContent='✓';m.querySelector('#bf-clue-count').textContent=clues.size+' von 2 Hinweisen';m.querySelector('#bf-clue-notes').innerHTML=[...clues].map(k=>'<p><strong>'+(k==='soil'?'Bodenverfärbung':'Steingruppe')+':</strong> '+(k==='soil'?'Ein dunkler Bereich ist sichtbar. Die Ursache ist ungeklärt.':'Kleine Steine sind sichtbar. Ihre Bedeutung ist offen.')+'</p>').join('');if(clues.size===2){m.querySelector('#bf-question').hidden=false;m.querySelector('#bf-question').scrollIntoView({block:'nearest',behavior:'smooth'});}}));m.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{m.querySelectorAll('[data-answer]').forEach(x=>x.classList.toggle('selected',x===b));m.querySelector('#bf-result').textContent=b.dataset.answer==='yes'?'Richtig! Eine Markierung der Simulation ist dokumentiert. Für echte Fundgeschichte brauchen wir weitere Befunde.':'Das können wir aus dieser schematischen Übung nicht ableiten. Prüfe noch einmal, was wirklich dokumentiert wurde.'}));
+  m.querySelectorAll('[data-answer]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.answer==='yes'){m.querySelector('#bf-summary').hidden=false;m.querySelector('#bf-result').textContent='Richtig: Beobachtungen sind dokumentiert, historische Zusammenhänge bleiben offen.';m.querySelector('#bf-summary').scrollIntoView({block:'nearest',behavior:'smooth'});}else{m.querySelector('#bf-result').textContent='Eine dunkle Bodenfarbe allein belegt keine Feuerstelle. Überlege noch einmal.';}}));m.querySelector('.bf-close').focus();update();
  }
  window.openBefundlabor=open;
 })();
@@ -1752,5 +1752,5 @@ window.openForschungsreise=open;
 #bf-modal .bf-card>p{line-height:1.5}
 @media(max-width:480px){#bf-modal .bf-wrap{padding:15px 12px 35px}#bf-modal .bf-plan-box,#bf-modal .bf-card{padding:12px}#bf-modal .bf-placements{grid-template-columns:1fr 1fr}#bf-modal .bf-placements button:last-child{grid-column:1/-1}}
 </style>
-</body>
+<style id="bf-clues-v4">#bf-modal .bf-clue{position:absolute;left:13%;top:62%;z-index:3;display:none}#bf-modal .bf-clue.stones{left:79%;top:28%}#bf-modal .bf-clue.enabled{display:block}#bf-modal .bf-clue button{width:56px;height:56px;border-radius:50%;border:3px solid #ebcb93;background:#25402e;color:#fff;font-size:24px;touch-action:manipulation}#bf-modal .bf-clue.found button{background:#567748}#bf-modal .bf-observe{padding:14px;border:1px solid #9a8259;border-radius:12px;background:#23382b;display:grid;gap:8px}#bf-modal .bf-observe[hidden]{display:none}#bf-modal .bf-observe p{line-height:1.5;margin:4px 0}</style></body>
 </html>
