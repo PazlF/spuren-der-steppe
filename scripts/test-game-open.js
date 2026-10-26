@@ -20,8 +20,7 @@ async function run(lang){
   assert(panel.textContent.trim().length>40,lang+': '+id+' has no meaningful content');
   panel.remove();
  }
- // Allow queued MutationObserver callbacks to run while their DOM is still alive.
- return new Promise(resolve=>w.queueMicrotask(()=>{w.close();resolve();}));
+ // Keep the short-lived DOM alive until Node exits: localization uses queued observers.
  console.log('PASS '+lang+': all three games open and render content');
 }
 (async()=>{await run('de');await run('en');})().catch(err=>{console.error(err);process.exitCode=1;});
