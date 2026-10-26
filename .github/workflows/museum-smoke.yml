@@ -19,3 +19,7 @@ jobs:
           node-version: '22'
       - name: Check game JavaScript, launch buttons and language setup
         run: node scripts/check-museum.js
+      - name: Install isolated DOM test dependency
+        run: npm install --no-save --no-package-lock jsdom@26
+      - name: Open all three minigames in German and English
+        run: node scripts/test-game-open.js
