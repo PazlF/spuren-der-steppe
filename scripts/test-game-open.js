@@ -124,6 +124,7 @@ async function run(lang){
    iw.HTMLCanvasElement.prototype.getContext=function(){return context;};
    iw.SKYTHEN_RESIDUE_103=()=>({mask:new Uint8Array(24*18).fill(1),total:24*18});
    iw.eval(testSource);
+   iw.eval(source('museum-overlay-english-v1'));
    iw.openForschungsreise();
    iw.__journeyTest.chooseObject({id:'hirsch',name:'Goldhirsch',inv:'24.97.55',image:'assets/photos/hirsch.jpg'});
    iw.__journeyTest.next(); // test harness: simulate successful completion of excavation
