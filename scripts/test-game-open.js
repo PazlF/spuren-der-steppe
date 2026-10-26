@@ -81,6 +81,32 @@ async function run(lang){
     assert(w.document.getElementById('j87-canvas'),lang+': excavation canvas missing for '+item);
     w.openForschungsreise();
    }
+   // Exercise stage 2 without bypassing the excavation: advance the internal
+   // state through the stage-one completion event used by the journey controller.
+   const journeyScript=source('journey87-script');
+   // Re-evaluate only a test accessor in the same closure by injecting a hook.
+   // The hook is installed before user interactions in a separate isolated DOM.
+   const testSource=journeyScript.replace('window.openForschungsreise=open;', 'window.__journeyTest={chooseObject,drawDocument,drawStudy,drawReport,next,getStep:()=>step};window.openForschungsreise=open;');
+   const isolated=new JSDOM('<!doctype html><html lang="'+lang+'"><body></body></html>',{url:'https://museum.example/',runScripts:'outside-only',pretendToBeVisual:true});
+   const iw=isolated.window;
+   iw.HTMLElement.prototype.scrollIntoView=function(){};
+   iw.HTMLCanvasElement.prototype.getContext=function(){return context;};
+   iw.SKYTHEN_RESIDUE_103=()=>({mask:new Uint8Array(24*18).fill(1),total:24*18});
+   iw.eval(testSource);
+   iw.openForschungsreise();
+   iw.__journeyTest.chooseObject({id:'hirsch',name:'Goldhirsch',inv:'24.97.55',image:'assets/photos/hirsch.jpg'});
+   iw.__journeyTest.next(); // test harness: simulate successful completion of excavation
+   assert.equal(iw.__journeyTest.getStep(),1,lang+': did not advance to documentation');
+   const doc=iw.document;
+   assert.equal(doc.getElementById('j87-next').disabled,true,lang+': undocumented position allowed progression');
+   doc.getElementById('j87-plan').dispatchEvent(new iw.MouseEvent('click',{bubbles:true,clientX:0,clientY:0}));
+   assert.equal(doc.getElementById('j87-next').disabled,true,lang+': position selection bypassed documentation');
+   doc.getElementById('j87-save').click();
+   assert.equal(doc.getElementById('j87-next').disabled,false,lang+': saved position did not unlock study');
+   assert(doc.getElementById('j87-coord').textContent.includes('✓'),lang+': position save not confirmed');
+   doc.getElementById('j87-next').click();
+   assert.equal(iw.__journeyTest.getStep(),2,lang+': study stage not reached after documentation');
+   console.log('PASS '+lang+': research journey documentation gates the investigation stage');
    console.log('PASS '+lang+': all seven journey choices open the excavation stage');
   }
   panel.remove();
