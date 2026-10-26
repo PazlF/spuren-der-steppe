@@ -11,6 +11,10 @@ async function run(lang){
  const dom=new JSDOM('<!doctype html><html lang="'+lang+'"><body><div id="app"></div></body></html>',{url:'https://museum.example/',runScripts:'outside-only',pretendToBeVisual:true});
  const w=dom.window;
  w.HTMLElement.prototype.scrollIntoView=function(){};
+ const gradient={addColorStop(){}};
+ const context=new Proxy({createLinearGradient(){return gradient},createRadialGradient(){return gradient},getImageData(){return {data:new Uint8ClampedArray(4)}}},{get:(obj,key)=>key in obj?obj[key]:()=>{}});
+ w.HTMLCanvasElement.prototype.getContext=function(){return context;};
+ w.SKYTHEN_RESIDUE_103=()=>({mask:new Uint8Array(24*18).fill(1),total:24*18});
  for(const id of ids){try{w.eval(source(id));}catch(e){throw Error(lang+' '+id+' initialization: '+e.message);}}
  const games=[['openFundlabor','fundlabor-modal'],['openBefundlabor','bf-modal'],['openForschungsreise','journey87']];
  for(const [fn,id] of games){
@@ -64,6 +68,20 @@ async function run(lang){
    assert.equal(fresh.querySelector('#bf-summary').hidden,true,lang+': restart did not reset report');
    fresh.remove();
    console.log('PASS '+lang+': Field Lab documentation, both clues, feedback and restart');
+  }
+  if(id==='journey87'){
+   const cards=[...panel.querySelectorAll('[data-choose]')];
+   assert.equal(cards.length,7,lang+': research journey must offer seven artifacts');
+   for(const card of cards){
+    const item=card.dataset.choose;
+    card.click();
+    const next=w.document.getElementById('j87-next');
+    assert(next,lang+': excavation stage did not render for '+item);
+    assert.equal(next.disabled,true,lang+': excavation bypasses uncovering for '+item);
+    assert(w.document.getElementById('j87-canvas'),lang+': excavation canvas missing for '+item);
+    w.openForschungsreise();
+   }
+   console.log('PASS '+lang+': all seven journey choices open the excavation stage');
   }
   panel.remove();
  }
