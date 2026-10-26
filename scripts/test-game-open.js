@@ -18,6 +18,27 @@ async function run(lang){
   const panel=w.document.getElementById(id);
   assert(panel,lang+': missing '+id+' after opening');
   assert(panel.textContent.trim().length>40,lang+': '+id+' has no meaningful content');
+  if(id==='fundlabor-modal'){
+   const picks=[['hirsch','kleidung'],['eber','pferd'],['greif','kleidung'],['trense','pferd'],['rosette','kleidung']];
+   const byItem=item=>panel.querySelector('.fl-card[data-item="'+item+'"]');
+   const byGroup=group=>panel.querySelector('.fl-target[data-group="'+group+'"]');
+   assert.equal(panel.querySelector('#fl-finish').hidden,true,lang+': completion appears too early');
+   byItem('hirsch').click();
+   byGroup('pferd').click(); // intentionally incorrect
+   assert.equal(byItem('hirsch').disabled,false,lang+': incorrect match disabled the artifact');
+   assert.equal(panel.querySelector('#fl-progress-text').textContent.includes('0'),true,lang+': wrong match changed progress');
+   for(let i=0;i<picks.length;i++){
+    const [item,group]=picks[i];
+    byItem(item).click();byGroup(group).click();
+    assert.equal(byItem(item).disabled,true,lang+': correct match did not finish '+item);
+    assert.equal(panel.querySelector('#fl-progress').style.width,(i+1)*20+'%',lang+': progress bar mismatch');
+   }
+   assert.equal(panel.querySelector('#fl-finish').hidden,false,lang+': completion remains hidden');
+   panel.querySelector('.fl-again').click();
+   assert.equal(panel.querySelector('#fl-finish').hidden,true,lang+': replay did not reset completion');
+   assert.equal(byItem('hirsch').disabled,false,lang+': replay did not reactivate cards');
+   console.log('PASS '+lang+': Artifact Lab rejects wrong matches, completes all five and replays');
+  }
   panel.remove();
  }
  // Keep the short-lived DOM alive until Node exits: localization uses queued observers.
