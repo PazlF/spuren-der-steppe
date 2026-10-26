@@ -1555,9 +1555,13 @@ const items=[
  {id:'trense',title:'Trensenteil',image:'assets/photos/trense.jpg',answer:'pferd',evidence:'Im Museumskatalog als seitliches Trensenteil bezeichnet.'},
  {id:'rosette',title:'Mini-Goldstück',image:'assets/photos/rosette.jpg',answer:'kleidung',evidence:'Der Katalog beschreibt ein kleines Kleidungsornament; das Objekt ist nur etwa 7,5 mm breit.'}
 ];
+const enLab={"Goldhirsch":"Dress Ornament (Stag)","Eberbeschlag":"Harness Ornament (Boar)","Goldgreif":"Dress Ornament (Griffin)","Trensenteil":"Bridle Fitting","Mini-Goldstück":"Dress Ornament (Rosette)","Im Met-Katalog als Kleidungsornament beschrieben. Die genaue Trageposition ist nicht dokumentiert.":"The Met catalogue identifies this as a dress ornament. Its exact position on clothing is not recorded.","Im Met-Katalog als Verzierung für Pferdegeschirr oder Trense eingeordnet.":"The Met catalogue classifies this as an ornament for horse harness or bridle.","Das Schmuckstück hat eine Befestigungsöse und wird als Ornament eingeordnet.":"The object has an attachment loop and is classified as an ornament.","Im Museumskatalog als seitliches Trensenteil bezeichnet.":"The museum catalogue describes it as a side element of a bridle.","Der Katalog beschreibt ein kleines Kleidungsornament; das Objekt ist nur etwa 7,5 mm breit.":"The catalogue describes a small dress ornament, only about 7.5 mm wide.","SPUREN DER STEPPE · FUNDLABOR":"TRACES OF THE STEPPE · ARTIFACT LAB","✕ Spiel verlassen":"✕ Exit activity","TOUCH-MISSION 02 · ORDNEN":"TOUCH MISSION 02 · SORTING","Wohin gehört der Fund?":"Where does this artifact belong?","Ziehe die Fundstücke zu ihrer Verwendung. Auf dem Tablet kannst du auch":"Match each artifact to its documented use. On a tablet, you can also","ein Foto antippen und danach ein Feld wählen":"tap a photograph and then choose a category","0 von 5 Funden zugeordnet":"0 of 5 artifacts matched","Kategorien":"Categories","Kleidungsornament":"Dress ornament","Schmuck und Verzierung an Kleidung":"Ornaments worn on clothing","Pferdeausrüstung":"Horse equipment","Verzierungen und Teile des Zaumzeugs":"Ornaments and bridle components","Verschiebbare Fundfotos":"Interactive artifact photographs","Ziehen oder antippen ↗":"Drag or tap ↗","Beginne mit einem Fundfoto. Wähle dann eine der beiden Kategorien.":"Choose an artifact photograph, then select one of the two categories.","Fundlabor geschafft!":"Artifact Lab completed!","Du hast Fundstücke nach ihrer":"You have sorted the artifacts by their","dokumentierten Funktion":"documented function","geordnet. Das ist mehr als bloßes Raten anhand des Fotos.":"rather than guessing from photographs alone.","Noch einmal spielen ↻":"Play again ↻","Zuordnung zurücksetzen ↻":"Reset matches ↻","Zur Sammlung zurück →":"Back to collection →","Archäologische Methode:":"Archaeological method:","Aussehen und Material liefern Hinweise, aber die Zuordnung stützt sich auch auf Form, Vergleichsfunde und Museumsdokumentation. Diese Aufgabe vereinfacht Kategorien für Lernzwecke. Es werden keine echten Fundzusammenhänge nachgestellt. Originalfotos: The Metropolitan Museum of Art. Vor Museumseinsatz fachlich prüfen.":"Appearance and material provide clues, but classification also relies on shape, comparable finds and museum documentation. This educational activity simplifies the categories and does not recreate real archaeological contexts. Original photographs: The Metropolitan Museum of Art. Content should be reviewed by a subject specialist before use in a museum.","Fundlabor: Funde zuordnen":"Artifact Lab: match artifacts","✓ Zugeordnet":"✓ Matched","Alle fünf Funde sind zugeordnet. Gut gemacht!":"All five artifacts matched. Well done!","Noch nicht! Achte auf die dokumentierte Verwendung, nicht nur auf die Farbe oder das Material.":"Not quite. Consider the documented use, not just the colour or material.","Neu gestartet. Wähle einen Fund.":"Activity restarted. Choose an artifact.","Foto gewählt. Tippe jetzt auf eine Kategorie.":"Photograph selected. Now tap a category."};
+const labEn=()=>document.documentElement.lang==='en';
+const labText=t=>labEn()?(enLab[t]||t):t;
+function localizeLab(){const m=modal();if(!m||!labEn())return;const w=document.createTreeWalker(m,NodeFilter.SHOW_TEXT),nodes=[];while(w.nextNode())nodes.push(w.currentNode);for(const n of nodes){const v=n.nodeValue||'',t=v.trim();if(enLab[t])n.nodeValue=v.replace(t,enLab[t]);else if(/^([0-5]) von 5 Funden zugeordnet$/.test(t))n.nodeValue=v.replace(t,t.replace('von 5 Funden zugeordnet','of 5 artifacts matched'));}for(const el of m.querySelectorAll('[aria-label],[alt]'))for(const attr of ['aria-label','alt']){const v=el.getAttribute(attr);if(!v)continue;const next=enLab[v]||(v.startsWith('Originalfoto: ')?'Original photograph: '+labText(v.slice(14)):null);if(next)el.setAttribute(attr,next);}}
 let completed=new Set(),selected=null,drag=null;
 const modal=()=>document.getElementById('fundlabor-modal');
-function announce(msg,kind='info'){let el=document.getElementById('fl-feedback');if(el){el.textContent=msg;el.dataset.kind=kind;}}
+function announce(msg,kind='info'){let el=document.getElementById('fl-feedback');if(el){el.textContent=msg;el.dataset.kind=kind;localizeLab();}}
 function refresh(){
  const m=modal();if(!m)return;
  const n=completed.size;
@@ -1565,11 +1569,11 @@ function refresh(){
  m.querySelector('#fl-progress-text').textContent=n+' von 5 Funden zugeordnet';
  m.querySelectorAll('.fl-card').forEach(b=>{let done=completed.has(b.dataset.item);b.classList.toggle('finished',done);b.classList.toggle('selected',!done&&b.dataset.item===selected);b.setAttribute('aria-pressed',String(!done&&b.dataset.item===selected));b.disabled=done; if(done)b.querySelector('small').textContent='✓ Zugeordnet';});
  const done=m.querySelector('#fl-finish');done.hidden=n!==5;
- if(n===5)announce('Alle fünf Funde sind zugeordnet. Gut gemacht!','correct');
+ if(n===5)announce('Alle fünf Funde sind zugeordnet. Gut gemacht!','correct');localizeLab();
 }
 function place(group,id=selected){if(!id||completed.has(id))return;let item=items.find(x=>x.id===id);if(!item)return;
  if(group!==item.answer){announce('Noch nicht! Achte auf die dokumentierte Verwendung, nicht nur auf die Farbe oder das Material.','error');selected=id;refresh();return;}
- completed.add(id);selected=null;announce('✓ '+item.title+': '+item.evidence,'correct');refresh();
+ completed.add(id);selected=null;announce('✓ '+labText(item.title)+': '+labText(item.evidence),'correct');refresh();
 }
 function close(){if(drag)drag=null;modal()?.remove();document.body.style.overflow='';}
 function open(){close();completed=new Set();selected=null;let m=document.createElement('div');m.id='fundlabor-modal';m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');m.setAttribute('aria-label','Fundlabor: Funde zuordnen');
@@ -1579,7 +1583,7 @@ function open(){close();completed=new Set();selected=null;let m=document.createE
  m.querySelectorAll('.fl-reset,.fl-again').forEach(b=>b.addEventListener('click',()=>{completed.clear();selected=null;announce('Neu gestartet. Wähle einen Fund.');refresh();}));
  m.querySelectorAll('.fl-target').forEach(b=>b.addEventListener('click',()=>place(b.dataset.group)));
  m.querySelectorAll('.fl-card').forEach(b=>{
-  b.addEventListener('click',()=>{if(completed.has(b.dataset.item))return;selected=b.dataset.item;announce('Gewählt: '+items.find(x=>x.id===selected).title+'. Tippe auf eine Kategorie.');refresh();});
+  b.addEventListener('click',()=>{if(completed.has(b.dataset.item))return;selected=b.dataset.item;announce(labEn()?'Selected: '+labText(items.find(x=>x.id===selected).title)+'. Tap a category.':'Gewählt: '+items.find(x=>x.id===selected).title+'. Tippe auf eine Kategorie.');refresh();});
   b.addEventListener('pointerdown',e=>{if(completed.has(b.dataset.item)||e.pointerType==='mouse'&&e.button!==0)return;drag={id:b.dataset.item,startX:e.clientX,startY:e.clientY,active:false,pointerId:e.pointerId};});
   b.addEventListener('pointermove',e=>{if(!drag||drag.pointerId!==e.pointerId)return; if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>12){drag.active=true;selected=drag.id;b.classList.add('dragging');let target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.fl-target');m.querySelectorAll('.fl-target').forEach(t=>t.classList.toggle('active',t===target));}});
   b.addEventListener('pointerup',e=>{if(!drag||drag.pointerId!==e.pointerId)return;let wasDragged=drag.active;let id=drag.id;drag=null;b.classList.remove('dragging');m.querySelectorAll('.fl-target').forEach(t=>t.classList.remove('active'));if(wasDragged){let target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.fl-target');if(target){selected=id;place(target.dataset.group,id);}else {selected=id;announce('Foto gewählt. Tippe jetzt auf eine Kategorie.');refresh();}}});
@@ -1587,7 +1591,7 @@ function open(){close();completed=new Set();selected=null;let m=document.createE
  });
  document.addEventListener('keydown',onEscape,{once:false});
  function onEscape(e){if(e.key==='Escape'){document.removeEventListener('keydown',onEscape);close();}}
- m.querySelector('.fl-close').focus();refresh();
+ m.querySelector('.fl-close').focus();refresh();localizeLab();
 }
 window.openFundlabor=open;
 })();
