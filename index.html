@@ -797,6 +797,8 @@ const englishMuseumText={
  "Fundstück abschließen →":"Finish artifact →",
  "Weiter zur Wissensfrage →":"Continue to the knowledge question →",
 
+ "← Zur Sammlung":"← Back to collection",
+ "Zur Sammlung zurück →":"Back to collection →",
  "IMPRESSUM & QUELLEN":"LEGAL INFORMATION & SOURCES",
  "ÜBER DIESE DIGITALE AUSSTELLUNG":"ABOUT THIS DIGITAL EXHIBITION",
  "Gute Fragen.":"Good questions.",
@@ -1362,7 +1364,7 @@ async function checkOfflinePhotos(){
   const label=imported?'lokal im Browser importiert':asset.ok?`lokale Datei (${asset.w} × ${asset.h} px)`:'NICHT lokal vorhanden';
   lines.push(`${o.n} ${o.short}: ${label}`);
  }
- status.textContent=`${success}/7 Originalaufnahmen lokal verfügbar.\n`+lines.join('\n')+(success===7?'\nAlle sieben Fotos sind auf diesem Gerät lokal vorhanden.':'\nFür einen sicheren Offline-Betrieb die fehlenden Originale ergänzen.');
+ status.textContent=state.lang==='en'?`${success}/7 original photographs available locally.\n`+lines.join('\n')+(success===7?'\nAll seven photographs are available locally on this device.':'\nAdd the missing original photographs for reliable offline operation.'):`${success}/7 Originalaufnahmen lokal verfügbar.\n`+lines.join('\n')+(success===7?'\nAlle sieben Fotos sind auf diesem Gerät lokal vorhanden.':'\nFür einen sicheren Offline-Betrieb die fehlenden Originale ergänzen.');
 }
 function updateZoom(){const w=document.querySelector('#touch-world');if(w){w.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.zoom})`;const canvas=document.querySelector('#lab-canvas');if(canvas)canvas.style.setProperty('--inv-z',(1/state.zoom).toFixed(4));const readout=document.querySelector('#zoom-readout');if(readout)readout.textContent=state.zoom.toFixed(1)+'×';return;} const z=document.querySelector('.zoom-stage .art-frame');if(!z)return;let v=z.querySelectorAll('img');v.forEach(img=>{img.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.zoom})`});const lbl=document.querySelector('#zoom-readout');if(lbl)lbl.textContent=state.zoom.toFixed(1)+'×';}
 root.addEventListener('change',async(ev)=>{
