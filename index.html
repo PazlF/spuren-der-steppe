@@ -1430,7 +1430,7 @@ function applyMuseumLanguage(){
   }
  }
 }
-function render(){if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?(state.lang==='en'?'Traces of the Steppe':'Spuren der Steppe'):(me()?.short||(state.lang==='en'?'Digital collection':'Digitale Sammlung'))} · ${museum.maker}`;updateZoom();applyMuseumLanguage();}
+function render(){const scrollBefore=window.scrollY;if(state.page!=='gallery' && !me() && !['about','final'].includes(state.page))state.page='gallery';root.innerHTML=({gallery,object:objectPage,excavation:excavationPage,detail:detailPage,compare:comparePage,fieldmission:fieldMission,exercise:challenge,evidence,report,about,final:finalPage}[state.page]||gallery)();if(state.page==='excavation')requestAnimationFrame(setupExcavation);document.title=`${state.page==='gallery'?(state.lang==='en'?'Traces of the Steppe':'Spuren der Steppe'):(me()?.short||(state.lang==='en'?'Digital collection':'Digitale Sammlung'))} · ${museum.maker}`;updateZoom();applyMuseumLanguage();if(Math.abs(window.scrollY-scrollBefore)>2)window.scrollTo(0,scrollBefore);}
 async function checkOfflinePhotos(){
  const status=document.querySelector('#offline-result');if(!status)return;
  status.textContent='Prüfung der sieben lokalen Originaldateien läuft …';
