@@ -264,6 +264,10 @@ button,select,input { -webkit-tap-highlight-color:transparent; }
   .lab-toolbar > span {font-size:10px;}
 }
 
+/* Clear one-tap kiosk restart, with touch-friendly sizing. */
+.museum-reset{min-height:44px;border:1px solid var(--border);background:#253429;color:var(--gold-soft);padding:8px 13px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap;touch-action:manipulation}
+.museum-reset:hover{background:#344a38;border-color:var(--gold-deep)}
+@media(max-width:560px){.museum-reset{min-width:44px;min-height:44px;padding:8px;font-size:11px}.masthead-right{gap:6px}}
 </style>
   <script>
 /*
@@ -279,7 +283,7 @@ window.SKYTHEN_PACK = {
     maker: 'Paul Fürst',
     makerRole: 'Konzept & Entwicklung',
     museumName: 'Digitale Sammlung · Originalfundlabor',
-    idleMinutes: 4,
+    idleMinutes: 7,
     opening: 'Vor rund 2.500 Jahren lebten in den eurasischen Steppen verschiedene Gemeinschaften, die antike Autoren unter anderem als Skythen bezeichneten. Ihre Funde erzählen Geschichten von Kunst, Pferden und Begegnungen mit anderen Kulturen.',
     disclaimer: 'Die Bezeichnung „Skythen“ umfasst unterschiedliche Gruppen. Nicht jedes Objekt dieser Sammlung wurde von skythischen Handwerkern hergestellt: Eine Reiterfigur zeigt ausdrücklich eine Darstellung von außen.',
     research: 'Wissenschaftliche Grundlage: Objektkataloge des Metropolitan Museum of Art und Forschungsaufsatz von Anatoly Grablevsky (2024). Vor einer Ausstellung wird eine kuratorische Prüfung empfohlen.'
@@ -512,10 +516,10 @@ function resets(){state.selected=[];state.checked=false;state.zoom=1;state.x=0;s
 function go(page,id){if(page==='shortfinish'){visitComplete();state.done.add(state.objectId);page='report';}if(page==='object' && id)visitStart(id);else if(activeVisit && ['gallery','about','final'].includes(page))visitAbort();if(id)state.objectId=id;state.page=page;stepMark(page);resets();render();window.scrollTo(0,0);}
 function restart(){if(activeVisit)visitAbort();state.done.clear();state.discovered={};state.dossierNotes={};state.hirschMission={phase:0,answer:null};state.objectId=null;go('gallery');}
 const kioskMode=new URLSearchParams(location.search).get('kiosk')==='1';
-function idle(){clearTimeout(inactivityTimer);if(!kioskMode)return;inactivityTimer=setTimeout(()=>{if(pilotEnabled){stats.idleResets++;recordSave();}restart();},Math.max(8,Number(museum.idleMinutes)||8)*60000)}
+function idle(){clearTimeout(inactivityTimer);if(!kioskMode)return;inactivityTimer=setTimeout(()=>{if(pilotEnabled){stats.idleResets++;recordSave();}location.reload();},Math.max(1,Number(museum.idleMinutes)||7)*60000)}
 ['pointerdown','keydown','wheel','touchstart'].forEach(name=>window.addEventListener(name,idle,{passive:true}));idle();
 function logo(){return `<span class="sigil" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M8 34L16 12L24 24L32 12L39 34Z M14 34H36 M23 24V36"/></svg></span>`}
-function masthead(){return `<header class="masthead"><button class="brand" data-action="home" aria-label="Zur Sammlung">${logo()}<span class="brand-text"><strong>SPUREN DER STEPPE</strong><small>ENTDECKEN · SPIELEN · FORSCHEN</small></span></button><div class="masthead-right"><div class="museum-language" role="group" aria-label="Sprache / Language"><button type="button" data-action="language" data-lang="de" class="${state.lang==='de'?'active':''}" aria-pressed="${state.lang==='de'}">DE</button><button type="button" data-action="language" data-lang="en" class="${state.lang==='en'?'active':''}" aria-pressed="${state.lang==='en'}">EN</button></div><span class="tiny-maker">KONZEPT & ENTWICKLUNG <b>${esc(museum.maker)}</b></span><button class="icon-circle" data-action="about" aria-label="Über das Projekt und Quellen">i</button></div></header>`}
+function masthead(){return `<header class="masthead"><button class="brand" data-action="home" aria-label="Zur Sammlung">${logo()}<span class="brand-text"><strong>SPUREN DER STEPPE</strong><small>ENTDECKEN · SPIELEN · FORSCHEN</small></span></button><div class="masthead-right"><div class="museum-language" role="group" aria-label="Sprache / Language"><button type="button" data-action="language" data-lang="de" class="${state.lang==='de'?'active':''}" aria-pressed="${state.lang==='de'}">DE</button><button type="button" data-action="language" data-lang="en" class="${state.lang==='en'?'active':''}" aria-pressed="${state.lang==='en'}">EN</button></div><span class="tiny-maker">KONZEPT & ENTWICKLUNG <b>${esc(museum.maker)}</b></span><button class="museum-reset" type="button" data-action="museum-reset" aria-label="${state.lang==='en'?'Restart the game':'Spiel zurücksetzen'}" title="${state.lang==='en'?'Restart the game':'Spiel zurücksetzen'}">${state.lang==='en'?'↻ Restart':'↻ Neustart'}</button><button class="icon-circle" data-action="about" aria-label="Über das Projekt und Quellen">i</button></div></header>`}
 function footer(){return `<footer class="footer"><span><i class="dot"></i> ${esc(museum.museumName)} · Forschungsbasierter Prototyp</span><span>Eine Arbeit von <strong>${esc(museum.maker)}</strong></span><button class="text-button" data-action="share" aria-label="${state.lang==='en'?'Share the exhibition link':'Ausstellungslink teilen'}">${state.lang==='en'?'Share exhibition ↗':'Ausstellung teilen ↗'}</button><button class="text-button" data-action="about">Projekt & Quellen ↗</button></footer>`}
 function thumb(o,size='card'){return `<div class="art-frame art-${size}" data-art="${esc(o.id)}"><img class="art-original" src="${esc(photoSrc(o))}" data-object="${o.id}" data-stage="local" alt="${state.lang==='en'?'Original photograph: ':'Originalfoto: '}${esc(galleryObjectName(o))} · The Metropolitan Museum of Art" loading="${size==='hero'?'eager':'lazy'}" onload="window.metPhotoLoaded(this)" onerror="window.metPhotoError(this)"><span class="art-offline">Originalfoto noch nicht geladen · Fundstück öffnen</span><span class="art-stamp">${size==='card'?'MET · '+esc(o.inventory):'THE MET · ORIGINALFOTOGRAFIE'}</span></div>`}
 function ornament(){return `<span class="ornament-line" aria-hidden="true">◈ <span>───</span> ◈ <span>───</span> ◈</span>`}
@@ -1499,7 +1503,7 @@ root.addEventListener('click',(ev)=>{const b=ev.target.closest('[data-action]');
   state.labView=b.dataset.view==='photo'?'photo':'schema';state.zoom=1;state.x=state.y=0;state.photoPoint=null;
   state.activeSpot=null;render();return;
  }
- if(a==='go-collection'){document.getElementById('sammlung')?.scrollIntoView({behavior:'smooth'});return;}if(a==='home'){go('gallery');return;}if(a==='about'){go('about');return;}if(a==='restart'){restart();return;}if(a==='final'){go('final');return;}if(a==='open'){go('object',b.dataset.id);return;}if(a==='next'){go(b.dataset.to);return;}
+ if(a==='go-collection'){document.getElementById('sammlung')?.scrollIntoView({behavior:'smooth'});return;}if(a==='home'){go('gallery');return;}if(a==='about'){go('about');return;}if(a==='restart'){restart();return;}if(a==='museum-reset'){if(confirm(state.lang==='en'?'Restart the game and clear this visit?':'Spiel neu starten und den aktuellen Spielstand zurücksetzen?'))location.reload();return;}if(a==='final'){go('final');return;}if(a==='open'){go('object',b.dataset.id);return;}if(a==='next'){go(b.dataset.to);return;}
  if(a==='hint'){state.showHint=!state.showHint;render();return;}
  if(a==='pick'&&!state.checked){let i=Number(b.dataset.index);const multi=state.page==='exercise'&&me().mission.kind==='multi';if(multi){if(state.selected.includes(i))state.selected=state.selected.filter(x=>x!==i);else if(state.selected.length<me().mission.correct.length)state.selected=[...state.selected,i];}else state.selected=[i];render();return;}
  if(a==='check'){if(state.selected.length){state.checked=true;render();}return;}
