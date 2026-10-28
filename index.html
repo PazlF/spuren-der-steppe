@@ -193,6 +193,77 @@ button,select,input { -webkit-tap-highlight-color:transparent; }
   .lab-pill {min-width:48px;min-height:48px;}
 }
 
+
+/* Visitor-flow compact layout: reduce page travel without shrinking touch targets. */
+@media (min-width:851px) {
+  .station-main .breadcrumbs {padding:16px 0 10px;}
+  .station-title-row {padding-bottom:12px;}
+  .station-title-row h1 {margin-top:6px;font-size:clamp(31px,3.1vw,48px);}
+  .station-main .stepper {min-height:48px;gap:12px;}
+  .station-main .station-mode {margin:5px 0 12px;}
+  .station-layout {gap:24px;}
+  .details-column {padding:6px 0;}
+  .details-column h2,.workbench-task h2,.evidence-content h2 {margin:9px 0 13px;}
+  .field-note {margin:14px 0;}
+  .facts {margin:12px 0;}
+  .facts div {padding:7px 0;}
+  .museum-tag {margin-bottom:12px;}
+  .touchlab-layout {margin:10px 0 24px;}
+  .touchlab-gallery {padding:12px;}
+  .lab-titlebar {padding-bottom:10px;}
+  .lab-brief h2 {font-size:clamp(26px,2.8vw,34px);margin:6px 0 8px;}
+  .touchlab-inspector {padding:16px;gap:12px;}
+  .lab-discovery-bar {padding:10px 0;}
+  .lab-fact {min-height:190px;padding:14px;gap:8px;}
+  .lab-toolbar {padding:8px 2px 4px;}
+  .workbench-task {padding:20px;}
+  .choices,.evidence-choices {margin:12px 0;}
+  .evidence-layout {gap:24px;min-height:0;}
+  .evidence-art {height:min(440px,52vh);}
+  .evidence-content blockquote {margin:12px 0;padding:15px 18px;}
+}
+@media (max-width:850px) {
+  .station-main .breadcrumbs {padding:10px 0 8px;}
+  .station-title-row {padding-bottom:8px;}
+  .station-title-row h1 {font-size:clamp(27px,6vw,38px);margin:5px 0 0;}
+  .station-main .stepper {min-height:42px;gap:6px;}
+  .station-main .station-mode {margin:4px 0 10px;}
+  .station-layout,.workbench-layout,.evidence-layout {gap:10px;}
+  .details-column {padding:4px 0;}
+  .details-column h2,.workbench-task h2,.evidence-content h2 {margin:8px 0 12px;}
+  .field-note {margin:12px 0;padding:10px 13px;}
+  .facts {margin:12px 0;}
+  .facts div {padding:7px 0;}
+  .museum-tag {margin-bottom:12px;}
+  .art-large {height:min(300px,37vh);min-height:210px;}
+  .zoom-stage {height:min(320px,40vh);min-height:220px;}
+  .evidence-art {height:min(285px,35vh);min-height:205px;}
+  .workbench-task {padding:16px;}
+  .choices,.evidence-choices {margin:12px 0;}
+  .evidence-content blockquote {margin:12px 0;padding:13px 16px;}
+  .touchlab-layout {margin:6px 0 22px;gap:10px;}
+  .touchlab-gallery {padding:8px;}
+  .lab-titlebar {padding-bottom:7px;}
+  .lab-mode-switch {margin-bottom:7px;}
+  .lab-toolbar {padding:7px 2px 4px;}
+  .touchlab-inspector {padding:13px;gap:10px;}
+  .lab-brief h2 {margin:5px 0 7px;}
+  .lab-discovery-bar {padding:10px 0;}
+  .lab-fact {min-height:0;padding:13px;gap:9px;}
+  .lab-inspector-footer p {margin-bottom:10px;}
+}
+@media (max-width:560px) {
+  .hero {padding:19px 0 23px;gap:16px;}
+  .hero h1 {margin:13px 0 14px;}
+  .hero-actions {margin-top:16px;}
+  .hero-visual {height:230px;}
+  .collection-intro {padding:22px 0 15px;}
+  .station-main .stepper b {font-size:7px;}
+  .index-stamp {font-size:31px;}
+  .lab-titlebar h2 {font-size:21px;}
+  .lab-toolbar > span {font-size:10px;}
+}
+
 </style>
   <script>
 /*
