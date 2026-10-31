@@ -1973,6 +1973,26 @@ window.SKYTHEN_RESIDUE_103=function(canvas,img,cols,rows){
  .excavation-page .exc-camera-trigger,.excavation-page .exc-camera-ring{transition:none}
 }
 </style>
+
+<style id="excavation-photo-scale-transparent">
+/* Freigestellter Fotomaßstab: nur die Skala statt weißer Kartenfläche. */
+.excavation-page #excavation-scale{
+ background:transparent;
+ border:0;
+ box-shadow:none;
+ border-radius:0;
+ padding:5px 7px 4px;
+ color:#fff;
+}
+.excavation-page #excavation-scale .exc-scale-ticks,
+.excavation-page #excavation-scale .exc-scale-units{
+ color:#fff;
+ text-shadow:0 1px 3px #000,0 0 5px #000;
+}
+.excavation-page #excavation-scale .exc-scale-bw{
+ box-shadow:0 1px 4px #0009;
+}
+</style>
 </head>
 <body>
   <div id="app"><div class="loading">Die Sammlung wird vorbereitet …</div></div>
