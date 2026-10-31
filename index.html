@@ -1993,6 +1993,67 @@ window.SKYTHEN_RESIDUE_103=function(canvas,img,cols,rows){
  box-shadow:0 1px 4px #0009;
 }
 </style>
+
+<style id="museum-tablet-ux-20261031">
+/* Touchscreen exhibition ergonomics. Restrict layout overrides to real touch tablets. */
+@media (pointer:coarse) and (min-width:700px) and (max-width:1366px) {
+  .main-gallery .hero {min-height:0;padding-top:28px;padding-bottom:32px;}
+  .main-gallery .collection-intro {padding-top:28px;padding-bottom:18px;}
+  .station-main .station-mode {padding:9px 13px;font-size:13px;border-radius:10px;}
+  .station-main .stepper {gap:8px;}
+  .station-main .stepper span {letter-spacing:.04em;}
+  .museum-reset {min-height:52px;padding:9px 15px;}
+  .choice,.evidence-choice,.exc-tool,.research-tools button,.research-save {
+    min-height:60px;
+    touch-action:manipulation;
+  }
+  .task-buttons .btn,.lab-inspector-footer .btn,.report-actions .btn {
+    min-height:60px;
+  }
+  .lab-zoom-buttons button {min-width:56px;min-height:56px;}
+  .lab-pill {min-width:54px;min-height:54px;}
+  .workbench-task,.field-panel {padding:18px;}
+  .evidence-content {padding-top:4px;}
+  .excavation-layout {gap:16px;margin-top:12px;}
+  .excavation-info {padding:17px;gap:11px;}
+  .excavation-heading {margin-bottom:12px;}
+  .excavation-page button:active,
+  .research-tools button:active,
+  .choice:active,.evidence-choice:active,.lab-pill:active {
+    filter:brightness(1.15);
+  }
+  button:focus-visible,[role="button"]:focus-visible {
+    outline:3px solid var(--gold-soft);
+    outline-offset:3px;
+  }
+}
+@media (pointer:coarse) and (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
+  /* Keep artifact photo and explanations in view at once on landscape tablets. */
+  .touchlab-layout {grid-template-columns:minmax(0,1.22fr) minmax(330px,.78fr);gap:14px;}
+  .touchlab-inspector {display:flex;flex-direction:column;gap:10px;padding:15px;}
+  .lab-brief,.lab-discovery-bar,.lab-fact,.lab-inspector-footer {grid-column:auto;}
+  .lab-brief h2 {font-size:27px;}
+  .lab-brief p {font-size:13px;line-height:1.5;}
+  .lab-discovery-bar {padding:9px 0;}
+  .lab-fact {min-height:0;padding:12px;}
+  .lab-fact h3 {font-size:22px;}
+  .lab-fact p {line-height:1.5;}
+  .touchlab-gallery {padding:10px;}
+  .excavation-layout {grid-template-columns:minmax(0,1.14fr) minmax(330px,.86fr);}
+  .excavation-image {min-height:400px;}
+  .field-layout {gap:16px;margin-top:14px;}
+}
+@media (pointer:coarse) and (min-width:700px) and (max-width:1023px) and (orientation:portrait) {
+  .touchlab-layout {gap:10px;}
+  .touchlab-inspector {gap:12px;}
+  .touch-canvas {aspect-ratio:4/3;min-height:0;}
+  .lab-fact {min-height:0;}
+  .excavation-image {min-height:385px;}
+  .station-title-row h1 {font-size:clamp(30px,4.6vw,42px);}
+  .station-main .breadcrumbs {padding:10px 0 7px;}
+  .station-main .stepper {min-height:44px;}
+}
+</style>
 </head>
 <body>
   <div id="app"><div class="loading">Die Sammlung wird vorbereitet …</div></div>
