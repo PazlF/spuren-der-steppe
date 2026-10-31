@@ -1,0 +1,25 @@
+name: Museum JavaScript smoke test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - optimize/museum-tablet-touch-20261024
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check game JavaScript, launch buttons and language setup
+        run: node scripts/check-museum.js
+      - name: Install isolated DOM test dependency
+        run: npm install --no-save --no-package-lock jsdom@26
+      - name: Open all three minigames in German and English
+        run: node scripts/test-game-open.js
